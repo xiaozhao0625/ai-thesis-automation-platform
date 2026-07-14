@@ -1,0 +1,8 @@
+# Third-party skills and delivery handoff material are not application source.
+ALL-Skills-main/
+handoff/
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.tmp
