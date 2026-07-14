@@ -6,3 +6,6 @@ handoff/
 .DS_Store
 Thumbs.db
 *.tmp
+
+# Isolated local Git worktrees.
+.worktrees/
