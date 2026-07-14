@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { readFile, readdir } from 'node:fs/promises';
+
+const files = await readdir(new URL('.', import.meta.url));
+const htmlName = files.find(name => name.endsWith('.html'));
+assert.ok(htmlName, 'missing prototype HTML file');
+const file = new URL(`./${htmlName}`, import.meta.url);
+const html = await readFile(file, 'utf8');
+
+const pages = [
+  'dashboard', 'tasks', 'new-task', 'overview', 'workflow', 'inspector', 'evidence',
+  'content', 'engineering', 'quality', 'templates', 'delivery', 'approvals',
+  'materials', 'outline', 'components'
+];
+
+for (const page of pages) {
+  if (page === 'inspector') {
+    assert.match(html, /id="inspector"/, 'missing node inspector page');
+  } else {
+    assert.match(html, new RegExp(`data-page="${page}"`), `missing page: ${page}`);
+  }
+}
+assert.match(html, /data-page="components"/, 'missing component state library');
+
+for (const id of ['create-task', 'outline-impact', 'deadletter-recover', 'quality-recheck', 'quality-complete', 'delivery-approve']) {
+  assert.match(html, new RegExp(`data-action="${id}"`), `missing core interaction: ${id}`);
+}
+
+assert.match(html, /--domain-engineering:\s*#16825D/i, 'engineering domain token missing');
+assert.match(html, /Attempt 2\/3/, 'Attempt denominator must be 3');
+assert.doesNotMatch(html, /Attempt 3\/5/, 'obsolete retry sample must not reappear');
+assert.match(html, /修订轮次 2\/2/, 'revision round limit missing');
+for (const id of ['recoveryNodeRun', 'reviewRunState', 'deliveryApprovalDetail', 'deliveryPackageStatus', 'officialDownload']) {
+  assert.match(html, new RegExp(`(?:id\\s*=|\\.id=)["']${id}["']|#${id}`), `missing v1.2.1 interaction target: ${id}`);
+}
+assert.match(html, /page\[data-page="approvals"\] \.panel-grid\{padding-bottom:88px/, 'approval safety area missing');
+assert.doesNotMatch(html, /workflowInvalidationResult/, 'duplicate invalidation result panel must not return');
+assert.match(html, /<svg class="wf-svg"/, 'workflow edges must use SVG');
+assert.match(html, /data-node-id=/, 'workflow nodes must expose stable node identities');
+assert.match(html, /data-source-port=/, 'SVG edges must bind source ports');
+assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
+assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
+assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
+assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
