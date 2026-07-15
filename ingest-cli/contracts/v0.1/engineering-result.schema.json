@@ -1,0 +1,651 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-result.schema.json",
+  "title": "EngineeringResult",
+  "description": "跨能力包工程结果契约。Artifact 引用必须是正式业务 ArtifactVersion 标识，不得使用 ingest_record_id 或 source_occurrence_key。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "engineering_result_id",
+    "result_type",
+    "task_id",
+    "node_run_id",
+    "environment_snapshot",
+    "input_artifact_version_ids",
+    "output_artifact_version_ids",
+    "status",
+    "metrics",
+    "producer",
+    "provenance_type",
+    "provenance",
+    "verification_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "engineering_result_id": {
+      "$ref": "#/$defs/Identifier"
+    },
+    "result_type": {
+      "enum": [
+        "BUILD",
+        "STATIC_CHECK",
+        "UNIT_TEST",
+        "API_TEST",
+        "DATABASE_TEST",
+        "SIMULATION",
+        "MODEL_TRAINING",
+        "CALCULATION",
+        "HARDWARE_MEASUREMENT",
+        "MANUAL_OBSERVATION"
+      ]
+    },
+    "task_id": {
+      "$ref": "#/$defs/Identifier"
+    },
+    "node_run_id": {
+      "$ref": "#/$defs/Identifier"
+    },
+    "node_execution_attempt_id": {
+      "$ref": "#/$defs/Identifier"
+    },
+    "environment_snapshot": {
+      "$ref": "#/$defs/EnvironmentSnapshot"
+    },
+    "input_artifact_version_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/ArtifactVersionId"
+      }
+    },
+    "output_artifact_version_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/ArtifactVersionId"
+      }
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "RUNNING",
+        "SUCCEEDED",
+        "PARTIAL",
+        "FAILED",
+        "TIMED_OUT",
+        "CANCELLED"
+      ]
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Metric"
+      }
+    },
+    "execution_fingerprint": {
+      "$ref": "#/$defs/Sha256"
+    },
+    "started_at": {
+      "$ref": "#/$defs/ZonedDateTime"
+    },
+    "finished_at": {
+      "$ref": "#/$defs/ZonedDateTime"
+    },
+    "producer": {
+      "$ref": "#/$defs/Producer"
+    },
+    "result_hash": {
+      "$ref": "#/$defs/Sha256",
+      "description": "对不可变工程结果载荷的 JCS 投影计算；排除 schema_version、engineering_result_id、result_hash 与 verification_status。"
+    },
+    "provenance_type": {
+      "enum": [
+        "TRUSTED_EXECUTION",
+        "IMPORTED"
+      ]
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "verification_status": {
+      "enum": [
+        "UNVERIFIED",
+        "VERIFIED",
+        "REJECTED"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "PENDING"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "started_at"
+              ]
+            },
+            {
+              "required": [
+                "finished_at"
+              ]
+            },
+            {
+              "required": [
+                "result_hash"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "RUNNING"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "started_at"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "finished_at"
+              ]
+            },
+            {
+              "required": [
+                "result_hash"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "SUCCEEDED",
+              "PARTIAL",
+              "FAILED",
+              "TIMED_OUT",
+              "CANCELLED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "started_at",
+          "finished_at",
+          "result_hash"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance_type": {
+            "const": "TRUSTED_EXECUTION"
+          }
+        },
+        "required": [
+          "provenance_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "node_execution_attempt_id",
+          "execution_fingerprint"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance_type": {
+            "const": "IMPORTED"
+          }
+        },
+        "required": [
+          "provenance_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verification_status": {
+            "const": "UNVERIFIED"
+          }
+        },
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "node_execution_attempt_id"
+              ]
+            },
+            {
+              "required": [
+                "execution_fingerprint"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verification_status": {
+            "const": "VERIFIED"
+          }
+        },
+        "required": [
+          "verification_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": [
+              "SUCCEEDED",
+              "PARTIAL",
+              "FAILED",
+              "TIMED_OUT",
+              "CANCELLED"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "examples": [
+        "engineering-result-unit-test-001"
+      ]
+    },
+    "ArtifactVersionId": {
+      "description": "正式后端 ArtifactVersion 业务标识；扫描记录 ID 与来源发生键不符合此前缀。",
+      "type": "string",
+      "minLength": 18,
+      "maxLength": 128,
+      "pattern": "^artifact-version-[a-z0-9][a-z0-9._-]*$",
+      "examples": [
+        "artifact-version-source-001"
+      ]
+    },
+    "Sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "examples": [
+        "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+      ]
+    },
+    "ZonedDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$",
+      "examples": [
+        "2026-07-15T10:05:00Z"
+      ]
+    },
+    "OperatingSystem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "architecture"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "examples": [
+        {
+          "name": "Linux",
+          "version": "6.8",
+          "architecture": "x86_64"
+        }
+      ]
+    },
+    "VersionedComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "examples": [
+        {
+          "name": "Python",
+          "version": "3.12.4"
+        }
+      ]
+    },
+    "HardwareComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "model"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "firmware_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "examples": [
+        {
+          "name": "CPU",
+          "model": "Generic x86_64"
+        }
+      ]
+    },
+    "EnvironmentSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operating_system",
+        "runtimes",
+        "dependency_lock_hash",
+        "toolchain",
+        "hardware"
+      ],
+      "properties": {
+        "operating_system": {
+          "$ref": "#/$defs/OperatingSystem"
+        },
+        "runtimes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/VersionedComponent"
+          }
+        },
+        "dependency_lock_hash": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "toolchain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/VersionedComponent"
+          }
+        },
+        "hardware": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/HardwareComponent"
+          }
+        }
+      },
+      "examples": [
+        {
+          "operating_system": {
+            "name": "Linux",
+            "version": "6.8",
+            "architecture": "x86_64"
+          },
+          "runtimes": [
+            {
+              "name": "Python",
+              "version": "3.12.4"
+            }
+          ],
+          "dependency_lock_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "toolchain": [
+            {
+              "name": "pytest",
+              "version": "8.3.2"
+            }
+          ],
+          "hardware": []
+        }
+      ]
+    },
+    "Metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "value",
+        "unit",
+        "measurement_basis"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z][A-Za-z0-9._-]*$"
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "measurement_basis": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "examples": [
+        {
+          "name": "tests_passed",
+          "value": 64,
+          "unit": "count",
+          "measurement_basis": "pytest collected test cases with passing outcomes"
+        }
+      ]
+    },
+    "Producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "adapter_version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "adapter_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "examples": [
+        {
+          "name": "pytest",
+          "version": "8.3.2",
+          "adapter_version": "python-web-management-v1/0.1"
+        }
+      ]
+    },
+    "Provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_system",
+        "recorded_at",
+        "source_artifact_version_ids"
+      ],
+      "properties": {
+        "source_system": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "recorded_at": {
+          "$ref": "#/$defs/ZonedDateTime"
+        },
+        "source_artifact_version_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/ArtifactVersionId"
+          }
+        }
+      },
+      "examples": [
+        {
+          "source_system": "trusted-engineering-worker",
+          "recorded_at": "2026-07-15T10:05:01Z",
+          "source_artifact_version_ids": [
+            "artifact-version-source-001"
+          ]
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "0.1",
+      "engineering_result_id": "engineering-result-unit-test-001",
+      "result_type": "UNIT_TEST",
+      "task_id": "task-001",
+      "node_run_id": "node-run-001",
+      "node_execution_attempt_id": "node-execution-attempt-001",
+      "environment_snapshot": {
+        "operating_system": {
+          "name": "Linux",
+          "version": "6.8",
+          "architecture": "x86_64"
+        },
+        "runtimes": [
+          {
+            "name": "Python",
+            "version": "3.12.4"
+          }
+        ],
+        "dependency_lock_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "toolchain": [
+          {
+            "name": "pytest",
+            "version": "8.3.2"
+          }
+        ],
+        "hardware": []
+      },
+      "input_artifact_version_ids": [
+        "artifact-version-source-001"
+      ],
+      "output_artifact_version_ids": [
+        "artifact-version-test-report-001"
+      ],
+      "status": "SUCCEEDED",
+      "metrics": [
+        {
+          "name": "tests_passed",
+          "value": 64,
+          "unit": "count",
+          "measurement_basis": "pytest collected test cases with passing outcomes"
+        }
+      ],
+      "execution_fingerprint": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "started_at": "2026-07-15T10:05:00Z",
+      "finished_at": "2026-07-15T10:05:01Z",
+      "producer": {
+        "name": "pytest",
+        "version": "8.3.2",
+        "adapter_version": "python-web-management-v1/0.1"
+      },
+      "result_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "provenance_type": "TRUSTED_EXECUTION",
+      "provenance": {
+        "source_system": "trusted-engineering-worker",
+        "recorded_at": "2026-07-15T10:05:01Z",
+        "source_artifact_version_ids": [
+          "artifact-version-source-001"
+        ]
+      },
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

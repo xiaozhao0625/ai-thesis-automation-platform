@@ -1,0 +1,2663 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "artifact-ingest-record.schema.json",
+  "title": "Artifact Ingest Record and Derived Ingest Records",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "ingest_record_id",
+    "scan_id",
+    "source_mount_id",
+    "binding_revision",
+    "observed_relative_path",
+    "relative_path",
+    "path_key",
+    "hash_status",
+    "size_bytes",
+    "modified_at",
+    "media_type",
+    "extension",
+    "pre_dedup_decision",
+    "pre_dedup_parser_eligible",
+    "ingest_decision",
+    "decision_reason_codes",
+    "decision_rule_matches",
+    "requires_review",
+    "parser_eligible",
+    "artifact_role",
+    "classification_status",
+    "classification_authority",
+    "classification_confidence",
+    "classification_method",
+    "classification_reasons",
+    "data_classification",
+    "content_categories",
+    "access_recommendation",
+    "model_usage_restriction",
+    "sensitivity_confidence",
+    "sensitivity_reasons",
+    "rule_set_version",
+    "scanner_version",
+    "observed_at",
+    "issue_refs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "record_type": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/record_type"
+    },
+    "ingest_record_id": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/ingest_record_id"
+    },
+    "scan_id": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/scan_id"
+    },
+    "source_mount_id": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/source_mount_id"
+    },
+    "binding_revision": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/binding_revision"
+    },
+    "observed_relative_path": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/observed_relative_path"
+    },
+    "relative_path": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/relative_path"
+    },
+    "path_key": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/path_key"
+    },
+    "hash_status": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/hash_status"
+    },
+    "content_hash": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/content_hash"
+    },
+    "source_occurrence_key": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/source_occurrence_key"
+    },
+    "size_bytes": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/size_bytes"
+    },
+    "modified_at": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/modified_at"
+    },
+    "media_type": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/media_type"
+    },
+    "extension": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/extension"
+    },
+    "pre_dedup_decision": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/pre_dedup_decision"
+    },
+    "pre_dedup_parser_eligible": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/pre_dedup_parser_eligible"
+    },
+    "ingest_decision": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/ingest_decision"
+    },
+    "decision_reason_codes": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/decision_reason_codes"
+    },
+    "decision_rule_matches": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/decision_rule_matches"
+    },
+    "requires_review": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/requires_review"
+    },
+    "parser_eligible": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/parser_eligible"
+    },
+    "duplicate_group_id": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/duplicate_group_id"
+    },
+    "artifact_role": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/artifact_role"
+    },
+    "classification_status": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/classification_status"
+    },
+    "classification_authority": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/classification_authority"
+    },
+    "classification_confidence": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/classification_confidence"
+    },
+    "classification_method": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/classification_method"
+    },
+    "classification_reasons": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/classification_reasons"
+    },
+    "data_classification": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/data_classification"
+    },
+    "content_categories": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/content_categories"
+    },
+    "access_recommendation": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/access_recommendation"
+    },
+    "model_usage_restriction": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/model_usage_restriction"
+    },
+    "sensitivity_confidence": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/sensitivity_confidence"
+    },
+    "sensitivity_reasons": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/sensitivity_reasons"
+    },
+    "rule_set_version": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/rule_set_version"
+    },
+    "scanner_version": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/scanner_version"
+    },
+    "observed_at": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/observed_at"
+    },
+    "issue_refs": {
+      "$ref": "#/$defs/artifact_ingest_record/properties/issue_refs"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/artifact_ingest_record"
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "source_mount_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "version_code": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$"
+    },
+    "reason_code": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{1,63}$"
+    },
+    "safe_text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^[^\\u0000-\\u001F\\u007F]+$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*[:\\\\\\u0000-\\u001F\\u007F])[^/]+(?:/[^/]+)*$"
+    },
+    "observed_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!\\\\\\\\)(?!.*[\\u0000-\\u001F\\u007F]).+$"
+    },
+    "hash_status": {
+      "enum": [
+        "COMPUTED",
+        "SKIPPED_BY_POLICY",
+        "FAILED"
+      ]
+    },
+    "pre_dedup_decision": {
+      "enum": [
+        "ACCEPTED",
+        "EXCLUDED",
+        "QUARANTINED",
+        "NEEDS_REVIEW"
+      ]
+    },
+    "ingest_decision": {
+      "enum": [
+        "ACCEPTED",
+        "EXCLUDED",
+        "QUARANTINED",
+        "DUPLICATE",
+        "NEEDS_REVIEW"
+      ]
+    },
+    "artifact_role": {
+      "enum": [
+        "PRIMARY_REQUIREMENT",
+        "PRIMARY_DOCUMENT",
+        "ENGINEERING_SOURCE",
+        "ENGINEERING_CONFIG",
+        "ENGINEERING_RESULT",
+        "SOURCE_IMAGE",
+        "SOURCE_TABLE",
+        "TEMPLATE",
+        "REFERENCE_CANDIDATE",
+        "VERIFIED_REFERENCE",
+        "EXISTING_DRAFT",
+        "GENERATED_DRAFT",
+        "BACKUP",
+        "THIRD_PARTY_DEPENDENCY",
+        "BUILD_OUTPUT",
+        "CACHE",
+        "NOISE",
+        "SENSITIVE_DATA",
+        "EXECUTABLE",
+        "UNKNOWN"
+      ]
+    },
+    "classification_method": {
+      "enum": [
+        "PATH_RULE",
+        "FILE_NAME_RULE",
+        "EXTENSION_RULE",
+        "CONTENT_SIGNATURE",
+        "METADATA_RULE",
+        "CAPABILITY_PACK_RULE",
+        "COMPOSITE_RULE",
+        "MANUAL_OVERRIDE"
+      ]
+    },
+    "data_classification": {
+      "enum": [
+        "PUBLIC",
+        "INTERNAL",
+        "SENSITIVE",
+        "RESTRICTED"
+      ]
+    },
+    "content_category": {
+      "enum": [
+        "FACE_IMAGE",
+        "PERSONAL_DATA",
+        "QUESTIONNAIRE",
+        "INTERVIEW",
+        "DATABASE_DUMP",
+        "CREDENTIAL",
+        "SOURCE_CODE",
+        "VIDEO",
+        "AUDIO"
+      ]
+    },
+    "access_recommendation": {
+      "enum": [
+        "STANDARD",
+        "RESTRICT_PREVIEW",
+        "ROLE_RESTRICTED",
+        "SECURITY_REVIEW_REQUIRED"
+      ]
+    },
+    "model_usage_restriction": {
+      "enum": [
+        "ALLOW",
+        "ALLOW_REDACTED_ONLY",
+        "LOCAL_MODEL_ONLY",
+        "DENY_EXTERNAL_MODEL"
+      ]
+    },
+    "decision_rule_match": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "signal_type",
+        "reason_code",
+        "redacted_summary"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "signal_type": {
+          "enum": [
+            "PATH",
+            "FILE_NAME",
+            "EXTENSION",
+            "CONTENT_SIGNATURE",
+            "METADATA",
+            "CAPABILITY_PACK",
+            "HASH",
+            "SENSITIVITY"
+          ]
+        },
+        "reason_code": {
+          "$ref": "#/$defs/reason_code"
+        },
+        "redacted_summary": {
+          "$ref": "#/$defs/safe_text"
+        }
+      },
+      "examples": [
+        {
+          "rule_id": "document-extension-v1",
+          "signal_type": "EXTENSION",
+          "reason_code": "SUPPORTED_DOCUMENT_TYPE",
+          "redacted_summary": "The extension is allowed by the document intake rule."
+        }
+      ]
+    },
+    "classification_reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reason_code",
+        "method",
+        "redacted_summary"
+      ],
+      "properties": {
+        "reason_code": {
+          "$ref": "#/$defs/reason_code"
+        },
+        "method": {
+          "$ref": "#/$defs/classification_method"
+        },
+        "redacted_summary": {
+          "$ref": "#/$defs/safe_text"
+        }
+      },
+      "examples": [
+        {
+          "reason_code": "DRAFT_NAME_SIGNAL",
+          "method": "FILE_NAME_RULE",
+          "redacted_summary": "The file name contains a draft-document signal."
+        }
+      ]
+    },
+    "sensitivity_reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "category",
+        "location_kind",
+        "redacted_summary",
+        "confidence"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "category": {
+          "$ref": "#/$defs/content_category"
+        },
+        "location_kind": {
+          "enum": [
+            "PATH_SEGMENT",
+            "FILE_NAME",
+            "METADATA",
+            "CONTENT_PREFIX",
+            "STRUCTURE",
+            "UNKNOWN"
+          ]
+        },
+        "redacted_summary": {
+          "$ref": "#/$defs/safe_text"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "examples": [
+        {
+          "rule_id": "credential-key-name-v1",
+          "category": "CREDENTIAL",
+          "location_kind": "STRUCTURE",
+          "redacted_summary": "A credential-like key was detected; its value was not recorded.",
+          "confidence": 0.98
+        }
+      ]
+    },
+    "artifact_ingest_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "ingest_record_id",
+        "scan_id",
+        "source_mount_id",
+        "binding_revision",
+        "observed_relative_path",
+        "relative_path",
+        "path_key",
+        "hash_status",
+        "size_bytes",
+        "modified_at",
+        "media_type",
+        "extension",
+        "pre_dedup_decision",
+        "pre_dedup_parser_eligible",
+        "ingest_decision",
+        "decision_reason_codes",
+        "decision_rule_matches",
+        "requires_review",
+        "parser_eligible",
+        "artifact_role",
+        "classification_status",
+        "classification_authority",
+        "classification_confidence",
+        "classification_method",
+        "classification_reasons",
+        "data_classification",
+        "content_categories",
+        "access_recommendation",
+        "model_usage_restriction",
+        "sensitivity_confidence",
+        "sensitivity_reasons",
+        "rule_set_version",
+        "scanner_version",
+        "observed_at",
+        "issue_refs"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "ARTIFACT_INGEST_RECORD"
+        },
+        "ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_mount_id": {
+          "$ref": "#/$defs/source_mount_id"
+        },
+        "binding_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "observed_relative_path": {
+          "$ref": "#/$defs/observed_relative_path"
+        },
+        "relative_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "path_key": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "hash_status": {
+          "$ref": "#/$defs/hash_status"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_occurrence_key": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "modified_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "media_type": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9!#$&^_.+-]*/[a-z0-9][a-z0-9!#$&^_.+-]*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extension": {
+          "type": "string",
+          "pattern": "^(?:|\\.[a-z0-9][a-z0-9._+-]{0,31})$"
+        },
+        "pre_dedup_decision": {
+          "$ref": "#/$defs/pre_dedup_decision"
+        },
+        "pre_dedup_parser_eligible": {
+          "type": "boolean"
+        },
+        "ingest_decision": {
+          "$ref": "#/$defs/ingest_decision"
+        },
+        "decision_reason_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reason_code"
+          },
+          "uniqueItems": true
+        },
+        "decision_rule_matches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision_rule_match"
+          }
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "parser_eligible": {
+          "type": "boolean"
+        },
+        "duplicate_group_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "artifact_role": {
+          "$ref": "#/$defs/artifact_role"
+        },
+        "classification_status": {
+          "const": "PROPOSED"
+        },
+        "classification_authority": {
+          "const": "AUTOMATED_SUGGESTION"
+        },
+        "classification_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "classification_method": {
+          "$ref": "#/$defs/classification_method"
+        },
+        "classification_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/reason_code"
+          },
+          "uniqueItems": true
+        },
+        "data_classification": {
+          "$ref": "#/$defs/data_classification"
+        },
+        "content_categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/content_category"
+          },
+          "uniqueItems": true
+        },
+        "access_recommendation": {
+          "$ref": "#/$defs/access_recommendation"
+        },
+        "model_usage_restriction": {
+          "$ref": "#/$defs/model_usage_restriction"
+        },
+        "sensitivity_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sensitivity_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sensitivity_reason"
+          }
+        },
+        "rule_set_version": {
+          "$ref": "#/$defs/version_code"
+        },
+        "scanner_version": {
+          "$ref": "#/$defs/version_code"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "hash_status": {
+                  "const": "COMPUTED"
+                }
+              },
+              "required": [
+                "content_hash",
+                "source_occurrence_key"
+              ]
+            },
+            {
+              "properties": {
+                "hash_status": {
+                  "const": "SKIPPED_BY_POLICY"
+                },
+                "pre_dedup_decision": {
+                  "const": "EXCLUDED"
+                },
+                "pre_dedup_parser_eligible": {
+                  "const": false
+                },
+                "ingest_decision": {
+                  "const": "EXCLUDED"
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "decision_reason_codes": {
+                  "minItems": 1
+                },
+                "decision_rule_matches": {
+                  "minItems": 1
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "content_hash"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "source_occurrence_key"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "duplicate_group_id"
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "properties": {
+                "hash_status": {
+                  "const": "FAILED"
+                },
+                "pre_dedup_parser_eligible": {
+                  "const": false
+                },
+                "ingest_decision": {
+                  "enum": [
+                    "QUARANTINED",
+                    "NEEDS_REVIEW"
+                  ]
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "issue_refs": {
+                  "minItems": 1
+                }
+              },
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "content_hash"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "source_occurrence_key"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "duplicate_group_id"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "pre_dedup_decision": {
+                  "const": "ACCEPTED"
+                },
+                "ingest_decision": {
+                  "const": "ACCEPTED"
+                },
+                "hash_status": {
+                  "const": "COMPUTED"
+                },
+                "requires_review": {
+                  "const": false
+                }
+              },
+              "anyOf": [
+                {
+                  "properties": {
+                    "pre_dedup_parser_eligible": {
+                      "const": true
+                    },
+                    "parser_eligible": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "pre_dedup_parser_eligible": {
+                      "const": false
+                    },
+                    "parser_eligible": {
+                      "const": false
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "properties": {
+                "pre_dedup_decision": {
+                  "const": "EXCLUDED"
+                },
+                "pre_dedup_parser_eligible": {
+                  "const": false
+                },
+                "ingest_decision": {
+                  "const": "EXCLUDED"
+                },
+                "hash_status": {
+                  "enum": [
+                    "COMPUTED",
+                    "SKIPPED_BY_POLICY"
+                  ]
+                },
+                "requires_review": {
+                  "const": false
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "decision_reason_codes": {
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "pre_dedup_decision": {
+                  "const": "QUARANTINED"
+                },
+                "pre_dedup_parser_eligible": {
+                  "const": false
+                },
+                "ingest_decision": {
+                  "const": "QUARANTINED"
+                },
+                "hash_status": {
+                  "enum": [
+                    "COMPUTED",
+                    "FAILED"
+                  ]
+                },
+                "requires_review": {
+                  "const": true
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "decision_reason_codes": {
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "pre_dedup_decision": {
+                  "const": "ACCEPTED"
+                },
+                "ingest_decision": {
+                  "const": "DUPLICATE"
+                },
+                "hash_status": {
+                  "const": "COMPUTED"
+                },
+                "requires_review": {
+                  "const": false
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "decision_reason_codes": {
+                  "contains": {
+                    "const": "CONTENT_HASH_DUPLICATE"
+                  },
+                  "minContains": 1
+                }
+              },
+              "required": [
+                "duplicate_group_id"
+              ]
+            },
+            {
+              "properties": {
+                "pre_dedup_decision": {
+                  "const": "NEEDS_REVIEW"
+                },
+                "pre_dedup_parser_eligible": {
+                  "const": false
+                },
+                "ingest_decision": {
+                  "const": "NEEDS_REVIEW"
+                },
+                "hash_status": {
+                  "enum": [
+                    "COMPUTED",
+                    "FAILED"
+                  ]
+                },
+                "requires_review": {
+                  "const": true
+                },
+                "parser_eligible": {
+                  "const": false
+                },
+                "decision_reason_codes": {
+                  "minItems": 1
+                },
+                "issue_refs": {
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "pre_dedup_parser_eligible": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pre_dedup_decision": {
+                "const": "ACCEPTED"
+              },
+              "hash_status": {
+                "const": "COMPUTED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "parser_eligible": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ingest_decision": {
+                "const": "ACCEPTED"
+              },
+              "hash_status": {
+                "const": "COMPUTED"
+              },
+              "pre_dedup_parser_eligible": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "duplicate_group_id"
+            ]
+          },
+          "then": {
+            "properties": {
+              "hash_status": {
+                "const": "COMPUTED"
+              }
+            },
+            "required": [
+              "content_hash"
+            ]
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "artifact_role": {
+                "const": "VERIFIED_REFERENCE"
+              }
+            },
+            "required": [
+              "artifact_role"
+            ]
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "classification_method": {
+                "const": "MANUAL_OVERRIDE"
+              }
+            },
+            "required": [
+              "classification_method"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "artifact_role": {
+                "enum": [
+                  "BACKUP",
+                  "THIRD_PARTY_DEPENDENCY",
+                  "BUILD_OUTPUT",
+                  "CACHE",
+                  "NOISE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pre_dedup_decision": {
+                "const": "EXCLUDED"
+              },
+              "ingest_decision": {
+                "const": "EXCLUDED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "artifact_role": {
+                "const": "EXECUTABLE"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pre_dedup_decision": {
+                "const": "QUARANTINED"
+              },
+              "ingest_decision": {
+                "const": "QUARANTINED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "enum": [
+                    "FACE_IMAGE",
+                    "PERSONAL_DATA",
+                    "QUESTIONNAIRE",
+                    "INTERVIEW"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data_classification": {
+                "not": {
+                  "const": "PUBLIC"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "const": "CREDENTIAL"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pre_dedup_decision": {
+                "const": "QUARANTINED"
+              },
+              "ingest_decision": {
+                "const": "QUARANTINED"
+              },
+              "data_classification": {
+                "const": "RESTRICTED"
+              },
+              "access_recommendation": {
+                "const": "SECURITY_REVIEW_REQUIRED"
+              },
+              "model_usage_restriction": {
+                "const": "DENY_EXTERNAL_MODEL"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "const": "DATABASE_DUMP"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pre_dedup_decision": {
+                "const": "QUARANTINED"
+              },
+              "ingest_decision": {
+                "const": "QUARANTINED"
+              },
+              "data_classification": {
+                "enum": [
+                  "SENSITIVE",
+                  "RESTRICTED"
+                ]
+              },
+              "requires_review": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "ARTIFACT_INGEST_RECORD",
+          "ingest_record_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "scan_id": "scan-20260715-001",
+          "source_mount_id": "thesis-library-2026",
+          "binding_revision": 1,
+          "observed_relative_path": "project-a/paper.docx",
+          "relative_path": "project-a/paper.docx",
+          "path_key": "project-a/paper.docx",
+          "hash_status": "COMPUTED",
+          "content_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "source_occurrence_key": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "size_bytes": 4096,
+          "modified_at": "2026-07-15T08:00:00Z",
+          "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "extension": ".docx",
+          "pre_dedup_decision": "ACCEPTED",
+          "pre_dedup_parser_eligible": true,
+          "ingest_decision": "ACCEPTED",
+          "decision_reason_codes": [
+            "ELIGIBLE_CONTENT"
+          ],
+          "decision_rule_matches": [
+            {
+              "rule_id": "document-extension-v1",
+              "signal_type": "EXTENSION",
+              "reason_code": "SUPPORTED_DOCUMENT_TYPE",
+              "redacted_summary": "The extension is allowed by the document intake rule."
+            }
+          ],
+          "requires_review": false,
+          "parser_eligible": true,
+          "artifact_role": "EXISTING_DRAFT",
+          "classification_status": "PROPOSED",
+          "classification_authority": "AUTOMATED_SUGGESTION",
+          "classification_confidence": 0.92,
+          "classification_method": "COMPOSITE_RULE",
+          "classification_reasons": [
+            "DRAFT_NAME_SIGNAL"
+          ],
+          "data_classification": "INTERNAL",
+          "content_categories": [],
+          "access_recommendation": "STANDARD",
+          "model_usage_restriction": "ALLOW",
+          "sensitivity_confidence": 0,
+          "sensitivity_reasons": [],
+          "rule_set_version": "0.1.0",
+          "scanner_version": "0.1.0",
+          "observed_at": "2026-07-15T08:01:00Z",
+          "issue_refs": []
+        }
+      ]
+    },
+    "duplicate_group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "duplicate_group_id",
+        "scan_id",
+        "content_hash",
+        "member_ingest_record_ids",
+        "canonical_selection_status",
+        "canonical_selection_method",
+        "canonical_selection_reasons",
+        "selection_rule_version"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "DUPLICATE_GROUP"
+        },
+        "duplicate_group_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "member_ingest_record_ids": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "canonical_selection_status": {
+          "enum": [
+            "SELECTED",
+            "NO_ELIGIBLE_CANONICAL"
+          ]
+        },
+        "canonical_ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "canonical_selection_method": {
+          "enum": [
+            "ACCEPTED_PARSER_ELIGIBLE_PATH_KEY_V1",
+            "NO_ELIGIBLE_CANONICAL"
+          ]
+        },
+        "canonical_selection_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/reason_code"
+          },
+          "uniqueItems": true
+        },
+        "selection_rule_version": {
+          "$ref": "#/$defs/version_code"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "canonical_selection_status": {
+                "const": "SELECTED"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "canonical_ingest_record_id"
+            ],
+            "properties": {
+              "canonical_selection_method": {
+                "const": "ACCEPTED_PARSER_ELIGIBLE_PATH_KEY_V1"
+              },
+              "canonical_selection_reasons": {
+                "contains": {
+                  "const": "ACCEPTED_PARSER_ELIGIBLE"
+                },
+                "minContains": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "canonical_selection_status": {
+                "const": "NO_ELIGIBLE_CANONICAL"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "canonical_selection_method": {
+                "const": "NO_ELIGIBLE_CANONICAL"
+              },
+              "canonical_selection_reasons": {
+                "contains": {
+                  "const": "NO_ACCEPTED_PARSER_ELIGIBLE_MEMBER"
+                },
+                "minContains": 1
+              }
+            },
+            "not": {
+              "required": [
+                "canonical_ingest_record_id"
+              ]
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "DUPLICATE_GROUP",
+          "duplicate_group_id": "duplicate-group-001",
+          "scan_id": "scan-20260715-001",
+          "content_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "member_ingest_record_ids": [
+            "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+            "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+          ],
+          "canonical_selection_status": "SELECTED",
+          "canonical_ingest_record_id": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "canonical_selection_method": "ACCEPTED_PARSER_ELIGIBLE_PATH_KEY_V1",
+          "canonical_selection_reasons": [
+            "ACCEPTED_PARSER_ELIGIBLE",
+            "PATH_KEY_TIE_BREAK"
+          ],
+          "selection_rule_version": "0.1.0"
+        },
+        {
+          "schema_version": "0.1",
+          "record_type": "DUPLICATE_GROUP",
+          "duplicate_group_id": "duplicate-group-002",
+          "scan_id": "scan-20260715-001",
+          "content_hash": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+          "member_ingest_record_ids": [
+            "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+            "sha256:9999999999999999999999999999999999999999999999999999999999999999"
+          ],
+          "canonical_selection_status": "NO_ELIGIBLE_CANONICAL",
+          "canonical_selection_method": "NO_ELIGIBLE_CANONICAL",
+          "canonical_selection_reasons": [
+            "NO_ACCEPTED_PARSER_ELIGIBLE_MEMBER"
+          ],
+          "selection_rule_version": "0.1.0"
+        }
+      ]
+    },
+    "metadata_extractor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "version": {
+          "$ref": "#/$defs/version_code"
+        }
+      },
+      "examples": [
+        {
+          "name": "safe-docx-metadata",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    "candidate_evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ingest_record_id",
+        "file_name",
+        "content_hash",
+        "modified_at",
+        "candidate_score",
+        "feature_values"
+      ],
+      "properties": {
+        "ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "file_name": {
+          "$ref": "#/$defs/safe_text"
+        },
+        "content_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "modified_at": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "candidate_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "page_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "word_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "metadata_extractor": {
+          "$ref": "#/$defs/metadata_extractor"
+        },
+        "feature_values": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/reason_code"
+          },
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string",
+                "maxLength": 256
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "page_count"
+                ]
+              },
+              {
+                "required": [
+                  "word_count"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "metadata_extractor"
+            ]
+          }
+        }
+      ],
+      "examples": [
+        {
+          "ingest_record_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "file_name": "paper-final.docx",
+          "content_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "modified_at": "2026-07-15T08:00:00Z",
+          "candidate_score": 0.91,
+          "page_count": 42,
+          "word_count": 18000,
+          "metadata_extractor": {
+            "name": "safe-docx-metadata",
+            "version": "0.1.0"
+          },
+          "feature_values": {
+            "FILE_NAME_SIGNAL": 0.9,
+            "BACKUP_PENALTY": false
+          }
+        }
+      ]
+    },
+    "comparison_metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "left_ingest_record_id",
+        "right_ingest_record_id",
+        "metric_type",
+        "value",
+        "algorithm",
+        "algorithm_version"
+      ],
+      "properties": {
+        "left_ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "right_ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "metric_type": {
+          "enum": [
+            "EXACT_CONTENT",
+            "FILE_NAME_SIMILARITY",
+            "DOCUMENT_SIMILARITY",
+            "VERSION_RELATION"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "algorithm": {
+          "$ref": "#/$defs/identifier"
+        },
+        "algorithm_version": {
+          "$ref": "#/$defs/version_code"
+        }
+      },
+      "examples": [
+        {
+          "left_ingest_record_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "right_ingest_record_id": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "metric_type": "DOCUMENT_SIMILARITY",
+          "value": 0.86,
+          "algorithm": "document-similarity",
+          "algorithm_version": "0.1.0"
+        }
+      ]
+    },
+    "primary_artifact_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "candidate_id",
+        "scan_id",
+        "candidate_scope_id",
+        "selection_type",
+        "recommendation_status",
+        "candidate_ingest_record_ids",
+        "candidate_evaluations",
+        "recommendation_reasons",
+        "comparison_metrics",
+        "scoring_rule_version",
+        "requires_human_confirmation",
+        "issue_refs",
+        "created_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "PRIMARY_ARTIFACT_CANDIDATE"
+        },
+        "candidate_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "candidate_scope_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "selection_type": {
+          "enum": [
+            "PRIMARY_DOCUMENT",
+            "PRIMARY_ENGINEERING_ROOT"
+          ]
+        },
+        "recommendation_status": {
+          "enum": [
+            "RECOMMENDED",
+            "NO_RECOMMENDATION",
+            "TIED_REVIEW"
+          ]
+        },
+        "candidate_ingest_record_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "candidate_evaluations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/candidate_evaluation"
+          }
+        },
+        "recommended_ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "recommendation_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "tied_ingest_record_ids": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "tied_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "recommendation_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/reason_code"
+          },
+          "uniqueItems": true
+        },
+        "comparison_metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/comparison_metric"
+          }
+        },
+        "scoring_rule_version": {
+          "$ref": "#/$defs/version_code"
+        },
+        "requires_human_confirmation": {
+          "const": true
+        },
+        "issue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "recommendation_status": {
+                "const": "RECOMMENDED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "candidate_ingest_record_ids": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "recommended_ingest_record_id",
+              "recommendation_score"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "tied_ingest_record_ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "tied_score"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "recommendation_status": {
+                "const": "NO_RECOMMENDATION"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "issue_refs": {
+                "minItems": 1
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "recommended_ingest_record_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "recommendation_score"
+                  ]
+                },
+                {
+                  "required": [
+                    "tied_ingest_record_ids"
+                  ]
+                },
+                {
+                  "required": [
+                    "tied_score"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "recommendation_status": {
+                "const": "TIED_REVIEW"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "candidate_ingest_record_ids": {
+                "minItems": 2
+              },
+              "issue_refs": {
+                "minItems": 1
+              }
+            },
+            "required": [
+              "tied_ingest_record_ids",
+              "tied_score"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "recommended_ingest_record_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "recommendation_score"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "PRIMARY_ARTIFACT_CANDIDATE",
+          "candidate_id": "primary-candidate-001",
+          "scan_id": "scan-20260715-001",
+          "candidate_scope_id": "project-a",
+          "selection_type": "PRIMARY_DOCUMENT",
+          "recommendation_status": "NO_RECOMMENDATION",
+          "candidate_ingest_record_ids": [
+            "ingest-a"
+          ],
+          "candidate_evaluations": [],
+          "recommendation_reasons": [
+            "NO_ELIGIBLE_CANDIDATE"
+          ],
+          "comparison_metrics": [],
+          "scoring_rule_version": "0.1.0",
+          "requires_human_confirmation": true,
+          "issue_refs": [
+            "issue-no-primary-candidate"
+          ],
+          "created_at": "2026-07-15T08:05:00Z"
+        }
+      ]
+    },
+    "page_paragraph_locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator_type",
+        "page_number",
+        "paragraph_index"
+      ],
+      "properties": {
+        "locator_type": {
+          "const": "PAGE_PARAGRAPH"
+        },
+        "page_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "paragraph_index": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "char_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "char_end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "dependentRequired": {
+        "char_start": [
+          "char_end"
+        ],
+        "char_end": [
+          "char_start"
+        ]
+      },
+      "examples": [
+        {
+          "locator_type": "PAGE_PARAGRAPH",
+          "page_number": 12,
+          "paragraph_index": 3,
+          "char_start": 0,
+          "char_end": 88
+        }
+      ]
+    },
+    "line_range_locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator_type",
+        "line_start",
+        "line_end"
+      ],
+      "properties": {
+        "locator_type": {
+          "const": "LINE_RANGE"
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "examples": [
+        {
+          "locator_type": "LINE_RANGE",
+          "line_start": 18,
+          "line_end": 18
+        }
+      ]
+    },
+    "record_index_locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locator_type",
+        "record_index"
+      ],
+      "properties": {
+        "locator_type": {
+          "const": "RECORD_INDEX"
+        },
+        "record_index": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "examples": [
+        {
+          "locator_type": "RECORD_INDEX",
+          "record_index": 7
+        }
+      ]
+    },
+    "source_locator": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/page_paragraph_locator"
+        },
+        {
+          "$ref": "#/$defs/line_range_locator"
+        },
+        {
+          "$ref": "#/$defs/record_index_locator"
+        }
+      ],
+      "examples": [
+        {
+          "locator_type": "LINE_RANGE",
+          "line_start": 18,
+          "line_end": 18
+        }
+      ]
+    },
+    "reference_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "reference_candidate_id",
+        "scan_id",
+        "raw_reference_text",
+        "source_ingest_record_id",
+        "source_locator",
+        "extraction_method",
+        "verification_status",
+        "relevance_status",
+        "license_status",
+        "issue_refs",
+        "created_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "REFERENCE_CANDIDATE"
+        },
+        "reference_candidate_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "raw_reference_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8192
+        },
+        "title_candidate": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "author_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "year_candidate": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 9999
+        },
+        "doi_candidate": {
+          "type": "string",
+          "pattern": "^10\\.\\d{4,9}/\\S+$"
+        },
+        "isbn_candidate": {
+          "type": "string",
+          "pattern": "^(?:97[89])?[0-9Xx-]{10,17}$"
+        },
+        "url_candidate": {
+          "type": "string",
+          "format": "uri"
+        },
+        "source_ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "source_locator": {
+          "$ref": "#/$defs/source_locator"
+        },
+        "extraction_method": {
+          "enum": [
+            "BIBLIOGRAPHY_PARSER",
+            "PLAIN_TEXT_LINE",
+            "STRUCTURED_METADATA",
+            "FILE_NAME_RULE",
+            "DIRECTORY_INDEX_RULE"
+          ]
+        },
+        "verification_status": {
+          "const": "UNVERIFIED"
+        },
+        "duplicate_of": {
+          "$ref": "#/$defs/identifier"
+        },
+        "relevance_status": {
+          "const": "UNKNOWN"
+        },
+        "license_status": {
+          "const": "UNKNOWN"
+        },
+        "issue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "title_candidate"
+                  ]
+                },
+                {
+                  "required": [
+                    "author_candidates"
+                  ]
+                },
+                {
+                  "required": [
+                    "year_candidate"
+                  ]
+                },
+                {
+                  "required": [
+                    "doi_candidate"
+                  ]
+                },
+                {
+                  "required": [
+                    "isbn_candidate"
+                  ]
+                },
+                {
+                  "required": [
+                    "url_candidate"
+                  ]
+                }
+              ]
+            }
+          },
+          "then": {
+            "properties": {
+              "issue_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "REFERENCE_CANDIDATE",
+          "reference_candidate_id": "reference-candidate-001",
+          "scan_id": "scan-20260715-001",
+          "raw_reference_text": "Example Author. Example Title. 2024.",
+          "title_candidate": "Example Title",
+          "author_candidates": [
+            "Example Author"
+          ],
+          "year_candidate": 2024,
+          "source_ingest_record_id": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "source_locator": {
+            "locator_type": "LINE_RANGE",
+            "line_start": 18,
+            "line_end": 18
+          },
+          "extraction_method": "PLAIN_TEXT_LINE",
+          "verification_status": "UNVERIFIED",
+          "relevance_status": "UNKNOWN",
+          "license_status": "UNKNOWN",
+          "issue_refs": [],
+          "created_at": "2026-07-15T08:06:00Z"
+        }
+      ]
+    },
+    "sensitive_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "sensitive_item_id",
+        "scan_id",
+        "ingest_record_id",
+        "data_classification",
+        "content_categories",
+        "access_recommendation",
+        "model_usage_restriction",
+        "sensitivity_confidence",
+        "sensitivity_reasons",
+        "requires_review",
+        "issue_refs",
+        "created_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "SENSITIVE_ITEM"
+        },
+        "sensitive_item_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "data_classification": {
+          "$ref": "#/$defs/data_classification"
+        },
+        "content_categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/content_category"
+          },
+          "uniqueItems": true
+        },
+        "access_recommendation": {
+          "$ref": "#/$defs/access_recommendation"
+        },
+        "model_usage_restriction": {
+          "$ref": "#/$defs/model_usage_restriction"
+        },
+        "sensitivity_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "sensitivity_reasons": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/sensitivity_reason"
+          }
+        },
+        "requires_review": {
+          "type": "boolean"
+        },
+        "issue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identifier"
+          },
+          "uniqueItems": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "const": "CREDENTIAL"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data_classification": {
+                "const": "RESTRICTED"
+              },
+              "access_recommendation": {
+                "const": "SECURITY_REVIEW_REQUIRED"
+              },
+              "model_usage_restriction": {
+                "const": "DENY_EXTERNAL_MODEL"
+              },
+              "requires_review": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "const": "DATABASE_DUMP"
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data_classification": {
+                "enum": [
+                  "SENSITIVE",
+                  "RESTRICTED"
+                ]
+              },
+              "requires_review": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "content_categories": {
+                "contains": {
+                  "enum": [
+                    "FACE_IMAGE",
+                    "PERSONAL_DATA",
+                    "QUESTIONNAIRE",
+                    "INTERVIEW"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "data_classification": {
+                "not": {
+                  "const": "PUBLIC"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "SENSITIVE_ITEM",
+          "sensitive_item_id": "sensitive-item-001",
+          "scan_id": "scan-20260715-001",
+          "ingest_record_id": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "data_classification": "RESTRICTED",
+          "content_categories": [
+            "CREDENTIAL"
+          ],
+          "access_recommendation": "SECURITY_REVIEW_REQUIRED",
+          "model_usage_restriction": "DENY_EXTERNAL_MODEL",
+          "sensitivity_confidence": 0.98,
+          "sensitivity_reasons": [
+            {
+              "rule_id": "credential-key-name-v1",
+              "category": "CREDENTIAL",
+              "location_kind": "STRUCTURE",
+              "redacted_summary": "A credential-like key was detected; its value was not recorded.",
+              "confidence": 0.98
+            }
+          ],
+          "requires_review": true,
+          "issue_refs": [
+            "issue-credential-risk"
+          ],
+          "created_at": "2026-07-15T08:07:00Z"
+        }
+      ]
+    },
+    "issue_stage": {
+      "enum": [
+        "CONFIG",
+        "MOUNT",
+        "DISCOVERY",
+        "PATH",
+        "PRECHECK",
+        "HASH",
+        "CLASSIFICATION",
+        "CANDIDATE",
+        "OUTPUT",
+        "VERIFY",
+        "MIGRATION"
+      ]
+    },
+    "error_code": {
+      "enum": [
+        "CONFIG_INVALID",
+        "RULE_SET_INCOMPATIBLE",
+        "SOURCE_MOUNT_NOT_FOUND",
+        "SOURCE_MOUNT_UNREADABLE",
+        "SOURCE_MOUNT_NOT_READ_ONLY",
+        "SOURCE_BINDING_MISMATCH",
+        "PATH_OUTSIDE_MOUNT",
+        "PATH_NORMALIZATION_FAILED",
+        "PATH_NORMALIZATION_COLLISION",
+        "PATH_LINK_SKIPPED",
+        "FILE_UNREADABLE",
+        "FILE_CHANGED_DURING_SCAN",
+        "HASH_FAILED",
+        "TYPE_SNIFF_FAILED",
+        "UNSUPPORTED_FILE_TYPE",
+        "EXTENSION_SIGNATURE_MISMATCH",
+        "CLASSIFICATION_AMBIGUOUS",
+        "SUSPICIOUS_BINARY",
+        "CREDENTIAL_RISK_DETECTED",
+        "ARCHIVE_UNREADABLE",
+        "REFERENCE_PARSE_FAILED",
+        "PROJECT_SCOPE_UNRESOLVED",
+        "PRIMARY_CANDIDATE_TIE",
+        "CHECKPOINT_CORRUPT",
+        "CHECKPOINT_INCOMPATIBLE",
+        "SOURCE_MUTATED_DURING_SCAN",
+        "OUTPUT_LOCKED",
+        "OUTPUT_DISK_FULL",
+        "OUTPUT_WRITE_FAILED",
+        "OUTPUT_HASH_MISMATCH",
+        "OUTPUT_COUNT_MISMATCH",
+        "SCHEMA_VALIDATION_FAILED",
+        "RECORD_REFERENCE_MISSING",
+        "LEGACY_PATH_UNMAPPED",
+        "LEGACY_HASH_MISMATCH"
+      ]
+    },
+    "ingest_issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "issue_id",
+        "scan_id",
+        "stage",
+        "error_code",
+        "severity",
+        "recoverable",
+        "message",
+        "recommended_action",
+        "created_at"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "INGEST_ISSUE"
+        },
+        "issue_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "scan_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "ingest_record_id": {
+          "$ref": "#/$defs/identifier"
+        },
+        "relative_path": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "stage": {
+          "$ref": "#/$defs/issue_stage"
+        },
+        "error_code": {
+          "$ref": "#/$defs/error_code"
+        },
+        "severity": {
+          "enum": [
+            "INFO",
+            "WARNING",
+            "ERROR",
+            "BLOCKING"
+          ]
+        },
+        "recoverable": {
+          "type": "boolean"
+        },
+        "message": {
+          "$ref": "#/$defs/safe_text"
+        },
+        "recommended_action": {
+          "$ref": "#/$defs/safe_text"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "CONFIG_INVALID",
+                  "RULE_SET_INCOMPATIBLE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "CONFIG"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "SOURCE_MOUNT_NOT_FOUND",
+                  "SOURCE_MOUNT_UNREADABLE",
+                  "SOURCE_MOUNT_NOT_READ_ONLY",
+                  "SOURCE_BINDING_MISMATCH"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "MOUNT"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "PATH_OUTSIDE_MOUNT",
+                  "PATH_NORMALIZATION_FAILED",
+                  "PATH_NORMALIZATION_COLLISION",
+                  "PATH_LINK_SKIPPED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "PATH"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "FILE_UNREADABLE",
+                  "TYPE_SNIFF_FAILED",
+                  "UNSUPPORTED_FILE_TYPE",
+                  "EXTENSION_SIGNATURE_MISMATCH",
+                  "SUSPICIOUS_BINARY",
+                  "CREDENTIAL_RISK_DETECTED",
+                  "ARCHIVE_UNREADABLE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "PRECHECK"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "FILE_CHANGED_DURING_SCAN",
+                  "HASH_FAILED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "HASH"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "CLASSIFICATION_AMBIGUOUS",
+                  "REFERENCE_PARSE_FAILED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "CLASSIFICATION"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "PROJECT_SCOPE_UNRESOLVED",
+                  "PRIMARY_CANDIDATE_TIE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "CANDIDATE"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "OUTPUT_LOCKED",
+                  "OUTPUT_DISK_FULL",
+                  "OUTPUT_WRITE_FAILED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "OUTPUT"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "CHECKPOINT_CORRUPT",
+                  "CHECKPOINT_INCOMPATIBLE",
+                  "SOURCE_MUTATED_DURING_SCAN",
+                  "OUTPUT_HASH_MISMATCH",
+                  "OUTPUT_COUNT_MISMATCH",
+                  "SCHEMA_VALIDATION_FAILED",
+                  "RECORD_REFERENCE_MISSING"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "VERIFY"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "LEGACY_PATH_UNMAPPED",
+                  "LEGACY_HASH_MISMATCH"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stage": {
+                "const": "MIGRATION"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "CONFIG_INVALID",
+                  "RULE_SET_INCOMPATIBLE",
+                  "SOURCE_MOUNT_NOT_FOUND",
+                  "SOURCE_MOUNT_UNREADABLE",
+                  "SOURCE_MOUNT_NOT_READ_ONLY",
+                  "SOURCE_BINDING_MISMATCH",
+                  "PATH_OUTSIDE_MOUNT",
+                  "CHECKPOINT_CORRUPT",
+                  "CHECKPOINT_INCOMPATIBLE",
+                  "SOURCE_MUTATED_DURING_SCAN",
+                  "OUTPUT_LOCKED",
+                  "OUTPUT_DISK_FULL",
+                  "OUTPUT_WRITE_FAILED",
+                  "OUTPUT_HASH_MISMATCH",
+                  "OUTPUT_COUNT_MISMATCH",
+                  "SCHEMA_VALIDATION_FAILED",
+                  "RECORD_REFERENCE_MISSING"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "severity": {
+                "const": "BLOCKING"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "error_code": {
+                "enum": [
+                  "FILE_UNREADABLE",
+                  "FILE_CHANGED_DURING_SCAN",
+                  "HASH_FAILED",
+                  "TYPE_SNIFF_FAILED",
+                  "UNSUPPORTED_FILE_TYPE",
+                  "EXTENSION_SIGNATURE_MISMATCH",
+                  "CLASSIFICATION_AMBIGUOUS",
+                  "SUSPICIOUS_BINARY",
+                  "CREDENTIAL_RISK_DETECTED",
+                  "ARCHIVE_UNREADABLE",
+                  "REFERENCE_PARSE_FAILED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "ingest_record_id"
+            ]
+          }
+        }
+      ],
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "INGEST_ISSUE",
+          "issue_id": "issue-source-mount-not-found",
+          "scan_id": "scan-20260715-001",
+          "stage": "MOUNT",
+          "error_code": "SOURCE_MOUNT_NOT_FOUND",
+          "severity": "BLOCKING",
+          "recoverable": false,
+          "message": "The configured source mount could not be resolved.",
+          "recommended_action": "Restore the mount or update its binding before starting a new scan.",
+          "created_at": "2026-07-15T08:08:00Z"
+        },
+        {
+          "schema_version": "0.1",
+          "record_type": "INGEST_ISSUE",
+          "issue_id": "issue-hash-failed",
+          "scan_id": "scan-20260715-001",
+          "ingest_record_id": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "relative_path": "project-a/unreadable.bin",
+          "stage": "HASH",
+          "error_code": "HASH_FAILED",
+          "severity": "ERROR",
+          "recoverable": true,
+          "message": "The file could not be hashed during this scan.",
+          "recommended_action": "Check read access and rescan the file.",
+          "created_at": "2026-07-15T08:09:00Z"
+        }
+      ]
+    }
+  }
+}

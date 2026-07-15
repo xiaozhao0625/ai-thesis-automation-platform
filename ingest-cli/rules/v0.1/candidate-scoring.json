@@ -1,0 +1,62 @@
+{
+  "candidate_scoring_version": "candidate-scoring-0.1",
+  "document": {
+    "role_weights": {
+      "PRIMARY_DOCUMENT": 0.3,
+      "EXISTING_DRAFT": 0.2
+    },
+    "current_name_weight": 0.25,
+    "format_weights": {
+      ".docx": 0.15,
+      ".pdf": 0.1
+    },
+    "minimum_word_count": 500,
+    "word_count_weight": 0.1,
+    "newest_mtime_weight": 0.05,
+    "scope_weight": 0.1,
+    "ineligible_roles": [
+      "BACKUP",
+      "BUILD_OUTPUT",
+      "CACHE",
+      "EXECUTABLE",
+      "NOISE",
+      "REFERENCE_CANDIDATE",
+      "THIRD_PARTY_DEPENDENCY",
+      "VERIFIED_REFERENCE"
+    ],
+    "current_name_tokens": [
+      "final",
+      "latest",
+      "current",
+      "最终",
+      "终稿",
+      "最新版",
+      "定稿"
+    ]
+  },
+  "engineering_root": {
+    "anchor_priority": [
+      "pyproject.toml",
+      "requirements.txt",
+      "manage.py",
+      "package.json",
+      "README.md"
+    ],
+    "weights": {
+      "anchor": 0.2,
+      "three_source_files": 0.2,
+      "dependency_or_lock": 0.15,
+      "tests": 0.15,
+      "migrations": 0.1,
+      "readme_or_start": 0.1,
+      "framework_config": 0.1
+    }
+  },
+  "recommendation": {
+    "minimum_top_score": 0.7,
+    "unique_gap_exclusive": 0.05,
+    "unique_status": "RECOMMENDED",
+    "tied_status": "TIED_REVIEW",
+    "none_status": "NO_RECOMMENDATION"
+  }
+}

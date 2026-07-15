@@ -1,0 +1,161 @@
+{
+  "rule_set_version": "ingest-rules-0.1",
+  "decision_order": [
+    "PATH_COLLISION",
+    "DISCOVERY_EXCLUDED",
+    "EXECUTABLE",
+    "DATABASE_DUMP",
+    "CREDENTIAL_RISK",
+    "SUSPICIOUS_ARCHIVE",
+    "UNKNOWN_BINARY",
+    "THIRD_PARTY_DEPENDENCY",
+    "BUILD_OUTPUT",
+    "BACKUP_OR_AUTOSAVE",
+    "LOW_CONFIDENCE",
+    "ACCEPTED"
+  ],
+  "exclude_directories": [
+    ".git",
+    ".idea",
+    ".venv",
+    ".vscode",
+    "__pycache__",
+    "coverage",
+    "node_modules",
+    "target",
+    "venv"
+  ],
+  "build_directories": [
+    "build",
+    "dist",
+    "out"
+  ],
+  "third_party_path_segments": [
+    "bower_components",
+    "dist-packages",
+    "node_modules",
+    "site-packages",
+    "vendor"
+  ],
+  "backup_name_patterns": [
+    "*.autosave",
+    "*.bak",
+    "*.backup",
+    "*.old",
+    "*.orig",
+    "*~",
+    "~$*"
+  ],
+  "rotated_log_patterns": [
+    "*.log.*"
+  ],
+  "executable_extensions": [
+    ".bat",
+    ".cmd",
+    ".com",
+    ".dll",
+    ".exe",
+    ".jar",
+    ".msi",
+    ".ps1",
+    ".scr"
+  ],
+  "database_dump_extensions": [
+    ".dump",
+    ".dmp",
+    ".sql",
+    ".sqlite",
+    ".sqlite3"
+  ],
+  "credential_file_names": [
+    ".env",
+    ".npmrc",
+    ".pypirc",
+    "credentials.json",
+    "id_dsa",
+    "id_ed25519",
+    "id_rsa",
+    "secrets.json"
+  ],
+  "credential_name_tokens": [
+    "credential",
+    "passwd",
+    "password",
+    "secret",
+    "token"
+  ],
+  "archive_extensions": [
+    ".7z",
+    ".gz",
+    ".rar",
+    ".tar",
+    ".tgz",
+    ".zip"
+  ],
+  "known_text_extensions": [
+    ".c",
+    ".cc",
+    ".conf",
+    ".cpp",
+    ".css",
+    ".csv",
+    ".go",
+    ".h",
+    ".hpp",
+    ".html",
+    ".ini",
+    ".java",
+    ".js",
+    ".json",
+    ".jsx",
+    ".kt",
+    ".md",
+    ".php",
+    ".properties",
+    ".py",
+    ".rb",
+    ".rs",
+    ".sh",
+    ".sql",
+    ".svg",
+    ".toml",
+    ".ts",
+    ".tsx",
+    ".txt",
+    ".vue",
+    ".xml",
+    ".yaml",
+    ".yml"
+  ],
+  "known_document_extensions": [
+    ".doc",
+    ".docx",
+    ".odt",
+    ".pdf",
+    ".ppt",
+    ".pptx",
+    ".rtf",
+    ".xls",
+    ".xlsx"
+  ],
+  "known_media_extensions": [
+    ".aac",
+    ".avi",
+    ".bmp",
+    ".flac",
+    ".gif",
+    ".jpeg",
+    ".jpg",
+    ".m4a",
+    ".mkv",
+    ".mov",
+    ".mp3",
+    ".mp4",
+    ".png",
+    ".tif",
+    ".tiff",
+    ".wav",
+    ".webm",
+    ".webp"
+  ]
+}
