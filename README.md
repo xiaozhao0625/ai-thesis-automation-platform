@@ -4,7 +4,7 @@ This is the only Git repository for the AI thesis automation platform code.
 
 ## Current source
 
-- `uiux-prototype/` - current UI/UX v1.2.3 clickable prototype, contract test, browser interaction test, and local SPA fallback preview server.
+- `uiux-prototype/` - current UI/UX v1.2.4 clickable prototype with ProjectFact governance, contract test, browser interaction test, and local SPA fallback preview server.
 - `nstl_index.html`, `nstl_index_js.js`, `nstl_paper_nav.js` - legacy NSTL-derived static prototype assets kept as business and visual reference, not the current engineering baseline.
 
 ## Repository scope

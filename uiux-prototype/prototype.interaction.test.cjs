@@ -114,7 +114,8 @@ test('SVG DAG keeps every node within its stage and every edge on ports', async 
   assert.equal(report.stageWidths.length, 8);
   assert.deepEqual(report.edgeIds, [
     'task_start_approval--project_source_parse',
-    'project_source_parse--outline_plan',
+    'project_source_parse--project_fact_confirm',
+    'project_fact_confirm--outline_plan',
     'outline_plan--section_generate_pre_group',
     'section_generate_pre_group--engineering_verify',
     'engineering_verify--section_generate_ch6',
@@ -200,4 +201,72 @@ test('global navigation updates URL, History state, and active page for every de
   assert.equal(new URL(page.url()).pathname, '/system/audit');
   await page.reload();
   assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'audit');
+});
+
+test('startup gate confirms extracted ProjectFacts without changing exact part numbers', async () => {
+  await page.locator('.nav-item[data-target="tasks"]').click();
+  await activeClick('button[data-target="new-task"]');
+  assert.equal(await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state'), 'PENDING_CONFIRMATION');
+  assert.deepEqual(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.slice(0, 4).map(row => row.dataset.canonicalValue)), [
+    'STM32F103C8T6', 'DHT11', 'ESP8266-01S', '0.96 英寸 OLED / SSD1306'
+  ]);
+  await activeClick('button[data-action="confirm-intake-facts"]');
+  assert.equal(await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state'), 'CONFIRMED');
+  assert.equal(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.every(row => row.dataset.status === 'CONFIRMED' && row.dataset.locked === 'true')), true);
+});
+
+test('ProjectFactSnapshot preserves exact models across materials, outline, content, BOM, and quality', async () => {
+  await taskOverview();
+  await activeRoute('materials');
+  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '5');
+  assert.deepEqual(await page.locator('#materialProjectFacts [data-fact-id]').evaluateAll(rows => rows.slice(0, 4).map(row => row.dataset.canonicalValue)), [
+    'STM32F103C8T6', 'DHT11', 'ESP8266-01S', '0.96 英寸 OLED / SSD1306'
+  ]);
+  await activeRoute('outline');
+  assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-fact-gate-state'), 'READY');
+  assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-project-fact-snapshot-version'), '5');
+  await activeRoute('content');
+  const contentFacts = await page.locator('#contentProjectFacts').textContent();
+  assert.match(contentFacts, /STM32F103C8T6[\s\S]*DHT11[\s\S]*ESP8266-01S[\s\S]*SSD1306/);
+  assert.doesNotMatch(contentFacts, /STM32F407|DHT22|ESP32/);
+  assert.match(await page.locator('#contentProjectFacts [data-fact-surface="bom"]').textContent(), /STM32F103C8T6[\s\S]*SSD1306/);
+  await activeRoute('quality');
+  assert.equal(await page.locator('#projectFactQuality').getAttribute('data-project-fact-snapshot-version'), '5');
+  assert.equal(await page.locator('#projectFactQuality [data-rule-id="FACT_CONSTRAINT_VIOLATION"]').count(), 1);
+});
+
+test('retrieval policy separates exact, series, and related models', async () => {
+  await taskOverview();
+  await activeRoute('evidence');
+  assert.equal(await page.locator('#projectFactRetrieval [data-match-type="EXACT_MATCH"]').count(), 1);
+  assert.equal(await page.locator('#projectFactRetrieval [data-match-type="SERIES_MATCH"]').count(), 1);
+  assert.equal(await page.locator('#projectFactRetrieval [data-match-type="RELATED_MODEL"]').count(), 1);
+  assert.match(await page.locator('#projectFactRetrieval').textContent(), /"STM32F103C8T6" 官方数据手册[\s\S]*可支撑型号专属参数/);
+  const related = page.locator('#projectFactRetrieval [data-match-type="RELATED_MODEL"]');
+  assert.equal(await related.getAttribute('data-model-context'), 'comparison');
+  assert.match(await related.textContent(), /STM32F407[\s\S]*不得支撑当前实现主张/);
+});
+
+test('conflicting user materials block the outline until human confirmation creates a new snapshot', async () => {
+  await taskOverview();
+  await activeRoute('materials');
+  await activeClick('button[data-action="simulate-fact-conflict"]');
+  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-conflict-status'), 'OPEN');
+  assert.match(await page.locator('#projectFactConflict').textContent(), /STM32F103C8T6[\s\S]*STM32F407VET6[\s\S]*未自动选择/);
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-id="fact-mcu-001"]').getAttribute('data-canonical-value'), 'STM32F103C8T6');
+  await activeRoute('outline');
+  assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-fact-gate-state'), 'BLOCKED');
+  await activeRoute('workflow');
+  assert.equal(await page.locator('[data-node-id="project_fact_confirm"]').getAttribute('data-runtime-status'), 'blocked');
+  assert.equal(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-runtime-status'), 'blocked');
+  await activeRoute('materials');
+  await activeClick('button[data-action="confirm-project-fact"]');
+  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-conflict-status'), 'RESOLVED');
+  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '6');
+  await activeRoute('workflow');
+  assert.equal(await page.locator('[data-node-id="project_fact_confirm"]').getAttribute('data-runtime-status'), 'succeeded');
+  assert.equal(await page.locator('[data-node-id="section_generate_pre_group"]').getAttribute('data-runtime-status'), 'invalidated');
+  assert.equal(await page.locator('[data-node-id="quality_gate_final"]').getAttribute('data-runtime-status'), 'invalidated');
+  await activeRoute('quality');
+  assert.match(await page.locator('#projectFactQuality').textContent(), /Snapshot v6[\s\S]*INVALIDATED/);
 });

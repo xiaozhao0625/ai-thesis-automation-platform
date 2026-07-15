@@ -42,11 +42,12 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.3 工作流语义与路由一致性校正原型/, 'v1.2.3 title missing');
+assert.match(html, /v1\.2\.4 项目事实锁与来源权威校正原型/, 'v1.2.4 title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
-  ['project_source_parse', 'outline_plan'],
+  ['project_source_parse', 'project_fact_confirm'],
+  ['project_fact_confirm', 'outline_plan'],
   ['outline_plan', 'section_generate_pre_group'],
   ['section_generate_pre_group', 'engineering_verify'],
   ['engineering_verify', 'section_generate_ch6'],
@@ -70,3 +71,11 @@ assert.match(html, /evidence:\['claim','source'\]/, 'evidence query allowlist mi
 assert.match(html, /content:\['chapter','claim','version'\]/, 'content query allowlist missing');
 assert.match(html, /pageName==='workflow'\?new URL\(location\.href\)\.searchParams\.get\('node'\):null/, 'inspector must be scoped to workflow route');
 assert.doesNotMatch(html, /searchParams\.set\('taskId'/, 'taskId must not leak into page query state');
+
+for (const marker of ['ProjectFactSnapshot', 'PROJECT_FACT_CONFLICT', 'FACT_CONSTRAINT_VIOLATION', 'EXACT_MATCH', 'SERIES_MATCH', 'RELATED_MODEL', 'STM32F103C8T6', 'DHT11', 'ESP8266-01S', 'SSD1306']) {
+  assert.ok(html.includes(marker), `missing ProjectFact marker: ${marker}`);
+}
+for (const action of ['simulate-fact-conflict', 'confirm-project-fact', 'confirm-intake-facts', 'view-fact-source']) {
+  assert.match(html, new RegExp(`data-action=["']${action}["']|dataset\\.action=["']${action}["']`), `missing ProjectFact interaction: ${action}`);
+}
+assert.match(html, /公开资料决定内容丰富度；用户锁定事实决定项目真实性/, 'source authority principle missing');
