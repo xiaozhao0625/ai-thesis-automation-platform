@@ -5,12 +5,12 @@ const path = require('node:path');
 const {spawn} = require('node:child_process');
 
 const prototype = path.join(__dirname, 'prototype.html');
-const projectFactPayload = path.join(__dirname, 'project-fact-r5.json');
+const projectFactPayload = path.join(__dirname, 'project-fact-r6.json');
 const port = Number(process.env.PORT || 4173);
 let intakeConfirmed = false;
 let conflictConfirmation = null;
-const executableRoot = fsSync.existsSync(path.join(__dirname, '..', 'project-fact-p0-r5'))
-  ? path.join(__dirname, '..', 'project-fact-p0-r5')
+const executableRoot = fsSync.existsSync(path.join(__dirname, '..', 'project-fact-p0-r6'))
+  ? path.join(__dirname, '..', 'project-fact-p0-r6')
   : path.join(__dirname, '..', 'executable');
 
 function sendJson(response, status, body) {
@@ -34,7 +34,7 @@ function readJsonBody(request) {
 function resolveConflictWithExecutable(requestBody) {
   return new Promise((resolve, reject) => {
     const child = spawn(process.env.PYTHON || 'python', [
-      '-B', '-m', 'project_fact_r5.cli', 'resolve-conflict', '--fixtures', 'fixtures'
+      '-B', '-m', 'project_fact_r6.cli', 'resolve-conflict', '--fixtures', 'fixtures'
     ], {cwd: executableRoot, windowsHide: true});
     let stdout = '', stderr = '';
     child.stdout.setEncoding('utf8');

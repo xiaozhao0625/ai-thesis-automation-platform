@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fact-bound-output.schema.json",
+  "title": "ProjectFactBoundOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["surface_id", "surface_type", "node_definition_id", "resolved_context_role", "content", "fact_bindings"],
+  "properties": {
+    "surface_id": {"type": "string", "minLength": 1},
+    "surface_type": {"enum": ["OUTLINE", "SECTION_BODY", "BOM", "PARAMETER_TABLE", "FIGURE", "TEST_CHAPTER", "COMPARISON", "BACKGROUND"]},
+    "node_definition_id": {"type": "string", "minLength": 1},
+    "resolved_context_role": {"enum": ["PROJECT_IMPLEMENTATION", "PROJECT_FACT_OUTPUT", "BACKGROUND_ONLY", "COMPARISON_ONLY", "GENERAL_PRINCIPLE"]},
+    "content": {"type": "string"},
+    "fact_bindings": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact_id", "fact_version_id", "canonical_value"],
+        "properties": {
+          "fact_id": {"type": "string", "minLength": 1},
+          "fact_version_id": {"type": "string", "minLength": 1},
+          "canonical_value": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ const htmlName = files.find(name => name.endsWith('.html'));
 assert.ok(htmlName, 'missing prototype HTML file');
 const file = new URL(`./${htmlName}`, import.meta.url);
 const html = await readFile(file, 'utf8');
-const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r5.json', import.meta.url), 'utf8'));
+const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r6.json', import.meta.url), 'utf8'));
 const server = await readFile(new URL('./prototype.server.cjs', import.meta.url), 'utf8');
 
 const pages = [
@@ -44,7 +44,7 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.4-P0-r5 ProjectFact 闭环修复候选/, 'r5 candidate title missing');
+assert.match(html, /v1\.2\.4-P0-r6 ProjectFact 闭环修复候选/, 'r6 candidate title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
@@ -88,6 +88,11 @@ for (const endpoint of ['/api/project-facts', '/api/project-facts/confirm-intake
 }
 assert.match(server, /resolveConflictWithExecutable/, 'conflict confirmation must invoke the executable candidate');
 assert.match(server, /readJsonBody/, 'conflict confirmation must read the request body');
+assert.match(server, /project_fact_r6\.cli/, 'server must invoke the r6 executable candidate');
+const generatedOutputs = projectFactPayload.intake_confirmation.generated_outputs;
+assert.ok(generatedOutputs.every(item => typeof item.content === 'string'), 'all fact-bound outputs must use content');
+assert.ok(generatedOutputs.every(item => item.fact_bindings.rtc_model?.canonical_value === 'DS3231'), 'dynamic rtc_model binding missing');
+assert.ok(generatedOutputs.every(item => !('text' in item)), 'obsolete text field must not return');
 assert.match(html, /conflictCandidate/, 'conflict confirmation must allow a candidate selection');
 assert.match(html, /conflictReason/, 'conflict confirmation must collect a reason');
 assert.match(html, /conflictApprover/, 'conflict confirmation must collect an approver');
@@ -100,7 +105,10 @@ assert.equal(projectFactPayload.intake_confirmation.snapshot.status, 'ACTIVE');
 assert.equal(projectFactPayload.intake_confirmation.human_approval.approval_type, 'PROJECT_FACT_INTAKE_CONFIRMATION');
 assert.equal(projectFactPayload.intake_confirmation.audit_event.event_type, 'PROJECT_FACT_INTAKE_CONFIRMED');
 assert.deepEqual(projectFactPayload.intake_confirmation.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
-assert.ok(projectFactPayload.intake_confirmation.generated_outputs.every(output => output.context_role === 'PROJECT_FACT_OUTPUT' && output.fact_bindings.mcu_model === 'STM32F103C8T6'), 'generated outputs must carry ProjectFact bindings');
+assert.ok(projectFactPayload.intake_confirmation.generated_outputs.every(output =>
+  ['PROJECT_FACT_OUTPUT', 'PROJECT_IMPLEMENTATION'].includes(output.resolved_context_role)
+  && output.fact_bindings.mcu_model.canonical_value === 'STM32F103C8T6'
+), 'generated outputs must carry server-resolved ProjectFact bindings');
 assert.equal(projectFactPayload.conflict.project_fact_conflict.status, 'OPEN');
 assert.equal(projectFactPayload.conflict.snapshot.status, 'SUSPENDED');
 const conflictedMcu = projectFactPayload.conflict.entities.facts.find(item => item.fact_key === 'mcu_model');

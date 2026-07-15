@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fact-dependency.schema.json",
+  "title": "FactDependency",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dependency_id", "fact_version_id", "target_type", "target_id", "execution_fingerprint"],
+  "properties": {
+    "dependency_id": {"type": "string", "minLength": 1},
+    "fact_version_id": {"type": "string", "minLength": 1},
+    "target_type": {"enum": ["NODE_RUN", "CLAIM", "ARTIFACT_VERSION", "QUALITY_REPORT", "DELIVERY_PACKAGE"]},
+    "target_id": {"type": "string", "minLength": 1},
+    "execution_fingerprint": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

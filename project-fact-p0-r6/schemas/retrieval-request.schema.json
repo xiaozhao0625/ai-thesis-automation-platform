@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "retrieval-request.schema.json",
+  "title": "ProjectFactRetrievalRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["result_id", "fact_id", "matched_model", "evidence_role", "alias_id"],
+  "properties": {
+    "result_id": {"type": "string", "minLength": 1},
+    "fact_id": {"type": "string", "minLength": 1},
+    "matched_model": {"type": "string", "minLength": 1},
+    "evidence_role": {"enum": ["PROJECT_FACT_EVIDENCE", "MODEL_PARAMETER_EVIDENCE", "GENERAL_PRINCIPLE", "BACKGROUND_ONLY", "COMPARISON_ONLY", "REJECTED"]},
+    "alias_id": {"type": ["string", "null"]}
+  }
+}
