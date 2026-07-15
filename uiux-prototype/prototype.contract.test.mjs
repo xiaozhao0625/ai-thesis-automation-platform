@@ -6,6 +6,8 @@ const htmlName = files.find(name => name.endsWith('.html'));
 assert.ok(htmlName, 'missing prototype HTML file');
 const file = new URL(`./${htmlName}`, import.meta.url);
 const html = await readFile(file, 'utf8');
+const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r2.json', import.meta.url), 'utf8'));
+const server = await readFile(new URL('./prototype.server.cjs', import.meta.url), 'utf8');
 
 const pages = [
   'dashboard', 'tasks', 'new-task', 'overview', 'workflow', 'inspector', 'evidence',
@@ -42,7 +44,7 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.4 项目事实锁与来源权威校正原型/, 'v1.2.4 title missing');
+assert.match(html, /v1\.2\.4-P0-r2 ProjectFact 闭环修复候选/, 'r2 candidate title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
@@ -72,10 +74,21 @@ assert.match(html, /content:\['chapter','claim','version'\]/, 'content query all
 assert.match(html, /pageName==='workflow'\?new URL\(location\.href\)\.searchParams\.get\('node'\):null/, 'inspector must be scoped to workflow route');
 assert.doesNotMatch(html, /searchParams\.set\('taskId'/, 'taskId must not leak into page query state');
 
-for (const marker of ['ProjectFactSnapshot', 'PROJECT_FACT_CONFLICT', 'FACT_CONSTRAINT_VIOLATION', 'EXACT_MATCH', 'SERIES_MATCH', 'RELATED_MODEL', 'STM32F103C8T6', 'DHT11', 'ESP8266-01S', 'SSD1306']) {
+for (const marker of ['PROJECT_FACT_CONFLICT', 'FACT_CONSTRAINT_VIOLATION', 'INVALIDATED_TO_READY']) {
   assert.ok(html.includes(marker), `missing ProjectFact marker: ${marker}`);
 }
-for (const action of ['simulate-fact-conflict', 'confirm-project-fact', 'confirm-intake-facts', 'view-fact-source']) {
+for (const action of ['simulate-fact-conflict', 'review-project-fact-impact', 'confirm-intake-facts', 'view-fact-source']) {
   assert.match(html, new RegExp(`data-action=["']${action}["']|dataset\\.action=["']${action}["']`), `missing ProjectFact interaction: ${action}`);
 }
 assert.match(html, /公开资料决定内容丰富度；用户锁定事实决定项目真实性/, 'source authority principle missing');
+assert.doesNotMatch(html, /const facts=\[/, 'ProjectFact data must not be hardcoded in HTML');
+assert.doesNotMatch(html, /snapshotVersion\s*\+=\s*1/, 'snapshot versions must come from the executable candidate');
+for (const endpoint of ['/api/project-facts', '/api/project-facts/conflict', '/api/project-facts/impact', '/api/project-facts/confirm']) {
+  assert.ok(server.includes(endpoint), `missing ProjectFact API endpoint: ${endpoint}`);
+}
+const initialMcu = projectFactPayload.initial.entities.fact_versions.find(item => item.fact_key === 'mcu_model');
+assert.equal(initialMcu.canonical_value, 'STM32F103C8T6');
+assert.deepEqual(projectFactPayload.initial.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
+assert.equal(projectFactPayload.conflict.project_fact_conflict.status, 'OPEN');
+assert.equal(projectFactPayload.confirmation.outline_transition.old_state, 'INVALIDATED');
+assert.equal(projectFactPayload.confirmation.outline_transition.new_state, 'READY');

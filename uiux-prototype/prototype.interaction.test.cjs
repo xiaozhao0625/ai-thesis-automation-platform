@@ -1,11 +1,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const http = require('node:http');
-const fs = require('node:fs/promises');
-const path = require('node:path');
 const { chromium } = require('playwright');
+const {createPrototypeServer} = require('./prototype.server.cjs');
 
-const prototype = path.join(__dirname, require('node:fs').readdirSync(__dirname).find(name => name.endsWith('.html')) || 'prototype.html');
 let server, browser, page, origin;
 
 async function activeClick(selector) {
@@ -20,16 +17,13 @@ async function taskOverview() {
 }
 
 test.before(async () => {
-  server = http.createServer(async (_req, res) => {
-    res.writeHead(200, {'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store'});
-    res.end(await fs.readFile(prototype));
-  });
+  server = createPrototypeServer();
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   origin = `http://127.0.0.1:${server.address().port}`;
   browser = await chromium.launch({headless: true, executablePath: process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'});
 });
 test.after(async () => { await browser?.close(); await new Promise(resolve => server?.close(resolve)); });
-test.beforeEach(async () => { page = await browser.newPage({viewport: {width: 1440, height: 900}}); page.setDefaultTimeout(3000); await page.goto(origin); });
+test.beforeEach(async () => { page = await browser.newPage({viewport: {width: 1440, height: 900}}); page.setDefaultTimeout(3000); await page.goto(origin); await page.locator('body[data-project-fact-ready="true"]').waitFor(); });
 test.afterEach(async () => { await page?.close(); });
 
 test('outline confirmation invalidates original DAG nodes without a duplicate result panel', async () => {
@@ -69,6 +63,7 @@ test('delivery approval selects DeliveryPackage v3 and enables official download
   await activeRoute('delivery');
   await activeClick('button[data-action="delivery-approve"]');
   assert.equal(await page.locator('#deliveryApprovalDetail').getAttribute('data-gate'), 'delivery_approval');
+  await page.waitForTimeout(2600);
   await page.locator('#approvalBar button[data-action="approval-approve"]').click();
   assert.equal(await page.locator('#deliveryPackageStatus').getAttribute('data-state'), 'approved');
   assert.equal(await page.locator('#officialDownload').isEnabled(), true);
@@ -203,27 +198,28 @@ test('global navigation updates URL, History state, and active page for every de
   assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'audit');
 });
 
-test('startup gate confirms extracted ProjectFacts without changing exact part numbers', async () => {
+test('startup gate confirms API-backed ProjectFacts with source locators', async () => {
   await page.locator('.nav-item[data-target="tasks"]').click();
   await activeClick('button[data-target="new-task"]');
   assert.equal(await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state'), 'PENDING_CONFIRMATION');
-  assert.deepEqual(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.slice(0, 4).map(row => row.dataset.canonicalValue)), [
-    'STM32F103C8T6', 'DHT11', 'ESP8266-01S', '0.96 英寸 OLED / SSD1306'
-  ]);
+  const mcu = page.locator('#projectFactIntake [data-fact-key="mcu_model"]');
+  assert.equal(await mcu.getAttribute('data-canonical-value'), 'STM32F103C8T6');
+  const sourceText = await mcu.textContent();
+  for (const source of ['任务书.docx', 'config.py', 'BOM.xlsx', 'hardware-list.png']) assert.match(sourceText, new RegExp(source.replace('.', '\\.')));
   await activeClick('button[data-action="confirm-intake-facts"]');
   assert.equal(await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state'), 'CONFIRMED');
-  assert.equal(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.every(row => row.dataset.status === 'CONFIRMED' && row.dataset.locked === 'true')), true);
+  assert.equal(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.every(row => row.dataset.status === 'LOCKED' && row.dataset.locked === 'true')), true);
 });
 
 test('ProjectFactSnapshot preserves exact models across materials, outline, content, BOM, and quality', async () => {
   await taskOverview();
   await activeRoute('materials');
   assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '5');
-  assert.deepEqual(await page.locator('#materialProjectFacts [data-fact-id]').evaluateAll(rows => rows.slice(0, 4).map(row => row.dataset.canonicalValue)), [
-    'STM32F103C8T6', 'DHT11', 'ESP8266-01S', '0.96 英寸 OLED / SSD1306'
-  ]);
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-key="mcu_model"]').getAttribute('data-canonical-value'), 'STM32F103C8T6');
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-key="sensor_model"]').getAttribute('data-canonical-value'), 'DHT11');
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-key="wireless_model"]').getAttribute('data-canonical-value'), 'ESP8266-01S');
   await activeRoute('outline');
-  assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-fact-gate-state'), 'READY');
+  assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-fact-gate-state'), 'WAITING_FOR_APPROVAL');
   assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-project-fact-snapshot-version'), '5');
   await activeRoute('content');
   const contentFacts = await page.locator('#contentProjectFacts').textContent();
@@ -238,35 +234,55 @@ test('ProjectFactSnapshot preserves exact models across materials, outline, cont
 test('retrieval policy separates exact, series, and related models', async () => {
   await taskOverview();
   await activeRoute('evidence');
-  assert.equal(await page.locator('#projectFactRetrieval [data-match-type="EXACT_MATCH"]').count(), 1);
+  assert.equal(await page.locator('#projectFactRetrieval [data-match-type="EXACT_MODEL"]').count(), 1);
   assert.equal(await page.locator('#projectFactRetrieval [data-match-type="SERIES_MATCH"]').count(), 1);
   assert.equal(await page.locator('#projectFactRetrieval [data-match-type="RELATED_MODEL"]').count(), 1);
-  assert.match(await page.locator('#projectFactRetrieval').textContent(), /"STM32F103C8T6" 官方数据手册[\s\S]*可支撑型号专属参数/);
+  assert.match(await page.locator('#projectFactRetrieval').textContent(), /"STM32F103C8T6" 官方数据手册[\s\S]*MODEL_PARAMETER_EVIDENCE/);
   const related = page.locator('#projectFactRetrieval [data-match-type="RELATED_MODEL"]');
-  assert.equal(await related.getAttribute('data-model-context'), 'comparison');
-  assert.match(await related.textContent(), /STM32F407[\s\S]*不得支撑当前实现主张/);
+  assert.equal(await related.getAttribute('data-evidence-role'), 'COMPARISON_ONLY');
+  assert.match(await related.textContent(), /STM32F407VET6[\s\S]*不得支撑型号参数/);
 });
 
-test('conflicting user materials block the outline until human confirmation creates a new snapshot', async () => {
+test('conflict applies dependency closure before confirmation and creates a new ready outline run', async () => {
   await taskOverview();
+  await activeRoute('workflow');
+  const oldFingerprint = await page.locator('[data-node-id="outline_plan"]').getAttribute('data-execution-fingerprint');
   await activeRoute('materials');
   await activeClick('button[data-action="simulate-fact-conflict"]');
-  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-conflict-status'), 'OPEN');
-  assert.match(await page.locator('#projectFactConflict').textContent(), /STM32F103C8T6[\s\S]*STM32F407VET6[\s\S]*未自动选择/);
-  assert.equal(await page.locator('#materialProjectFacts [data-fact-id="fact-mcu-001"]').getAttribute('data-canonical-value'), 'STM32F103C8T6');
+  await page.locator('#materialProjectFacts[data-conflict-status="OPEN"]').waitFor();
+  assert.match(await page.locator('#projectFactConflict').textContent(), /STM32F103C8T6[\s\S]*STM32F407VET6[\s\S]*系统未自动选择/);
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-key="mcu_model"]').getAttribute('data-status'), 'CONFLICT');
+  await activeRoute('overview');
+  assert.match(await page.locator('section.page.active .alert').textContent(), /PROJECT_FACT_CONFLICT[\s\S]*依赖图/);
+  await activeRoute('materials');
   await activeRoute('outline');
   assert.equal(await page.locator('#outlineProjectFacts').getAttribute('data-fact-gate-state'), 'BLOCKED');
+  await activeRoute('content');
+  assert.equal(await page.locator('#contentProjectFacts').getAttribute('data-fact-content-state'), 'INVALIDATED');
+  assert.doesNotMatch(await page.locator('#contentProjectFacts').textContent(), /BOM 主控[\s\S]*一致/);
+  await activeRoute('quality');
+  assert.equal(await page.locator('#projectFactQuality [data-rule-id="PROJECT_FACT_CONFLICT"]').getAttribute('data-severity'), 'BLOCKING');
+  await activeRoute('delivery');
+  assert.equal(await page.locator('#projectFactDelivery').getAttribute('data-delivery-fact-state'), 'INVALIDATED');
   await activeRoute('workflow');
-  assert.equal(await page.locator('[data-node-id="project_fact_confirm"]').getAttribute('data-runtime-status'), 'blocked');
-  assert.equal(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-runtime-status'), 'blocked');
+  assert.equal(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-runtime-status'), 'invalidated');
+  assert.equal(await page.locator('[data-node-id="section_generate_pre_group"]').getAttribute('data-runtime-status'), 'invalidated');
+  assert.equal(await page.locator('[data-node-id="engineering_verify"]').getAttribute('data-runtime-status'), 'cancel_requested');
+  assert.equal(await page.locator('[data-node-id="section_generate_ch6"]').getAttribute('data-runtime-status'), 'blocked');
+  assert.equal(await page.locator('[data-node-id="delivery_approval"]').getAttribute('data-runtime-status'), 'invalidated');
   await activeRoute('materials');
-  await activeClick('button[data-action="confirm-project-fact"]');
-  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-conflict-status'), 'RESOLVED');
+  await activeClick('button[data-action="review-project-fact-impact"]');
+  await page.locator('#modal').waitFor({state: 'visible'});
+  assert.equal(await page.locator('#modal').getAttribute('class'), 'modal-layer show');
+  assert.match(await page.locator('#modalList').textContent(), /将失效[\s\S]*将阻断[\s\S]*保持有效[\s\S]*Snapshot v6/);
+  assert.equal(await page.locator('#modalConfirm').textContent(), '确认事实并使受影响下游失效');
+  await page.locator('#modalConfirm').click();
+  await page.locator('#materialProjectFacts[data-conflict-status="RESOLVED"]').waitFor();
   assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '6');
+  assert.match(await page.locator('#materialProjectFacts').textContent(), /ProjectFactVersion v3[\s\S]*已被替代[\s\S]*旧 Snapshot v5/);
   await activeRoute('workflow');
   assert.equal(await page.locator('[data-node-id="project_fact_confirm"]').getAttribute('data-runtime-status'), 'succeeded');
-  assert.equal(await page.locator('[data-node-id="section_generate_pre_group"]').getAttribute('data-runtime-status'), 'invalidated');
-  assert.equal(await page.locator('[data-node-id="quality_gate_final"]').getAttribute('data-runtime-status'), 'invalidated');
-  await activeRoute('quality');
-  assert.match(await page.locator('#projectFactQuality').textContent(), /Snapshot v6[\s\S]*INVALIDATED/);
+  assert.equal(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-runtime-status'), 'ready');
+  assert.equal(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-prior-node-run-state'), 'INVALIDATED');
+  assert.notEqual(await page.locator('[data-node-id="outline_plan"]').getAttribute('data-execution-fingerprint'), oldFingerprint);
 });

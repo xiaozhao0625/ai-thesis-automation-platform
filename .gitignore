@@ -6,6 +6,9 @@ handoff/
 .DS_Store
 Thumbs.db
 *.tmp
+__pycache__/
+*.pyc
+project-fact-p0-r2/work/
 
 # Isolated local Git worktrees.
 .worktrees/
