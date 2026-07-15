@@ -1,6 +1,6 @@
 # 资料摄取、来源治理与工程结果统一模型 v0.1 设计规格
 
-- 状态：`DESIGN_REVIEW`
+- 状态：`APPROVED`
 - 日期：2026-07-15
 - 适用范围：V1.0 资料治理研发基线与数据契约
 - 后续参考实现：独立 Python CLI + JSON/JSONL 清单
@@ -92,10 +92,11 @@ ingest-output/
 | `unicode_normalization` | V0.1 固定为 `NFC`。 |
 | `path_normalization_version` | 路径规范版本，参与恢复兼容检查。 |
 | `root_fingerprint` | 对摄取范围计算的版本化指纹对象；不包含盘符或绝对根路径。 |
+| `last_scan_id` | 最近一次 `COMPLETED` 扫描 ID；新挂载为空。 |
 | `last_scan_at` | 最近一次完整扫描完成时间。 |
 | `access_policy` | 挂载默认访问策略，至少包含 `preview_policy`、`external_model_policy`、`export_policy` 和 `audit_required`；文件级更严格分类可以覆盖默认值。 |
 
-`source_mount_id` 创建后不可修改。`root_uri` 可以从 `D:/2026毕设` 改成 `D:/work/2026毕设` 或其他服务器路径；变更只产生新的 `binding_revision`。只要文件相对路径与内容 Hash 不变，来源发生键就不变。
+`source_mount_id` 创建后不可修改。`root_uri` 可以从一个部署位置改到另一个磁盘或服务器路径；变更只产生新的 `binding_revision`。只要文件相对路径与内容 Hash 不变，来源发生键就不变。`last_scan_id`、`last_scan_at` 和 `root_fingerprint` 必须同时为空或同时存在，且只由 `COMPLETED` 扫描更新；`PARTIAL` 不得覆盖最近完整快照。
 
 ### 4.2 ArtifactIngestRecord
 
@@ -117,13 +118,23 @@ ingest-output/
 source_mount_id + relative_path + content_hash
 ```
 
-持久化 `relative_path` 已是规范化路径。只有 `hash_status=COMPUTED` 且文件稳定时，才计算 `source_occurrence_key`；它使用上述三元组的 JCS 投影计算 SHA-256，更换物理根路径不会改变。文件重命名、移动或内容变化会生成新的 occurrence；仅内容相同但路径不同的文件通过 `duplicate_group_id` 建立关系，不被误当成同一来源位置。`SKIPPED_BY_POLICY` 或 `FAILED` 记录没有 `content_hash` 和 `source_occurrence_key`。未来正式 `Artifact` 的逻辑身份和 `ArtifactVersion` 版本身份由后端另行分配；不得把扫描记录 ID 或来源发生键直接当成业务主键。
+持久化 `relative_path` 已是规范化路径。只有 `hash_status=COMPUTED` 且文件稳定时，才计算 `source_occurrence_key`；它对下列确切对象执行 JCS 后计算 SHA-256，更换物理根路径不会改变：
+
+```json
+{
+  "content_hash": "sha256:<64-lowercase-hex>",
+  "relative_path": "<normalized-relative-path>",
+  "source_mount_id": "<stable-source-mount-id>"
+}
+```
+
+文件重命名、移动或内容变化会生成新的 occurrence；仅内容相同但路径不同的文件通过 `duplicate_group_id` 建立关系，不被误当成同一来源位置。`SKIPPED_BY_POLICY` 或 `FAILED` 记录没有 `content_hash` 和 `source_occurrence_key`。未来正式 `Artifact` 的逻辑身份和 `ArtifactVersion` 版本身份由后端另行分配；不得把扫描记录 ID 或来源发生键直接当成业务主键。
 
 核心字段分为六组：
 
 1. 来源：`source_mount_id`、`binding_revision`、`observed_relative_path`、`relative_path`、`path_key`、`ingest_record_id`，以及满足条件时的 `source_occurrence_key`。
 2. 文件事实：`hash_status`、`content_hash`、`size_bytes`、`modified_at`、`media_type`、`extension`。
-3. 摄取决定：`ingest_decision`、`decision_reason_codes`、结构化 `decision_rule_matches`、`requires_review`、`parser_eligible`；规则命中至少记录 `rule_id`、信号类型和脱敏摘要。
+3. 摄取决定：`pre_dedup_decision`、`pre_dedup_parser_eligible`、`ingest_decision`、`decision_reason_codes`、结构化 `decision_rule_matches`、`requires_review`、`parser_eligible`；规则命中至少记录 `rule_id`、信号类型和脱敏摘要。`pre_dedup_decision` 不含 `DUPLICATE`，两个 pre-dedup 字段共同用于复算规范代表并审计去重是否错误降低安全处置。
 4. Artifact 分类：`artifact_role`、`classification_status`、`classification_authority`、`classification_confidence`、`classification_method`、`classification_reasons`。
 5. 数据分类：`data_classification`、`content_categories`、`access_recommendation`、`model_usage_restriction`。
 6. 审计：`scan_id`、`rule_set_version`、`scanner_version`、`observed_at`、`issue_refs`。
@@ -137,7 +148,7 @@ source_mount_id + relative_path + content_hash
 - `ACCEPTED`：可进入后续候选、Parser 或人工确认流程。
 - `EXCLUDED`：明确噪声、第三方依赖、缓存或构建产物；不删除原文件。
 - `QUARANTINED`：可执行、未知二进制、数据库转储、凭证配置或可疑压缩包；仅进入受控审阅。
-- `DUPLICATE`：内容 Hash 与同一扫描中的规范代表相同；保留来源记录但不重复解析。
+- `DUPLICATE`：原本可 `ACCEPTED` 的非规范成员，其内容 Hash 与同一扫描中的可解析规范代表相同；保留来源记录但不重复解析。更严格的 `EXCLUDED`/`QUARANTINED` 决定不得因重复关系降级。
 - `NEEDS_REVIEW`：分类置信度不足或规则冲突，不能自动进入 Parser。
 
 `decision_reason_codes` 冻结为可扩展字符串代码。首批至少包含：
@@ -219,15 +230,15 @@ Artifact 记录和派生清单不得包含物理绝对路径。`root_uri` 只存
 - `SKIPPED_BY_POLICY` 只允许用于已经由路径/名称规则确定为 `EXCLUDED` 的低风险噪声；规则 ID 必须写入原因。`ACCEPTED`、`DUPLICATE`、主版本候选和参考文献候选必须具有 `COMPUTED` Hash。安全隔离文件原则上仍以只读字节流计算 Hash；若读取失败，保留 `QUARANTINED` 决定和 Issue，但不得形成内容身份。
 - 文件必须流式读取，禁止把大文件一次性加载到内存。
 - Hash 前后分别读取 size 与 mtime；扫描期间发生变化时记录 `FILE_CHANGED_DURING_SCAN`，本轮不接受该记录。
-- `root_fingerprint` 是对象，至少包含 `algorithm`、`canonicalization_version`、`scope`、`strength` 和 `value`。它对本轮治理范围内全部已发布记录的 `(relative_path, size_bytes, hash_status, content_hash)` JCS 投影按规范相对路径 UTF-8 字节序排序后计算；未 Hash 项的 `content_hash` 投影为 JSON `null`。指纹明确排除 `root_uri`、摄取决定、mtime、inode、规则集、扫描时间和遍历顺序。默认 `scope=RECORDED_ITEMS`、`strength=MIXED`，表示“可治理扫描快照”；被目录级快速排除且未逐文件枚举的内容不进入该指纹，不得宣称是完整物理目录的强内容指纹。
+- `root_fingerprint` 是对象，至少包含 `algorithm`、`canonicalization_version`、`scope`、`strength`、`record_count`、`hashed_record_count` 和 `value`。每条已发布记录先投影成对象 `{"content_hash": <hash-or-null>, "hash_status": "...", "relative_path": "...", "size_bytes": 0}`，再按 `relative_path` 的 UTF-8 字节序排序、封装为单个 JSON 数组，对该数组整体执行 JCS 后计算 SHA-256。指纹明确排除 `root_uri`、摄取决定、mtime、inode、规则集、扫描时间和遍历顺序。`0 <= hashed_record_count <= record_count`；只有两者相等时才可声明 `strength=STRONG`，否则固定为 `MIXED`。默认 `scope=RECORDED_ITEMS`，表示“可治理扫描快照”；被目录级快速排除且未逐文件枚举的内容不进入该指纹，不得宣称是完整物理目录的强内容指纹。
 
 ### 5.3 去重
 
 - 同一 `content_hash` 至少出现两次时生成 `DuplicateGroup`。
 - 每个成员保留独立 `ingest_record_id` 和来源路径。
-- `DuplicateGroup` 至少包含 `duplicate_group_id`、`content_hash`、`member_ingest_record_ids`、`canonical_ingest_record_id`、`canonical_selection_method` 和结构化选择理由。
+- `DuplicateGroup` 至少包含 `duplicate_group_id`、`content_hash`、`member_ingest_record_ids`、`canonical_selection_status`、`canonical_selection_method` 和结构化选择理由；`canonical_ingest_record_id` 只在状态为 `SELECTED` 时存在。
 - 技术上的 `canonical_ingest_record_id` 只用于避免重复解析，不代表论文正文或工程主版本。
-- 规范代表按“非隔离记录优先、非备份优先、路径字典序”确定，规则版本化且可复算；规范代表必须存在于成员集合中。
+- 规范候选集严格由 `pre_dedup_decision=ACCEPTED + pre_dedup_parser_eligible=true` 的成员组成。选中者最终保持 `ACCEPTED + parser_eligible=true`，其余合格非规范成员变为 `DUPLICATE + parser_eligible=false`；更严格处置成员保留原决定。只有规范候选集为空时才能使用 `canonical_selection_status=NO_ELIGIBLE_CANONICAL`，且不得用第三方依赖、已排除或隔离记录伪装成可解析规范代表。在合格集合内按“非备份优先、路径字典序”确定，规则版本化且可复算；`canonical_ingest_record_id` 存在时必须属于成员集合，并满足上述资格。隔离或排除记录可以作为重复组成员，但保留更严格主处置。
 - 精确重复只按 SHA-256 判断；文档近似度和版本相似关系只能写入候选比较信息，不得进入 `DuplicateGroup`。
 - 业务主版本始终由 `PrimaryArtifactCandidate` 推荐并在启动闸门①人工确认。
 
@@ -278,7 +289,8 @@ Artifact 记录和派生清单不得包含物理绝对路径。`root_uri` 只存
 - `METADATA_RULE`
 - `CAPABILITY_PACK_RULE`
 - `COMPOSITE_RULE`
-- `MANUAL_OVERRIDE`
+
+`ArtifactIngestRecord` 的 CLI 自动建议禁止使用 `MANUAL_OVERRIDE`；人工修正由后端版本化 Assignment 表达。
 
 自动分类冲突时使用保守优先级：安全隔离 > 明确排除 > 敏感限制 > 业务角色推荐。置信度低于规则集阈值或出现同优先级冲突时必须 `NEEDS_REVIEW`。每条记录只能有一个主 `ingest_decision`；`parser_eligible=true` 只允许出现在 Hash 已计算、决定为 `ACCEPTED` 且无阻断 Issue 的记录上。重复组中只有规范代表可进入一次 Parser，所有 `DUPLICATE` 成员的 `parser_eligible` 必须为 `false`。
 
@@ -296,15 +308,16 @@ Artifact 记录和派生清单不得包含物理绝对路径。`root_uri` 只存
 - `candidate_scope_id`：由配置中的项目根、人工指定范围或版本化目录识别规则产生；表示材料包或明确目录快照范围，禁止跨全库排名。
 - `selection_type`：`PRIMARY_DOCUMENT` 或 `PRIMARY_ENGINEERING_ROOT`
 - `candidate_ingest_record_ids`
-- `recommended_ingest_record_id`
+- `recommended_ingest_record_id`（仅 `RECOMMENDED` 必填）
+- `recommendation_status`：`RECOMMENDED`、`NO_RECOMMENDATION` 或 `TIED_REVIEW`
 - 每个候选的文件名、`content_hash`、`modified_at` 和可用的页数/字数
-- `recommendation_score`（0 到 1）
+- `recommendation_score`（仅 `RECOMMENDED` 必填，范围 0 到 1）
 - `recommendation_reasons`
 - `comparison_metrics`
 - `scoring_rule_version`
 - `requires_human_confirmation`（固定为 `true`）
 
-文档比较指标可包含文件名信号、Hash、修改时间、页数、字数和版本相似关系；修改时间只能是低权重信号，页数/字数必须记录提取器与版本。工程候选可以是 Git commit、目录快照或文件集合，并包含源码文件数、锁定依赖、测试、迁移脚本和启动说明，不能强制表示为单个源码文件。推荐分数必须记录评分规则版本、特征值和稳定平分规则。缺少解析能力时指标可以缺省，但不能伪造。`BACKUP` 和自动保存记录只可作为版本关系展示，默认不参与推荐；即使某范围只发现备份，也必须 `NEEDS_REVIEW`，不得自动晋升。
+`recommendation_status=RECOMMENDED` 时必须给出唯一 `recommended_ingest_record_id` 和分数；`NO_RECOMMENDATION` 表示证据不足，`TIED_REVIEW` 表示最高候选并列，后二者禁止为了满足字段而强行填写推荐记录，并必须给出结构化原因。文档比较指标可包含文件名信号、Hash、修改时间、页数、字数和版本相似关系；修改时间只能是低权重信号，页数/字数必须记录提取器与版本。工程候选可以是 Git commit、目录快照或文件集合，并包含源码文件数、锁定依赖、测试、迁移脚本和启动说明，不能强制表示为单个源码文件。推荐分数必须记录评分规则版本、特征值和稳定平分规则。缺少解析能力时指标可以缺省，但不能伪造。`BACKUP` 和自动保存记录只可作为版本关系展示，默认不参与推荐；即使某范围只发现备份，也必须 `NEEDS_REVIEW`，不得自动晋升。
 
 人工选择结果未来映射为 `PrimaryArtifactSelection`，必须记录候选、选择人、时间和理由，并参与 `TaskSpecification`、`ProjectFactSnapshot` 与 `execution_fingerprint`。选择变化使相关解析、证据、目录和正文失效。
 
@@ -410,7 +423,7 @@ UNVERIFIED
 - `HARDWARE_MEASUREMENT`
 - `MANUAL_OBSERVATION`
 
-V1.0 只启用前五种。`status` 为 `PENDING`、`RUNNING`、`SUCCEEDED`、`PARTIAL`、`FAILED`、`TIMED_OUT` 或 `CANCELLED`。`environment_snapshot` 至少冻结操作系统、运行时、依赖锁摘要、工具链与必要硬件信息；`metrics` 是带名称、数值、单位和统计口径的结构化数组，禁止用无单位自由文本代替。`execution_fingerprint` 绑定 TaskSpecification、主版本选择、输入 ArtifactVersion、环境和执行器版本。`result_hash` 对排除自身字段后的 JCS 结果载荷计算，避免自引用。
+V1.0 只启用前五种。`status` 为 `PENDING`、`RUNNING`、`SUCCEEDED`、`PARTIAL`、`FAILED`、`TIMED_OUT` 或 `CANCELLED`。`environment_snapshot` 至少冻结操作系统、运行时、依赖锁摘要、工具链与必要硬件信息；`metrics` 是带名称、数值、单位和统计口径的结构化数组，禁止用无单位自由文本代替。`execution_fingerprint` 绑定 TaskSpecification、主版本选择、输入 ArtifactVersion、环境和执行器版本。`result_hash` 只在终态必填；其 JCS 投影排除 `schema_version`、`engineering_result_id`、`result_hash` 和会随治理审核变化的 `verification_status`，避免自引用或人工核验造成结果内容身份漂移。
 
 摄取器发现日志、CSV 或截图时只能推荐 `ENGINEERING_RESULT` Artifact；不能凭文件名创建可信成功结果。导入历史结果必须是 `IMPORTED + UNVERIFIED`。`TRUSTED_EXECUTION` 必须引用有效的 `node_execution_attempt_id`，并由正式执行器产生；终态结果必须有 `finished_at`，运行中结果不得伪造结束时间。失败、不完整和未验证结果必须可归档，但不得支撑“测试成功”类 Claim；即使 `SUCCEEDED` 也必须经 Validator 且未失效后才能进入 Evidence gate。本轮只冻结该数据契约，不执行工程验证，也不采集结果。
 
