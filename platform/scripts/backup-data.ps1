@@ -15,8 +15,11 @@ if (-not (Test-Path $EnvFile)) { throw 'platform/.env is required; copy .env.exa
 
 $Env = @{}
 Get-Content -LiteralPath $EnvFile | Where-Object { $_ -match '^[^#][^=]*=' } | ForEach-Object { $Key,$Value = $_ -split '=',2; $Env[$Key]=$Value }
-$Db = $Env['POSTGRES_DB']; $User = $Env['POSTGRES_USER']; $DatabaseUrl = $Env['DATABASE_URL']; $ArtifactContainerRoot = $Env['ARTIFACT_STORE_ROOT']
+$Db = $Env['POSTGRES_DB']; $User = $Env['POSTGRES_USER']; $DatabaseUrl = $Env['DATABASE_URL']; $ArtifactContainerRoot = $Env['ARTIFACT_STORE_ROOT']; $ArtifactHostPath = $Env['ARTIFACT_STORE_HOST_PATH']
 if (-not $Db -or -not $User -or -not $DatabaseUrl -or -not $ArtifactContainerRoot) { throw 'POSTGRES_DB, POSTGRES_USER, DATABASE_URL and ARTIFACT_STORE_ROOT are required in platform/.env' }
+if (-not $ArtifactHostPath) { $ArtifactHostPath = '../artifact_store' }
+$ComposeRoot = Split-Path -Parent $ComposeFile
+$ArtifactRoot = if ([System.IO.Path]::IsPathRooted($ArtifactHostPath)) { [System.IO.Path]::GetFullPath($ArtifactHostPath) } else { [System.IO.Path]::GetFullPath((Join-Path $ComposeRoot $ArtifactHostPath)) }
 
 docker compose --env-file $EnvFile -f $ComposeFile stop api publisher worker frontend | Out-Null
 try {
@@ -27,7 +30,6 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'pg_dump failed' }
     docker compose --env-file $EnvFile -f $ComposeFile cp postgres:/tmp/p1-1-database.dump (Join-Path $Bundle 'database.dump')
     if ($LASTEXITCODE -ne 0) { throw 'copying database dump failed' }
-    $ArtifactRoot = Join-Path $PlatformRoot 'artifact_store'
     if (-not (Test-Path $ArtifactRoot)) { New-Item -ItemType Directory -Path $ArtifactRoot | Out-Null }
     $ArtifactArchive = Join-Path $Bundle 'artifact-store.zip'
     if (Test-Path $ArtifactArchive) { Remove-Item -LiteralPath $ArtifactArchive -Force }

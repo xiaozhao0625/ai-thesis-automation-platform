@@ -15,7 +15,9 @@ x-backend-service: &backend-service
     - ../.env
   environment: *backend-environment
   volumes:
-    - ../artifact_store:/app/platform/artifact_store
+    - type: bind
+      source: ${ARTIFACT_STORE_HOST_PATH:-../artifact_store}
+      target: /app/platform/artifact_store
     - ingest_work:/app/platform/.runtime/ingest-work
   restart: unless-stopped
 

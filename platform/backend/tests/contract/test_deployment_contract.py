@@ -63,15 +63,28 @@ def test_environment_and_operator_scripts_are_present() -> None:
 
 
 def test_handoff_scripts_capture_counts_and_verify_restored_artifacts() -> None:
+    compose = yaml.safe_load(
+        (PLATFORM_ROOT / "deploy" / "docker-compose.yml").read_text("utf-8")
+    )
     backup = (PLATFORM_ROOT / "scripts" / "backup-data.ps1").read_text("utf-8")
     restore = (PLATFORM_ROOT / "scripts" / "restore-data.ps1").read_text("utf-8")
     verify = (PLATFORM_ROOT / "scripts" / "verify-handoff.ps1").read_text("utf-8")
 
+    artifact_volume = compose["x-backend-service"]["volumes"][0]
+    assert artifact_volume["type"] == "bind"
+    assert "ARTIFACT_STORE_HOST_PATH" in artifact_volume["source"]
+    assert artifact_volume["target"] == "/app/platform/artifact_store"
     assert "app.maintenance.snapshot" in backup
+    assert "ARTIFACT_STORE_HOST_PATH" in backup
     assert "table_counts" in backup
     assert "artifact_store" in backup
     assert "[System.IO.Compression.ZipFile]::CreateFromDirectory" in backup
     assert "app.maintenance.verify_artifacts" in restore
+    assert "TargetArtifactDirectory" in restore
+    assert "ARTIFACT_STORE_HOST_PATH" in restore
+    assert "restore-artifact-store" in restore
+    assert "Creating target database failed" in restore
+    assert "Copying database dump into PostgreSQL failed" in restore
     assert "table_counts" in restore
     assert "artifact_store" in restore
     assert "format_version" in verify

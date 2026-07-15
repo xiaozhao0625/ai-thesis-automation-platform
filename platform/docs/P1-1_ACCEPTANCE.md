@@ -15,6 +15,7 @@
 - 真实 CLI Adapter：128 文件 scan + verify 通过；
 - Artifact：10 个当前 ArtifactVersion，逐文件内容寻址归档；
 - 迁移工具：备份 Manifest 已覆盖表行数、Artifact 文件统计；恢复后逐表、逐文件 Hash 核验；
+- 恢复演练使用独立数据库和独立 Artifact 目录，不覆盖正在运行的数据；
 - Docker 验收入口：可在一次性容器内运行 CLI、后端、前端和 Playwright，不要求新电脑单独安装 PostgreSQL/Redis；
 - 浏览器：创建任务、人工批准、QUEUED 节点与 Outbox 真实显示；
 - 浏览器控制台：无 error/warn；
