@@ -8,7 +8,7 @@ import pytest
 from thesis_ingest.config import ConfigError, load_config, load_rule_bundle
 
 
-def valid_config(root: Path, output_directory: str = "ingest-output") -> dict:
+def valid_config(root: Path, output_directory: str = "ingest-output/") -> dict:
     return {
         "config_version": "0.1",
         "source_mount": {
@@ -94,7 +94,7 @@ def test_config_relative_output_is_resolved_from_config_directory(
     source.mkdir()
     config_path = tmp_path / "settings" / "ingest-config.json"
     config_path.parent.mkdir()
-    write_config(config_path, valid_config(source, "../results"))
+    write_config(config_path, valid_config(source, "../results/"))
 
     loaded = load_config(config_path)
 
@@ -109,7 +109,7 @@ def test_cli_output_is_resolved_from_cwd_and_must_match_config(
     source.mkdir()
     config_path = tmp_path / "config" / "ingest-config.json"
     config_path.parent.mkdir()
-    write_config(config_path, valid_config(source, "../results"))
+    write_config(config_path, valid_config(source, "../results/"))
 
     loaded = load_config(config_path, cli_output="results", cwd=tmp_path)
 
@@ -120,7 +120,7 @@ def test_cli_output_mismatch_is_rejected(tmp_path: Path) -> None:
     source = tmp_path / "source"
     source.mkdir()
     config_path = tmp_path / "ingest-config.json"
-    write_config(config_path, valid_config(source, "expected"))
+    write_config(config_path, valid_config(source, "expected/"))
 
     with pytest.raises(ConfigError, match="CLI_OUTPUT_MISMATCH"):
         load_config(config_path, cli_output="different", cwd=tmp_path)
@@ -190,7 +190,21 @@ def test_output_directory_inside_source_mount_is_rejected(tmp_path: Path) -> Non
     source = tmp_path / "source"
     source.mkdir()
     config_path = tmp_path / "ingest-config.json"
-    write_config(config_path, valid_config(source, "source/ingest-output"))
+    write_config(config_path, valid_config(source, "source/ingest-output/"))
 
     with pytest.raises(ConfigError, match="OUTPUT_INSIDE_SOURCE_ROOT"):
+        load_config(config_path)
+
+
+def test_full_frozen_ingest_config_fragment_is_enforced(tmp_path: Path) -> None:
+    source = tmp_path / "source"
+    source.mkdir()
+    config = valid_config(source)
+    config["output"]["output_directory"] = "missing-trailing-slash"
+    config_path = tmp_path / "ingest-config.json"
+    write_config(config_path, config)
+
+    with pytest.raises(
+        ConfigError, match=r"/output/output_directory"
+    ):
         load_config(config_path)

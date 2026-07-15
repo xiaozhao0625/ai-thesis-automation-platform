@@ -12,7 +12,7 @@ class SensitivitySuggestion:
     access_recommendation: str
     model_usage_restriction: str
     sensitivity_confidence: float
-    sensitivity_reasons: tuple[str, ...]
+    sensitivity_reasons: tuple[dict[str, object], ...]
 
 
 def classify_sensitivity(
@@ -25,7 +25,7 @@ def classify_sensitivity(
     name = PurePosixPath(lowered).name
     extension = PurePosixPath(name).suffix
     categories: set[str] = set()
-    reasons: list[str] = []
+    reasons: list[dict[str, object]] = []
 
     credential_tokens = {
         ".env",
@@ -40,43 +40,115 @@ def classify_sensitivity(
     }
     if any(token in name for token in credential_tokens):
         categories.add("CREDENTIAL")
-        reasons.append("CREDENTIAL_NAME_HEURISTIC")
+        reasons.append(
+            _reason(
+                "credential-name-v1",
+                "CREDENTIAL",
+                "FILE_NAME",
+                "A credential-like file-name signal was detected.",
+                0.95,
+            )
+        )
 
     if extension in {".dump", ".dmp", ".sqlite", ".sqlite3"} or (
         extension == ".sql"
         and any(token in lowered for token in {"backup", "dump", "export"})
     ):
         categories.add("DATABASE_DUMP")
-        reasons.append("DATABASE_DUMP_PATH_HEURISTIC")
+        reasons.append(
+            _reason(
+                "database-dump-path-v1",
+                "DATABASE_DUMP",
+                "PATH_SEGMENT",
+                "A database-dump path or extension signal was detected.",
+                0.95,
+            )
+        )
 
     image_extensions = {".bmp", ".gif", ".jpeg", ".jpg", ".png", ".webp"}
     if extension in image_extensions and any(
         token in lowered for token in {"face", "portrait", "student", "人脸", "头像"}
     ):
         categories.add("FACE_IMAGE")
-        reasons.append("FACE_IMAGE_NAME_HEURISTIC")
+        reasons.append(
+            _reason(
+                "face-image-name-v1",
+                "FACE_IMAGE",
+                "FILE_NAME",
+                "The image file name contains a face-related signal; no recognition model was used.",
+                0.75,
+            )
+        )
 
     if any(token in lowered for token in {"questionnaire", "survey", "问卷", "调查表"}):
         categories.add("QUESTIONNAIRE")
-        reasons.append("QUESTIONNAIRE_NAME_HEURISTIC")
+        reasons.append(
+            _reason(
+                "questionnaire-name-v1",
+                "QUESTIONNAIRE",
+                "FILE_NAME",
+                "The path contains a questionnaire-related signal.",
+                0.8,
+            )
+        )
     if any(token in lowered for token in {"interview", "访谈", "采访"}):
         categories.add("INTERVIEW")
-        reasons.append("INTERVIEW_NAME_HEURISTIC")
+        reasons.append(
+            _reason(
+                "interview-name-v1",
+                "INTERVIEW",
+                "FILE_NAME",
+                "The path contains an interview-related signal.",
+                0.8,
+            )
+        )
 
     if extension in {".avi", ".mkv", ".mov", ".mp4", ".webm"}:
         categories.add("VIDEO")
-        reasons.append("VIDEO_EXTENSION")
+        reasons.append(
+            _reason(
+                "video-extension-v1",
+                "VIDEO",
+                "METADATA",
+                "The file extension identifies a video container.",
+                0.9,
+            )
+        )
     if extension in {".aac", ".flac", ".m4a", ".mp3", ".wav"}:
         categories.add("AUDIO")
-        reasons.append("AUDIO_EXTENSION")
+        reasons.append(
+            _reason(
+                "audio-extension-v1",
+                "AUDIO",
+                "METADATA",
+                "The file extension identifies an audio container.",
+                0.9,
+            )
+        )
 
     if artifact_role == "ENGINEERING_SOURCE":
         categories.add("SOURCE_CODE")
-        reasons.append("SOURCE_CODE_ROLE")
+        reasons.append(
+            _reason(
+                "source-code-role-v1",
+                "SOURCE_CODE",
+                "METADATA",
+                "The automated ArtifactRole suggestion identifies source code.",
+                0.9,
+            )
+        )
 
     if sample_text and _contains_personal_data(sample_text):
         categories.add("PERSONAL_DATA")
-        reasons.append("PERSONAL_DATA_PATTERN_HEURISTIC")
+        reasons.append(
+            _reason(
+                "personal-data-pattern-v1",
+                "PERSONAL_DATA",
+                "CONTENT_PREFIX",
+                "A personal-data pattern was detected in a bounded text prefix; the value was not recorded.",
+                0.8,
+            )
+        )
 
     ordered_categories = tuple(
         category
@@ -122,7 +194,7 @@ def classify_sensitivity(
             access_recommendation="STANDARD",
             model_usage_restriction="ALLOW",
             sensitivity_confidence=0.9,
-            sensitivity_reasons=("FIXED_OFFICIAL_SOURCE_SCOPE",),
+            sensitivity_reasons=(),
         )
     if artifact_role == "ENGINEERING_SOURCE":
         return SensitivitySuggestion(
@@ -139,7 +211,7 @@ def classify_sensitivity(
         access_recommendation="RESTRICT_PREVIEW",
         model_usage_restriction="LOCAL_MODEL_ONLY",
         sensitivity_confidence=0.6,
-        sensitivity_reasons=tuple(reasons) or ("DEFAULT_PROJECT_INTERNAL",),
+        sensitivity_reasons=tuple(reasons),
     )
 
 
@@ -147,3 +219,19 @@ def _contains_personal_data(value: str) -> bool:
     email = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.I)
     mainland_phone = re.compile(r"(?<!\d)1[3-9]\d{9}(?!\d)")
     return bool(email.search(value) or mainland_phone.search(value))
+
+
+def _reason(
+    rule_id: str,
+    category: str,
+    location_kind: str,
+    summary: str,
+    confidence: float,
+) -> dict[str, object]:
+    return {
+        "rule_id": rule_id,
+        "category": category,
+        "location_kind": location_kind,
+        "redacted_summary": summary,
+        "confidence": confidence,
+    }

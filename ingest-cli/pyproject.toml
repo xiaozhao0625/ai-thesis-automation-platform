@@ -19,3 +19,7 @@ thesis-ingest = "thesis_ingest.cli:main"
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = "--strict-markers"
+markers = [
+  "recovery: checkpoint, interruption, resume, and source-mutation scenarios",
+  "security: negative path, executable, credential, dependency, and isolation scenarios",
+]

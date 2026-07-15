@@ -9,6 +9,7 @@ from thesis_ingest.preflight import PreflightInput, evaluate_preflight
 
 
 RULES = load_rule_bundle()
+pytestmark = pytest.mark.security
 
 
 def item(
@@ -70,6 +71,7 @@ def test_executables_and_scripts_are_quarantined(
 
     assert result.decision == "QUARANTINED"
     assert result.parser_eligible is False
+    assert result.requires_review is True
     assert "EXECUTABLE_EXTENSION" in result.reason_codes
 
 

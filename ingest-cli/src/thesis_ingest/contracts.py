@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import hashlib
+from functools import lru_cache
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
 
 from thesis_ingest.canonical_json import loads_strict
 
@@ -24,6 +26,7 @@ def contract_root() -> Path:
     return package_root() / "contracts" / "v0.1"
 
 
+@lru_cache(maxsize=8)
 def load_schema(name: str) -> dict[str, object]:
     root = contract_root()
     lock = loads_strict((root / "contract-lock.json").read_bytes())
@@ -63,6 +66,7 @@ def validate_instance(
     validator = Draft202012Validator(
         schema,
         format_checker=FormatChecker(),
+        registry=_contract_registry(),
     )
     errors = sorted(validator.iter_errors(instance), key=lambda error: list(error.path))
     if not errors:
@@ -87,3 +91,17 @@ def _resolve_fragment(schema: dict[str, object], fragment: str) -> object:
             raise ContractError(f"schema fragment not found: {fragment}")
         current = current[segment]
     return current
+
+
+@lru_cache(maxsize=1)
+def _contract_registry() -> Registry:
+    registry = Registry()
+    for name in (
+        "source-mount.schema.json",
+        "ingest-manifest.schema.json",
+        "artifact-ingest-record.schema.json",
+        "engineering-result.schema.json",
+    ):
+        schema = load_schema(name)
+        registry = registry.with_resource(name, Resource.from_contents(schema))
+    return registry

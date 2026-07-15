@@ -60,6 +60,18 @@ def classify_artifact(
     backup_patterns = _sequence(ingest_rules, "backup_name_patterns")
     if any(fnmatch.fnmatchcase(name, pattern.casefold()) for pattern in backup_patterns):
         return _suggest("BACKUP", 0.95, "FILE_NAME_RULE", "BACKUP_NAME")
+    if name in {
+        "readme.md",
+        "requirements.txt",
+        "pyproject.toml",
+        "package.json",
+    }:
+        return _suggest(
+            "ENGINEERING_CONFIG",
+            0.9,
+            "FILE_NAME_RULE",
+            "PROJECT_METADATA_FILE_NAME",
+        )
 
     if _contains_any(lowered, _values(document, "requirement_name_tokens")):
         return _suggest(

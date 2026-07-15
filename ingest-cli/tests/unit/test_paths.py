@@ -12,6 +12,9 @@ from thesis_ingest.paths import (
 )
 
 
+pytestmark = pytest.mark.security
+
+
 SENSITIVE_POLICY = PathPolicy(
     case_policy="CASE_SENSITIVE",
     unicode_normalization="NFC",

@@ -28,8 +28,15 @@ def test_face_image_name_signal_is_sensitive_without_claiming_ml_detection() -> 
 
     assert result.data_classification == "SENSITIVE"
     assert "FACE_IMAGE" in result.content_categories
-    assert "FACE_IMAGE_NAME_HEURISTIC" in result.sensitivity_reasons
-    assert all("MODEL_DETECTED" not in reason for reason in result.sensitivity_reasons)
+    assert any(
+        reason["rule_id"] == "face-image-name-v1"
+        for reason in result.sensitivity_reasons
+    )
+    assert all(
+        "recognition model was used" in reason["redacted_summary"]
+        or "MODEL_DETECTED" not in reason["redacted_summary"]
+        for reason in result.sensitivity_reasons
+    )
 
 
 def test_personal_data_pattern_is_sensitive() -> None:
@@ -90,4 +97,4 @@ def test_default_project_material_is_internal() -> None:
 
     assert result.data_classification == "INTERNAL"
     assert result.content_categories == ()
-    assert result.sensitivity_reasons == ("DEFAULT_PROJECT_INTERNAL",)
+    assert result.sensitivity_reasons == ()

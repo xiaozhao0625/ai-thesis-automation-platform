@@ -46,6 +46,7 @@
     ".ini",
     ".json",
     ".properties",
+    ".sql",
     ".toml",
     ".xml",
     ".yaml",

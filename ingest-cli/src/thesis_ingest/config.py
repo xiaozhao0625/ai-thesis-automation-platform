@@ -47,6 +47,14 @@ def load_config(
         raise ConfigError("CONFIG_INVALID: root must be an object")
     if raw.get("config_version") != "0.1":
         raise ConfigError("CONFIG_VERSION_MISMATCH: expected 0.1")
+    try:
+        validate_instance(
+            raw,
+            "ingest-manifest.schema.json",
+            schema_fragment="#/$defs/IngestConfig",
+        )
+    except ContractError as exc:
+        raise ConfigError(f"CONFIG_SCHEMA_INVALID: {exc}") from exc
 
     source_mount = raw.get("source_mount")
     if not isinstance(source_mount, dict):

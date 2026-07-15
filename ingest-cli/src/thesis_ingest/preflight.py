@@ -162,7 +162,7 @@ def _decision(
     return PreflightDecision(
         decision=decision,
         parser_eligible=parser_eligible,
-        requires_review=decision == "NEEDS_REVIEW",
+        requires_review=decision in {"QUARANTINED", "NEEDS_REVIEW"},
         reason_codes=(reason,),
         rule_matches=(
             {
