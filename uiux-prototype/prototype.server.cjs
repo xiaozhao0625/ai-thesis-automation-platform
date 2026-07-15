@@ -3,7 +3,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const prototype = path.join(__dirname, 'prototype.html');
-const projectFactPayload = path.join(__dirname, 'project-fact-r3.json');
+const projectFactPayload = path.join(__dirname, 'project-fact-r4.json');
 const port = Number(process.env.PORT || 4173);
 let intakeConfirmed = false;
 

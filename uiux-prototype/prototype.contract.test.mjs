@@ -6,7 +6,7 @@ const htmlName = files.find(name => name.endsWith('.html'));
 assert.ok(htmlName, 'missing prototype HTML file');
 const file = new URL(`./${htmlName}`, import.meta.url);
 const html = await readFile(file, 'utf8');
-const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r3.json', import.meta.url), 'utf8'));
+const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r4.json', import.meta.url), 'utf8'));
 const server = await readFile(new URL('./prototype.server.cjs', import.meta.url), 'utf8');
 
 const pages = [
@@ -44,7 +44,7 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.4-P0-r3 ProjectFact 闭环修复候选/, 'r3 candidate title missing');
+assert.match(html, /v1\.2\.4-P0-r4 ProjectFact 闭环修复候选/, 'r4 candidate title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
@@ -96,5 +96,9 @@ assert.equal(projectFactPayload.intake_confirmation.human_approval.approval_type
 assert.equal(projectFactPayload.intake_confirmation.audit_event.event_type, 'PROJECT_FACT_INTAKE_CONFIRMED');
 assert.deepEqual(projectFactPayload.intake_confirmation.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
 assert.equal(projectFactPayload.conflict.project_fact_conflict.status, 'OPEN');
+assert.equal(projectFactPayload.conflict.snapshot.status, 'SUSPENDED');
+const conflictedMcu = projectFactPayload.conflict.entities.facts.find(item => item.fact_key === 'mcu_model');
+assert.equal(conflictedMcu.current_fact_version_id, null);
+assert.equal(conflictedMcu.last_locked_fact_version_id, 'fact-mcu-model-v2');
 assert.equal(projectFactPayload.confirmation.outline_transition.old_state, 'INVALIDATED');
 assert.equal(projectFactPayload.confirmation.outline_transition.new_state, 'READY');

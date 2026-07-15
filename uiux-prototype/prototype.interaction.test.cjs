@@ -273,7 +273,9 @@ test('conflict applies dependency closure before confirmation and creates a new 
   await activeClick('button[data-action="simulate-fact-conflict"]');
   await page.locator('#materialProjectFacts[data-conflict-status="OPEN"]').waitFor();
   assert.match(await page.locator('#projectFactConflict').textContent(), /STM32F103C8T6[\s\S]*STM32F407VET6[\s\S]*系统未自动选择/);
+  assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-status'), 'SUSPENDED');
   assert.equal(await page.locator('#materialProjectFacts [data-fact-key="mcu_model"]').getAttribute('data-status'), 'CONFLICT');
+  assert.equal(await page.locator('#materialProjectFacts [data-fact-key="mcu_model"]').getAttribute('data-locked'), 'false');
   await activeRoute('overview');
   assert.match(await page.locator('section.page.active .alert').textContent(), /PROJECT_FACT_CONFLICT[\s\S]*依赖图/);
   await activeRoute('materials');
