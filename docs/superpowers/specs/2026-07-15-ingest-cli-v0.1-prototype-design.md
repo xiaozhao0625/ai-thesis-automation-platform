@@ -1,6 +1,6 @@
 # Ingest CLI v0.1-Prototype 实现设计
 
-- 状态：DESIGN_REVIEW
+- 状态：APPROVED
 - 阶段：P0-1 资料摄取 CLI 最小闭环
 - 日期：2026-07-15
 - 开发分支：feat/ingest-cli-v0.1
