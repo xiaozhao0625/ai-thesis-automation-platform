@@ -298,11 +298,15 @@ test('conflict applies dependency closure before confirmation and creates a new 
   await activeClick('button[data-action="review-project-fact-impact"]');
   await page.locator('#modal').waitFor({state: 'visible'});
   assert.equal(await page.locator('#modal').getAttribute('class'), 'modal-layer show');
-  assert.match(await page.locator('#modalList').textContent(), /将失效[\s\S]*将阻断[\s\S]*保持有效[\s\S]*Snapshot v6/);
+  assert.match(await page.locator('#modalList').textContent(), /将失效[\s\S]*将阻断[\s\S]*保持有效[\s\S]*确认事实值/);
   assert.equal(await page.locator('#modalConfirm').textContent(), '确认事实并使受影响下游失效');
+  await page.locator('#conflictCandidate').selectOption('STM32F407VET6');
+  await page.locator('#conflictReason').fill('以已提交代码配置为准');
+  assert.equal(await page.locator('input[name="conflict-source"]:checked').count(), 1);
   await page.locator('#modalConfirm').click();
   await page.locator('#materialProjectFacts[data-conflict-status="RESOLVED"]').waitFor();
   assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '6');
+  assert.match(await page.locator('#materialProjectFacts').textContent(), /STM32F407VET6[\s\S]*以已提交代码配置为准/);
   assert.match(await page.locator('#materialProjectFacts').textContent(), /ProjectFactVersion v3[\s\S]*已被替代[\s\S]*旧 Snapshot v5/);
   await activeRoute('workflow');
   assert.equal(await page.locator('[data-node-id="project_fact_confirm"]').getAttribute('data-runtime-status'), 'succeeded');

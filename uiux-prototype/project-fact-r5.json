@@ -1,0 +1,4270 @@
+{
+  "candidate": {
+    "baseline": "v0.3.2-P0-r5",
+    "prototype": "v1.2.4-P0-r5"
+  },
+  "initial": {
+    "entities": {
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "task_id": "task-001",
+          "fact_key": "database_type",
+          "fact_type": "DATABASE_TYPE",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "task_id": "task-001",
+          "fact_key": "display_driver",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "task_id": "task-001",
+          "fact_key": "mcu_model",
+          "fact_type": "HARDWARE_MODEL",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "task_id": "task-001",
+          "fact_key": "sensor_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "task_id": "task-001",
+          "fact_key": "software_framework",
+          "fact_type": "SOFTWARE_FRAMEWORK",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "task_id": "task-001",
+          "fact_key": "supply_voltage",
+          "fact_type": "ELECTRICAL_PARAMETER",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "task_id": "task-001",
+          "fact_key": "wireless_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": null,
+          "status": "PROPOSED",
+          "conflict_status": "NONE"
+        }
+      ],
+      "fact_versions": [],
+      "source_links": [
+        {
+          "source_link_id": "fsl-c97906dfc8cd02b1",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 21,
+            "char_end": 31
+          }
+        },
+        {
+          "source_link_id": "fsl-53ff3ead8f517211",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "DATABASE_TYPE = \"PostgreSQL\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DATABASE_TYPE = \"PostgreSQL\"",
+            "excerpt_hash": "sha256:ef5241aa4b23a1b7529488fa128b0903a7b8ec0fc5e89c9dbc4c7b59a98fd651",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 7,
+            "line_end": 7,
+            "symbol_name": "DATABASE_TYPE"
+          }
+        },
+        {
+          "source_link_id": "fsl-c3e98f7b12834b23",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "数据库：PostgreSQL",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "数据库：PostgreSQL",
+            "excerpt_hash": "sha256:9f67aa94536895bb29075c5bd5c2d76ce4ccfd2bffe1f5b45a10517203b5ec56",
+            "sheet_name": "硬件清单",
+            "cell_range": "B5"
+          }
+        },
+        {
+          "source_link_id": "fsl-241c324be66b42fd",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 82,
+            "char_end": 89
+          }
+        },
+        {
+          "source_link_id": "fsl-8118415ad7fa0b5e",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "DISPLAY_DRIVER = \"SSD1306\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DISPLAY_DRIVER = \"SSD1306\"",
+            "excerpt_hash": "sha256:de89ca7ac04fcf04cf1fc45130d8cc4f1d99aac5ec89f4eec14b41851062d619",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 5,
+            "line_end": 5,
+            "symbol_name": "DISPLAY_DRIVER"
+          }
+        },
+        {
+          "source_link_id": "fsl-d79b4493e83e671b",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "显示屏：0.96 英寸 OLED / SSD1306",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "显示屏：0.96 英寸 OLED / SSD1306",
+            "excerpt_hash": "sha256:6874332fd2bb17373b3188b2a48967d286a1cc63d722a96b2eef6a7d7bbdeab9",
+            "sheet_name": "硬件清单",
+            "cell_range": "B4"
+          }
+        },
+        {
+          "source_link_id": "fsl-5d5e3113d5f2f54d",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 12,
+            "char_end": 25
+          }
+        },
+        {
+          "source_link_id": "fsl-e9a944b068d43b4e",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU: STM32F103C8T6",
+          "confidence": 0.99,
+          "locator": {
+            "artifact_version_id": "av-d114f10b8a557ff8",
+            "source_type": "IMAGE_OCR",
+            "file_path": "screenshot/hardware-list.png",
+            "excerpt": "MCU: STM32F103C8T6",
+            "excerpt_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "page_index": 0,
+            "bbox": [
+              20,
+              20,
+              555,
+              55
+            ],
+            "ocr_block_id": "ocr-block-001",
+            "ocr_text": "MCU: STM32F103C8T6",
+            "ocr_text_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "image_sha256": "sha256:d114f10b8a557ff8f2cefe7f22c6ff1f22fa15e020148c4c0d6e801f2fb1261a"
+          }
+        },
+        {
+          "source_link_id": "fsl-77fadc766ca5dcd9",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU_MODEL = \"STM32F103C8T6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F103C8T6\"",
+            "excerpt_hash": "sha256:8f0574ca1a1e2951147381c22e35bd7d59d09fd49e1d9b3ab8cadf90f63ef5b5",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-012e03b3682cea32",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "主控芯片：STM32F103C8T6",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "主控芯片：STM32F103C8T6",
+            "excerpt_hash": "sha256:3f0d81652c64711504f6c1cbb03c7b34716449a31c179f440af83f579d7ec0b6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B7"
+          }
+        },
+        {
+          "source_link_id": "fsl-528cf35e61baff7b",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 34,
+            "char_end": 39
+          }
+        },
+        {
+          "source_link_id": "fsl-d8c446c15a3daab0",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-9ccd66b546e3d5a8",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "温湿度模块：DHT11",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "温湿度模块：DHT11",
+            "excerpt_hash": "sha256:e0b6f660ee75c937063a6c518af9710b87631f0be4f143826f966a3a02764f83",
+            "sheet_name": "硬件清单",
+            "cell_range": "B2"
+          }
+        },
+        {
+          "source_link_id": "fsl-3342ffeef88f5a71",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 7,
+            "char_end": 14
+          }
+        },
+        {
+          "source_link_id": "fsl-4fd81257b36a2cf3",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "WEB_FRAMEWORK = \"FastAPI\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WEB_FRAMEWORK = \"FastAPI\"",
+            "excerpt_hash": "sha256:c577df7f027d5040aeaed74307ae194a7ffbd6f0aac8294a32bf5fd32fc4abca",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 6,
+            "line_end": 6,
+            "symbol_name": "WEB_FRAMEWORK"
+          }
+        },
+        {
+          "source_link_id": "fsl-344aa64ae847e3d1",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 96,
+            "char_end": 100
+          }
+        },
+        {
+          "source_link_id": "fsl-ef125bc84a1b8436",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "SUPPLY_VOLTAGE = \"3.3V\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SUPPLY_VOLTAGE = \"3.3V\"",
+            "excerpt_hash": "sha256:4ad1588d2445e09118065db78604e4697b39fe6dcde64f1d569d554e4a2e144f",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 8,
+            "line_end": 8,
+            "symbol_name": "SUPPLY_VOLTAGE"
+          }
+        },
+        {
+          "source_link_id": "fsl-74cb5e4fa661377c",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "供电电压：3.3V",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "供电电压：3.3V",
+            "excerpt_hash": "sha256:27e07802a38fb59f8c8d7862d5a0cc9abcb6f0ea9a006b9ea50cf17fed96c8c7",
+            "sheet_name": "硬件清单",
+            "cell_range": "B6"
+          }
+        },
+        {
+          "source_link_id": "fsl-76427cf7fdd32928",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 47,
+            "char_end": 58
+          }
+        },
+        {
+          "source_link_id": "fsl-887b9be9b7707e3f",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-c526b87da835c0be",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "无线模块：ESP8266-01S",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "无线模块：ESP8266-01S",
+            "excerpt_hash": "sha256:9703d2543f8606843dda561622b594f200c8a4f8fde1067e6db80c80274b75c6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B3"
+          }
+        }
+      ],
+      "conflicts": []
+    },
+    "snapshot": null,
+    "targets": [],
+    "dependency_graph": {
+      "root": "fact-mcu-model-v2",
+      "targets": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-outline-v5",
+          "logical_id": "outline_plan",
+          "state": "WAITING_FOR_APPROVAL"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-pre-v5",
+          "logical_id": "section_generate_pre_group",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-engineering-v5",
+          "logical_id": "engineering_verify",
+          "state": "RUNNING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch6-v5",
+          "logical_id": "section_generate_ch6",
+          "state": "READY"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch7-v5",
+          "logical_id": "section_generate_ch7",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-quality-v5",
+          "logical_id": "manuscript_quality_check",
+          "state": "QUEUED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-gate-v5",
+          "logical_id": "quality_gate_final",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-docx-v5",
+          "logical_id": "docx_render",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-delivery-v5",
+          "logical_id": "delivery_approval",
+          "state": "WAITING_FOR_APPROVAL"
+        },
+        {
+          "target_type": "CLAIM",
+          "target_id": "claim-mcu-design-v3",
+          "logical_id": "claim_mcu_design",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-retrieval-mcu-v2",
+          "logical_id": "retrieval_evidence",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-hardware-v3",
+          "logical_id": "hardware_section",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "QUALITY_REPORT",
+          "target_id": "quality-report-v3",
+          "logical_id": "quality_report",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "DELIVERY_PACKAGE",
+          "target_id": "delivery-package-v3",
+          "logical_id": "delivery_package",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-background-v2",
+          "logical_id": "background_theory",
+          "state": "SUCCEEDED"
+        }
+      ],
+      "edges": [
+        [
+          "fact-mcu-model-v2",
+          "nr-outline-v5"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "nr-engineering-v5"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "claim-mcu-design-v3"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "artifact-retrieval-mcu-v2"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "artifact-hardware-v3"
+        ],
+        [
+          "nr-outline-v5",
+          "nr-pre-v5"
+        ],
+        [
+          "nr-pre-v5",
+          "nr-ch6-v5"
+        ],
+        [
+          "nr-engineering-v5",
+          "nr-ch6-v5"
+        ],
+        [
+          "nr-ch6-v5",
+          "nr-ch7-v5"
+        ],
+        [
+          "nr-ch7-v5",
+          "nr-quality-v5"
+        ],
+        [
+          "nr-quality-v5",
+          "nr-gate-v5"
+        ],
+        [
+          "nr-gate-v5",
+          "nr-docx-v5"
+        ],
+        [
+          "nr-docx-v5",
+          "nr-delivery-v5"
+        ],
+        [
+          "nr-docx-v5",
+          "delivery-package-v3"
+        ],
+        [
+          "claim-mcu-design-v3",
+          "quality-report-v3"
+        ],
+        [
+          "artifact-hardware-v3",
+          "quality-report-v3"
+        ],
+        [
+          "quality-report-v3",
+          "delivery-package-v3"
+        ]
+      ]
+    },
+    "fact_dependencies": [],
+    "workflow_state": {
+      "project_fact_confirm": {
+        "runtime_status": "ready",
+        "node_run_id": "nr-fact-confirm-v5"
+      },
+      "outline_plan": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-outline-v5"
+      }
+    },
+    "retrieval": []
+  },
+  "intake_confirmation": {
+    "entities": {
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "task_id": "task-001",
+          "fact_key": "database_type",
+          "fact_type": "DATABASE_TYPE",
+          "current_fact_version_id": "fact-database-type-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "task_id": "task-001",
+          "fact_key": "display_driver",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-display-driver-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "task_id": "task-001",
+          "fact_key": "mcu_model",
+          "fact_type": "HARDWARE_MODEL",
+          "current_fact_version_id": "fact-mcu-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "task_id": "task-001",
+          "fact_key": "sensor_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-sensor-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "task_id": "task-001",
+          "fact_key": "software_framework",
+          "fact_type": "SOFTWARE_FRAMEWORK",
+          "current_fact_version_id": "fact-software-framework-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "task_id": "task-001",
+          "fact_key": "supply_voltage",
+          "fact_type": "ELECTRICAL_PARAMETER",
+          "current_fact_version_id": "fact-supply-voltage-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "task_id": "task-001",
+          "fact_key": "wireless_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-wireless-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        }
+      ],
+      "fact_versions": [
+        {
+          "fact_version_id": "fact-database-type-v2",
+          "fact_id": "fact-database-type",
+          "fact_key": "database_type",
+          "version": 2,
+          "canonical_value": "PostgreSQL",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-53ff3ead8f517211",
+            "fsl-c3e98f7b12834b23",
+            "fsl-c97906dfc8cd02b1"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_version_id": "fact-display-driver-v2",
+          "fact_id": "fact-display-driver",
+          "fact_key": "display_driver",
+          "version": 2,
+          "canonical_value": "SSD1306",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-241c324be66b42fd",
+            "fsl-8118415ad7fa0b5e",
+            "fsl-d79b4493e83e671b"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_version_id": "fact-mcu-model-v2",
+          "fact_id": "fact-mcu-model",
+          "fact_key": "mcu_model",
+          "version": 2,
+          "canonical_value": "STM32F103C8T6",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-012e03b3682cea32",
+            "fsl-5d5e3113d5f2f54d",
+            "fsl-77fadc766ca5dcd9",
+            "fsl-e9a944b068d43b4e"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+        },
+        {
+          "fact_version_id": "fact-sensor-model-v2",
+          "fact_id": "fact-sensor-model",
+          "fact_key": "sensor_model",
+          "version": 2,
+          "canonical_value": "DHT11",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-528cf35e61baff7b",
+            "fsl-9ccd66b546e3d5a8",
+            "fsl-d8c446c15a3daab0"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_version_id": "fact-software-framework-v2",
+          "fact_id": "fact-software-framework",
+          "fact_key": "software_framework",
+          "version": 2,
+          "canonical_value": "FastAPI",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-3342ffeef88f5a71",
+            "fsl-4fd81257b36a2cf3"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_version_id": "fact-supply-voltage-v2",
+          "fact_id": "fact-supply-voltage",
+          "fact_key": "supply_voltage",
+          "version": 2,
+          "canonical_value": "3.3V",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-344aa64ae847e3d1",
+            "fsl-74cb5e4fa661377c",
+            "fsl-ef125bc84a1b8436"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_version_id": "fact-wireless-model-v2",
+          "fact_id": "fact-wireless-model",
+          "fact_key": "wireless_model",
+          "version": 2,
+          "canonical_value": "ESP8266-01S",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-76427cf7fdd32928",
+            "fsl-887b9be9b7707e3f",
+            "fsl-c526b87da835c0be"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        }
+      ],
+      "source_links": [
+        {
+          "source_link_id": "fsl-c97906dfc8cd02b1",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 21,
+            "char_end": 31
+          }
+        },
+        {
+          "source_link_id": "fsl-53ff3ead8f517211",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "DATABASE_TYPE = \"PostgreSQL\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DATABASE_TYPE = \"PostgreSQL\"",
+            "excerpt_hash": "sha256:ef5241aa4b23a1b7529488fa128b0903a7b8ec0fc5e89c9dbc4c7b59a98fd651",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 7,
+            "line_end": 7,
+            "symbol_name": "DATABASE_TYPE"
+          }
+        },
+        {
+          "source_link_id": "fsl-c3e98f7b12834b23",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "数据库：PostgreSQL",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "数据库：PostgreSQL",
+            "excerpt_hash": "sha256:9f67aa94536895bb29075c5bd5c2d76ce4ccfd2bffe1f5b45a10517203b5ec56",
+            "sheet_name": "硬件清单",
+            "cell_range": "B5"
+          }
+        },
+        {
+          "source_link_id": "fsl-241c324be66b42fd",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 82,
+            "char_end": 89
+          }
+        },
+        {
+          "source_link_id": "fsl-8118415ad7fa0b5e",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "DISPLAY_DRIVER = \"SSD1306\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DISPLAY_DRIVER = \"SSD1306\"",
+            "excerpt_hash": "sha256:de89ca7ac04fcf04cf1fc45130d8cc4f1d99aac5ec89f4eec14b41851062d619",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 5,
+            "line_end": 5,
+            "symbol_name": "DISPLAY_DRIVER"
+          }
+        },
+        {
+          "source_link_id": "fsl-d79b4493e83e671b",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "显示屏：0.96 英寸 OLED / SSD1306",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "显示屏：0.96 英寸 OLED / SSD1306",
+            "excerpt_hash": "sha256:6874332fd2bb17373b3188b2a48967d286a1cc63d722a96b2eef6a7d7bbdeab9",
+            "sheet_name": "硬件清单",
+            "cell_range": "B4"
+          }
+        },
+        {
+          "source_link_id": "fsl-5d5e3113d5f2f54d",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 12,
+            "char_end": 25
+          }
+        },
+        {
+          "source_link_id": "fsl-e9a944b068d43b4e",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU: STM32F103C8T6",
+          "confidence": 0.99,
+          "locator": {
+            "artifact_version_id": "av-d114f10b8a557ff8",
+            "source_type": "IMAGE_OCR",
+            "file_path": "screenshot/hardware-list.png",
+            "excerpt": "MCU: STM32F103C8T6",
+            "excerpt_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "page_index": 0,
+            "bbox": [
+              20,
+              20,
+              555,
+              55
+            ],
+            "ocr_block_id": "ocr-block-001",
+            "ocr_text": "MCU: STM32F103C8T6",
+            "ocr_text_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "image_sha256": "sha256:d114f10b8a557ff8f2cefe7f22c6ff1f22fa15e020148c4c0d6e801f2fb1261a"
+          }
+        },
+        {
+          "source_link_id": "fsl-77fadc766ca5dcd9",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU_MODEL = \"STM32F103C8T6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F103C8T6\"",
+            "excerpt_hash": "sha256:8f0574ca1a1e2951147381c22e35bd7d59d09fd49e1d9b3ab8cadf90f63ef5b5",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-012e03b3682cea32",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "主控芯片：STM32F103C8T6",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "主控芯片：STM32F103C8T6",
+            "excerpt_hash": "sha256:3f0d81652c64711504f6c1cbb03c7b34716449a31c179f440af83f579d7ec0b6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B7"
+          }
+        },
+        {
+          "source_link_id": "fsl-528cf35e61baff7b",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 34,
+            "char_end": 39
+          }
+        },
+        {
+          "source_link_id": "fsl-d8c446c15a3daab0",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-9ccd66b546e3d5a8",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "温湿度模块：DHT11",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "温湿度模块：DHT11",
+            "excerpt_hash": "sha256:e0b6f660ee75c937063a6c518af9710b87631f0be4f143826f966a3a02764f83",
+            "sheet_name": "硬件清单",
+            "cell_range": "B2"
+          }
+        },
+        {
+          "source_link_id": "fsl-3342ffeef88f5a71",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 7,
+            "char_end": 14
+          }
+        },
+        {
+          "source_link_id": "fsl-4fd81257b36a2cf3",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "WEB_FRAMEWORK = \"FastAPI\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WEB_FRAMEWORK = \"FastAPI\"",
+            "excerpt_hash": "sha256:c577df7f027d5040aeaed74307ae194a7ffbd6f0aac8294a32bf5fd32fc4abca",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 6,
+            "line_end": 6,
+            "symbol_name": "WEB_FRAMEWORK"
+          }
+        },
+        {
+          "source_link_id": "fsl-344aa64ae847e3d1",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 96,
+            "char_end": 100
+          }
+        },
+        {
+          "source_link_id": "fsl-ef125bc84a1b8436",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "SUPPLY_VOLTAGE = \"3.3V\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SUPPLY_VOLTAGE = \"3.3V\"",
+            "excerpt_hash": "sha256:4ad1588d2445e09118065db78604e4697b39fe6dcde64f1d569d554e4a2e144f",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 8,
+            "line_end": 8,
+            "symbol_name": "SUPPLY_VOLTAGE"
+          }
+        },
+        {
+          "source_link_id": "fsl-74cb5e4fa661377c",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "供电电压：3.3V",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "供电电压：3.3V",
+            "excerpt_hash": "sha256:27e07802a38fb59f8c8d7862d5a0cc9abcb6f0ea9a006b9ea50cf17fed96c8c7",
+            "sheet_name": "硬件清单",
+            "cell_range": "B6"
+          }
+        },
+        {
+          "source_link_id": "fsl-76427cf7fdd32928",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 47,
+            "char_end": 58
+          }
+        },
+        {
+          "source_link_id": "fsl-887b9be9b7707e3f",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-c526b87da835c0be",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "无线模块：ESP8266-01S",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "无线模块：ESP8266-01S",
+            "excerpt_hash": "sha256:9703d2543f8606843dda561622b594f200c8a4f8fde1067e6db80c80274b75c6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B3"
+          }
+        }
+      ],
+      "conflicts": []
+    },
+    "snapshot": {
+      "snapshot_id": "pfs-task-001-v5",
+      "task_id": "task-001",
+      "version": 5,
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "fact_version_id": "fact-database-type-v2",
+          "canonical_value": "PostgreSQL",
+          "fact_version_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "fact_version_id": "fact-display-driver-v2",
+          "canonical_value": "SSD1306",
+          "fact_version_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "fact_version_id": "fact-mcu-model-v2",
+          "canonical_value": "STM32F103C8T6",
+          "fact_version_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "fact_version_id": "fact-sensor-model-v2",
+          "canonical_value": "DHT11",
+          "fact_version_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "fact_version_id": "fact-software-framework-v2",
+          "canonical_value": "FastAPI",
+          "fact_version_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "fact_version_id": "fact-supply-voltage-v2",
+          "canonical_value": "3.3V",
+          "fact_version_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "fact_version_id": "fact-wireless-model-v2",
+          "canonical_value": "ESP8266-01S",
+          "fact_version_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        }
+      ],
+      "status": "ACTIVE",
+      "created_by": "operator-lin-chen",
+      "created_at": "2026-07-15T12:00:00+08:00",
+      "snapshot_hash": "sha256:7fb0e21311cec8bc19174e63a01a27f21acb374986c85b190522f805d096830a"
+    },
+    "human_approval": {
+      "approval_id": "ha-project-fact-intake-v5",
+      "task_id": "task-001",
+      "approval_type": "PROJECT_FACT_INTAKE_CONFIRMATION",
+      "status": "APPROVED",
+      "snapshot_id": "pfs-task-001-v5",
+      "approved_by": "operator-lin-chen",
+      "approved_at": "2026-07-15T12:00:00+08:00"
+    },
+    "audit_event": {
+      "audit_event_id": "ae-project-fact-intake-v5",
+      "task_id": "task-001",
+      "event_type": "PROJECT_FACT_INTAKE_CONFIRMED",
+      "actor_id": "operator-lin-chen",
+      "snapshot_id": "pfs-task-001-v5",
+      "occurred_at": "2026-07-15T12:00:00+08:00"
+    },
+    "targets": [
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v5",
+        "logical_id": "outline_plan",
+        "state": "WAITING_FOR_APPROVAL",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:c769afcbccdf770a38af5551b9ab7f60f967c0fbcb9f5c39de00bdd1270026c3"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "logical_id": "section_generate_pre_group",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "logical_id": "engineering_verify",
+        "state": "RUNNING",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "logical_id": "section_generate_ch6",
+        "state": "READY",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "logical_id": "section_generate_ch7",
+        "state": "PENDING",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "logical_id": "manuscript_quality_check",
+        "state": "QUEUED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "logical_id": "quality_gate_final",
+        "state": "PENDING",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "logical_id": "docx_render",
+        "state": "PENDING",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "logical_id": "delivery_approval",
+        "state": "WAITING_FOR_APPROVAL",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff"
+      },
+      {
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "logical_id": "claim_mcu_design",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:061dc77a254a9aef3feeaf188aa0f24f88e48aac6c228fb62763423e41884ab5"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "logical_id": "retrieval_evidence",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:c0bc16c6259d8d6e85e6904e6dca22ea19898c016f920f23a9d264f830783a83"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "logical_id": "hardware_section",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5ba1e1725501aeb27b68aa072589b7565693423bf19532c14902fc8e1c1835cb"
+      },
+      {
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "logical_id": "quality_report",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:1f5f361de6e3d69a65580ae4fa15708afe29c79c67f11f170d684090ee2857d5"
+      },
+      {
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "logical_id": "delivery_package",
+        "state": "SUCCEEDED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:53bbc7350a4596e3d84066f65494c77f7a603c1b0b0833b77e44691eedfb7c62"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-background-v2",
+        "logical_id": "background_theory",
+        "state": "SUCCEEDED",
+        "depends_on_fact": false,
+        "fact_version_ids": [],
+        "execution_fingerprint": "sha256:59a3d895f9b0d24b47fc7b332d6b204e406013882cb7d53cb82df54d22a1d0b9"
+      }
+    ],
+    "dependency_graph": {
+      "root": "fact-mcu-model-v2",
+      "targets": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-outline-v5",
+          "logical_id": "outline_plan",
+          "state": "WAITING_FOR_APPROVAL"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-pre-v5",
+          "logical_id": "section_generate_pre_group",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-engineering-v5",
+          "logical_id": "engineering_verify",
+          "state": "RUNNING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch6-v5",
+          "logical_id": "section_generate_ch6",
+          "state": "READY"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch7-v5",
+          "logical_id": "section_generate_ch7",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-quality-v5",
+          "logical_id": "manuscript_quality_check",
+          "state": "QUEUED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-gate-v5",
+          "logical_id": "quality_gate_final",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-docx-v5",
+          "logical_id": "docx_render",
+          "state": "PENDING"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-delivery-v5",
+          "logical_id": "delivery_approval",
+          "state": "WAITING_FOR_APPROVAL"
+        },
+        {
+          "target_type": "CLAIM",
+          "target_id": "claim-mcu-design-v3",
+          "logical_id": "claim_mcu_design",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-retrieval-mcu-v2",
+          "logical_id": "retrieval_evidence",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-hardware-v3",
+          "logical_id": "hardware_section",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "QUALITY_REPORT",
+          "target_id": "quality-report-v3",
+          "logical_id": "quality_report",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "DELIVERY_PACKAGE",
+          "target_id": "delivery-package-v3",
+          "logical_id": "delivery_package",
+          "state": "SUCCEEDED"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-background-v2",
+          "logical_id": "background_theory",
+          "state": "SUCCEEDED"
+        }
+      ],
+      "edges": [
+        [
+          "fact-mcu-model-v2",
+          "nr-outline-v5"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "nr-engineering-v5"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "claim-mcu-design-v3"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "artifact-retrieval-mcu-v2"
+        ],
+        [
+          "fact-mcu-model-v2",
+          "artifact-hardware-v3"
+        ],
+        [
+          "nr-outline-v5",
+          "nr-pre-v5"
+        ],
+        [
+          "nr-pre-v5",
+          "nr-ch6-v5"
+        ],
+        [
+          "nr-engineering-v5",
+          "nr-ch6-v5"
+        ],
+        [
+          "nr-ch6-v5",
+          "nr-ch7-v5"
+        ],
+        [
+          "nr-ch7-v5",
+          "nr-quality-v5"
+        ],
+        [
+          "nr-quality-v5",
+          "nr-gate-v5"
+        ],
+        [
+          "nr-gate-v5",
+          "nr-docx-v5"
+        ],
+        [
+          "nr-docx-v5",
+          "nr-delivery-v5"
+        ],
+        [
+          "nr-docx-v5",
+          "delivery-package-v3"
+        ],
+        [
+          "claim-mcu-design-v3",
+          "quality-report-v3"
+        ],
+        [
+          "artifact-hardware-v3",
+          "quality-report-v3"
+        ],
+        [
+          "quality-report-v3",
+          "delivery-package-v3"
+        ]
+      ]
+    },
+    "fact_dependencies": [
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-outline-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v5",
+        "execution_fingerprint": "sha256:c769afcbccdf770a38af5551b9ab7f60f967c0fbcb9f5c39de00bdd1270026c3"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-pre-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-engineering-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-ch6-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-ch7-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-quality-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-gate-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-docx-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-delivery-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-claim-mcu-design-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "execution_fingerprint": "sha256:061dc77a254a9aef3feeaf188aa0f24f88e48aac6c228fb62763423e41884ab5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-artifact-retrieval-mcu-v2",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "execution_fingerprint": "sha256:c0bc16c6259d8d6e85e6904e6dca22ea19898c016f920f23a9d264f830783a83"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-artifact-hardware-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "execution_fingerprint": "sha256:5ba1e1725501aeb27b68aa072589b7565693423bf19532c14902fc8e1c1835cb"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-quality-report-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "execution_fingerprint": "sha256:1f5f361de6e3d69a65580ae4fa15708afe29c79c67f11f170d684090ee2857d5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-delivery-package-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "execution_fingerprint": "sha256:53bbc7350a4596e3d84066f65494c77f7a603c1b0b0833b77e44691eedfb7c62"
+      }
+    ],
+    "workflow_state": {
+      "outline_plan": {
+        "runtime_status": "waiting_for_approval",
+        "node_run_id": "nr-outline-v5",
+        "execution_fingerprint": "sha256:c769afcbccdf770a38af5551b9ab7f60f967c0fbcb9f5c39de00bdd1270026c3",
+        "prior_node_run_state": null
+      },
+      "section_generate_pre_group": {
+        "runtime_status": "succeeded",
+        "node_run_id": "nr-pre-v5",
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15",
+        "prior_node_run_state": null
+      },
+      "engineering_verify": {
+        "runtime_status": "running",
+        "node_run_id": "nr-engineering-v5",
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch6": {
+        "runtime_status": "ready",
+        "node_run_id": "nr-ch6-v5",
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch7": {
+        "runtime_status": "pending",
+        "node_run_id": "nr-ch7-v5",
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a",
+        "prior_node_run_state": null
+      },
+      "manuscript_quality_check": {
+        "runtime_status": "queued",
+        "node_run_id": "nr-quality-v5",
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31",
+        "prior_node_run_state": null
+      },
+      "quality_gate_final": {
+        "runtime_status": "pending",
+        "node_run_id": "nr-gate-v5",
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7",
+        "prior_node_run_state": null
+      },
+      "docx_render": {
+        "runtime_status": "pending",
+        "node_run_id": "nr-docx-v5",
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce",
+        "prior_node_run_state": null
+      },
+      "delivery_approval": {
+        "runtime_status": "waiting_for_approval",
+        "node_run_id": "nr-delivery-v5",
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff",
+        "prior_node_run_state": null
+      },
+      "project_fact_confirm": {
+        "runtime_status": "succeeded",
+        "node_run_id": "nr-fact-confirm-v5"
+      }
+    },
+    "retrieval": [
+      {
+        "result_id": "rr-stm32f103c8t6",
+        "locked_model": "STM32F103C8T6",
+        "matched_model": "STM32F103C8T6",
+        "fact_id": "fact-mcu-model",
+        "fact_version_id": "fact-mcu-model-v2",
+        "alias_id": null,
+        "match_type": "EXACT_MODEL",
+        "evidence_role": "MODEL_PARAMETER_EVIDENCE",
+        "supports_project_fact": true,
+        "supports_model_parameters": true
+      },
+      {
+        "result_id": "rr-stm32f103zet6",
+        "locked_model": "STM32F103C8T6",
+        "matched_model": "STM32F103ZET6",
+        "fact_id": "fact-mcu-model",
+        "fact_version_id": "fact-mcu-model-v2",
+        "alias_id": null,
+        "match_type": "SERIES_MATCH",
+        "evidence_role": "GENERAL_PRINCIPLE",
+        "supports_project_fact": false,
+        "supports_model_parameters": false
+      },
+      {
+        "result_id": "rr-stm32f407vet6",
+        "locked_model": "STM32F103C8T6",
+        "matched_model": "STM32F407VET6",
+        "fact_id": "fact-mcu-model",
+        "fact_version_id": "fact-mcu-model-v2",
+        "alias_id": null,
+        "match_type": "RELATED_MODEL",
+        "evidence_role": "COMPARISON_ONLY",
+        "supports_project_fact": false,
+        "supports_model_parameters": false
+      }
+    ],
+    "generated_outputs": [
+      {
+        "surface": "outline",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      },
+      {
+        "surface": "body",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      },
+      {
+        "surface": "bom",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      },
+      {
+        "surface": "parameter_table",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      },
+      {
+        "surface": "figure",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      },
+      {
+        "surface": "test_chapter",
+        "context_role": "PROJECT_FACT_OUTPUT",
+        "fact_bindings": {
+          "display_driver": "SSD1306",
+          "mcu_model": "STM32F103C8T6",
+          "sensor_model": "DHT11",
+          "wireless_model": "ESP8266-01S"
+        }
+      }
+    ]
+  },
+  "conflict": {
+    "entities": {
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "task_id": "task-001",
+          "fact_key": "database_type",
+          "fact_type": "DATABASE_TYPE",
+          "current_fact_version_id": "fact-database-type-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "task_id": "task-001",
+          "fact_key": "display_driver",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-display-driver-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "task_id": "task-001",
+          "fact_key": "mcu_model",
+          "fact_type": "HARDWARE_MODEL",
+          "current_fact_version_id": null,
+          "status": "CONFLICT",
+          "conflict_status": "OPEN",
+          "last_locked_fact_version_id": "fact-mcu-model-v2"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "task_id": "task-001",
+          "fact_key": "sensor_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-sensor-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "task_id": "task-001",
+          "fact_key": "software_framework",
+          "fact_type": "SOFTWARE_FRAMEWORK",
+          "current_fact_version_id": "fact-software-framework-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "task_id": "task-001",
+          "fact_key": "supply_voltage",
+          "fact_type": "ELECTRICAL_PARAMETER",
+          "current_fact_version_id": "fact-supply-voltage-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "task_id": "task-001",
+          "fact_key": "wireless_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-wireless-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        }
+      ],
+      "fact_versions": [
+        {
+          "fact_version_id": "fact-database-type-v2",
+          "fact_id": "fact-database-type",
+          "fact_key": "database_type",
+          "version": 2,
+          "canonical_value": "PostgreSQL",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-53ff3ead8f517211",
+            "fsl-c3e98f7b12834b23",
+            "fsl-c97906dfc8cd02b1"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_version_id": "fact-display-driver-v2",
+          "fact_id": "fact-display-driver",
+          "fact_key": "display_driver",
+          "version": 2,
+          "canonical_value": "SSD1306",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-241c324be66b42fd",
+            "fsl-8118415ad7fa0b5e",
+            "fsl-d79b4493e83e671b"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_version_id": "fact-mcu-model-v2",
+          "fact_id": "fact-mcu-model",
+          "fact_key": "mcu_model",
+          "version": 2,
+          "canonical_value": "STM32F103C8T6",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-012e03b3682cea32",
+            "fsl-5d5e3113d5f2f54d",
+            "fsl-77fadc766ca5dcd9",
+            "fsl-e9a944b068d43b4e"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+        },
+        {
+          "fact_version_id": "fact-sensor-model-v2",
+          "fact_id": "fact-sensor-model",
+          "fact_key": "sensor_model",
+          "version": 2,
+          "canonical_value": "DHT11",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-528cf35e61baff7b",
+            "fsl-9ccd66b546e3d5a8",
+            "fsl-d8c446c15a3daab0"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_version_id": "fact-software-framework-v2",
+          "fact_id": "fact-software-framework",
+          "fact_key": "software_framework",
+          "version": 2,
+          "canonical_value": "FastAPI",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-3342ffeef88f5a71",
+            "fsl-4fd81257b36a2cf3"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_version_id": "fact-supply-voltage-v2",
+          "fact_id": "fact-supply-voltage",
+          "fact_key": "supply_voltage",
+          "version": 2,
+          "canonical_value": "3.3V",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-344aa64ae847e3d1",
+            "fsl-74cb5e4fa661377c",
+            "fsl-ef125bc84a1b8436"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_version_id": "fact-wireless-model-v2",
+          "fact_id": "fact-wireless-model",
+          "fact_key": "wireless_model",
+          "version": 2,
+          "canonical_value": "ESP8266-01S",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-76427cf7fdd32928",
+            "fsl-887b9be9b7707e3f",
+            "fsl-c526b87da835c0be"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        }
+      ],
+      "source_links": [
+        {
+          "source_link_id": "fsl-012e03b3682cea32",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "主控芯片：STM32F103C8T6",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "主控芯片：STM32F103C8T6",
+            "excerpt_hash": "sha256:3f0d81652c64711504f6c1cbb03c7b34716449a31c179f440af83f579d7ec0b6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B7"
+          }
+        },
+        {
+          "source_link_id": "fsl-241c324be66b42fd",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 82,
+            "char_end": 89
+          }
+        },
+        {
+          "source_link_id": "fsl-3342ffeef88f5a71",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 7,
+            "char_end": 14
+          }
+        },
+        {
+          "source_link_id": "fsl-344aa64ae847e3d1",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 96,
+            "char_end": 100
+          }
+        },
+        {
+          "source_link_id": "fsl-49b5783add0aaa11",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-4fd81257b36a2cf3",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "WEB_FRAMEWORK = \"FastAPI\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WEB_FRAMEWORK = \"FastAPI\"",
+            "excerpt_hash": "sha256:c577df7f027d5040aeaed74307ae194a7ffbd6f0aac8294a32bf5fd32fc4abca",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 6,
+            "line_end": 6,
+            "symbol_name": "WEB_FRAMEWORK"
+          }
+        },
+        {
+          "source_link_id": "fsl-528cf35e61baff7b",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 34,
+            "char_end": 39
+          }
+        },
+        {
+          "source_link_id": "fsl-53ff3ead8f517211",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "DATABASE_TYPE = \"PostgreSQL\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DATABASE_TYPE = \"PostgreSQL\"",
+            "excerpt_hash": "sha256:ef5241aa4b23a1b7529488fa128b0903a7b8ec0fc5e89c9dbc4c7b59a98fd651",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 7,
+            "line_end": 7,
+            "symbol_name": "DATABASE_TYPE"
+          }
+        },
+        {
+          "source_link_id": "fsl-564c19e752f571b8",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-5d5e3113d5f2f54d",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 12,
+            "char_end": 25
+          }
+        },
+        {
+          "source_link_id": "fsl-74cb5e4fa661377c",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "供电电压：3.3V",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "供电电压：3.3V",
+            "excerpt_hash": "sha256:27e07802a38fb59f8c8d7862d5a0cc9abcb6f0ea9a006b9ea50cf17fed96c8c7",
+            "sheet_name": "硬件清单",
+            "cell_range": "B6"
+          }
+        },
+        {
+          "source_link_id": "fsl-76427cf7fdd32928",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 47,
+            "char_end": 58
+          }
+        },
+        {
+          "source_link_id": "fsl-77fadc766ca5dcd9",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU_MODEL = \"STM32F103C8T6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F103C8T6\"",
+            "excerpt_hash": "sha256:8f0574ca1a1e2951147381c22e35bd7d59d09fd49e1d9b3ab8cadf90f63ef5b5",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-8118415ad7fa0b5e",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "DISPLAY_DRIVER = \"SSD1306\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DISPLAY_DRIVER = \"SSD1306\"",
+            "excerpt_hash": "sha256:de89ca7ac04fcf04cf1fc45130d8cc4f1d99aac5ec89f4eec14b41851062d619",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 5,
+            "line_end": 5,
+            "symbol_name": "DISPLAY_DRIVER"
+          }
+        },
+        {
+          "source_link_id": "fsl-887b9be9b7707e3f",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-9ccd66b546e3d5a8",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "温湿度模块：DHT11",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "温湿度模块：DHT11",
+            "excerpt_hash": "sha256:e0b6f660ee75c937063a6c518af9710b87631f0be4f143826f966a3a02764f83",
+            "sheet_name": "硬件清单",
+            "cell_range": "B2"
+          }
+        },
+        {
+          "source_link_id": "fsl-c3e98f7b12834b23",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "数据库：PostgreSQL",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "数据库：PostgreSQL",
+            "excerpt_hash": "sha256:9f67aa94536895bb29075c5bd5c2d76ce4ccfd2bffe1f5b45a10517203b5ec56",
+            "sheet_name": "硬件清单",
+            "cell_range": "B5"
+          }
+        },
+        {
+          "source_link_id": "fsl-c526b87da835c0be",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "无线模块：ESP8266-01S",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "无线模块：ESP8266-01S",
+            "excerpt_hash": "sha256:9703d2543f8606843dda561622b594f200c8a4f8fde1067e6db80c80274b75c6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B3"
+          }
+        },
+        {
+          "source_link_id": "fsl-c97906dfc8cd02b1",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 21,
+            "char_end": 31
+          }
+        },
+        {
+          "source_link_id": "fsl-d79b4493e83e671b",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "显示屏：0.96 英寸 OLED / SSD1306",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "显示屏：0.96 英寸 OLED / SSD1306",
+            "excerpt_hash": "sha256:6874332fd2bb17373b3188b2a48967d286a1cc63d722a96b2eef6a7d7bbdeab9",
+            "sheet_name": "硬件清单",
+            "cell_range": "B4"
+          }
+        },
+        {
+          "source_link_id": "fsl-d8c446c15a3daab0",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-e9a944b068d43b4e",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU: STM32F103C8T6",
+          "confidence": 0.99,
+          "locator": {
+            "artifact_version_id": "av-d114f10b8a557ff8",
+            "source_type": "IMAGE_OCR",
+            "file_path": "screenshot/hardware-list.png",
+            "excerpt": "MCU: STM32F103C8T6",
+            "excerpt_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "page_index": 0,
+            "bbox": [
+              20,
+              20,
+              555,
+              55
+            ],
+            "ocr_block_id": "ocr-block-001",
+            "ocr_text": "MCU: STM32F103C8T6",
+            "ocr_text_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "image_sha256": "sha256:d114f10b8a557ff8f2cefe7f22c6ff1f22fa15e020148c4c0d6e801f2fb1261a"
+          }
+        },
+        {
+          "source_link_id": "fsl-eafc509581c7e88f",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F407VET6",
+          "original_value": "MCU_MODEL = \"STM32F407VET6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F407VET6\"",
+            "excerpt_hash": "sha256:85e045012f4f0fa30169b87db7fbcadccf07863143d7ce1fb53914df5f411b52",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-ef125bc84a1b8436",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "SUPPLY_VOLTAGE = \"3.3V\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SUPPLY_VOLTAGE = \"3.3V\"",
+            "excerpt_hash": "sha256:4ad1588d2445e09118065db78604e4697b39fe6dcde64f1d569d554e4a2e144f",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 8,
+            "line_end": 8,
+            "symbol_name": "SUPPLY_VOLTAGE"
+          }
+        }
+      ],
+      "conflicts": []
+    },
+    "snapshot": {
+      "snapshot_id": "pfs-task-001-v5",
+      "task_id": "task-001",
+      "version": 5,
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "fact_version_id": "fact-database-type-v2",
+          "canonical_value": "PostgreSQL",
+          "fact_version_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "fact_version_id": "fact-display-driver-v2",
+          "canonical_value": "SSD1306",
+          "fact_version_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "fact_version_id": "fact-mcu-model-v2",
+          "canonical_value": "STM32F103C8T6",
+          "fact_version_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "fact_version_id": "fact-sensor-model-v2",
+          "canonical_value": "DHT11",
+          "fact_version_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "fact_version_id": "fact-software-framework-v2",
+          "canonical_value": "FastAPI",
+          "fact_version_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "fact_version_id": "fact-supply-voltage-v2",
+          "canonical_value": "3.3V",
+          "fact_version_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "fact_version_id": "fact-wireless-model-v2",
+          "canonical_value": "ESP8266-01S",
+          "fact_version_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        }
+      ],
+      "status": "SUSPENDED",
+      "created_by": "operator-lin-chen",
+      "created_at": "2026-07-15T12:00:00+08:00",
+      "snapshot_hash": "sha256:7fb0e21311cec8bc19174e63a01a27f21acb374986c85b190522f805d096830a"
+    },
+    "snapshot_status_transition": {
+      "snapshot_id": "pfs-task-001-v5",
+      "from_status": "ACTIVE",
+      "to_status": "SUSPENDED",
+      "occurred_at": "2026-07-15T12:00:00+08:00"
+    },
+    "project_fact_conflict": {
+      "conflict_id": "pfc-mcu-model",
+      "task_id": "task-001",
+      "fact_id": "fact-mcu-model",
+      "conflict_type": "USER_MATERIAL_CONFLICT",
+      "status": "OPEN",
+      "candidates": [
+        {
+          "canonical_value": "STM32F103C8T6",
+          "source_link_ids": [
+            "fsl-012e03b3682cea32",
+            "fsl-5d5e3113d5f2f54d",
+            "fsl-e9a944b068d43b4e"
+          ]
+        },
+        {
+          "canonical_value": "STM32F407VET6",
+          "source_link_ids": [
+            "fsl-eafc509581c7e88f"
+          ]
+        }
+      ],
+      "auto_selection_allowed": false,
+      "created_at": "2026-07-15T12:00:00+08:00",
+      "content_hash": "sha256:9b905fccb3d04c816fdb51c45b73a08f651f2806b80a1576e610f7f6c55b7a23"
+    },
+    "targets": [
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v5",
+        "logical_id": "outline_plan",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:c769afcbccdf770a38af5551b9ab7f60f967c0fbcb9f5c39de00bdd1270026c3"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "logical_id": "section_generate_pre_group",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "logical_id": "engineering_verify",
+        "state": "CANCEL_REQUESTED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67",
+        "terminal_after_cancel": "BLOCKED"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "logical_id": "section_generate_ch6",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "logical_id": "section_generate_ch7",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "logical_id": "manuscript_quality_check",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "logical_id": "quality_gate_final",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "logical_id": "docx_render",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "logical_id": "delivery_approval",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff"
+      },
+      {
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "logical_id": "claim_mcu_design",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:061dc77a254a9aef3feeaf188aa0f24f88e48aac6c228fb62763423e41884ab5"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "logical_id": "retrieval_evidence",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:c0bc16c6259d8d6e85e6904e6dca22ea19898c016f920f23a9d264f830783a83"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "logical_id": "hardware_section",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5ba1e1725501aeb27b68aa072589b7565693423bf19532c14902fc8e1c1835cb"
+      },
+      {
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "logical_id": "quality_report",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:1f5f361de6e3d69a65580ae4fa15708afe29c79c67f11f170d684090ee2857d5"
+      },
+      {
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "logical_id": "delivery_package",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:53bbc7350a4596e3d84066f65494c77f7a603c1b0b0833b77e44691eedfb7c62"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-background-v2",
+        "logical_id": "background_theory",
+        "state": "SUCCEEDED",
+        "depends_on_fact": false,
+        "fact_version_ids": [],
+        "execution_fingerprint": "sha256:59a3d895f9b0d24b47fc7b332d6b204e406013882cb7d53cb82df54d22a1d0b9"
+      }
+    ],
+    "transitions": [
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v5",
+        "logical_id": "outline_plan",
+        "before": "WAITING_FOR_APPROVAL",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "logical_id": "section_generate_pre_group",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "logical_id": "engineering_verify",
+        "before": "RUNNING",
+        "after": "CANCEL_REQUESTED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "logical_id": "section_generate_ch6",
+        "before": "READY",
+        "after": "BLOCKED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "logical_id": "section_generate_ch7",
+        "before": "PENDING",
+        "after": "BLOCKED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "logical_id": "manuscript_quality_check",
+        "before": "QUEUED",
+        "after": "BLOCKED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "logical_id": "quality_gate_final",
+        "before": "PENDING",
+        "after": "BLOCKED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "logical_id": "docx_render",
+        "before": "PENDING",
+        "after": "BLOCKED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "logical_id": "delivery_approval",
+        "before": "WAITING_FOR_APPROVAL",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "logical_id": "claim_mcu_design",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "logical_id": "retrieval_evidence",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "logical_id": "hardware_section",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "logical_id": "quality_report",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "logical_id": "delivery_package",
+        "before": "SUCCEEDED",
+        "after": "INVALIDATED",
+        "reason": "PROJECT_FACT_CONFLICT"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-background-v2",
+        "logical_id": "background_theory",
+        "before": "SUCCEEDED",
+        "after": "SUCCEEDED",
+        "reason": "NO_FACT_DEPENDENCY"
+      }
+    ],
+    "impact": {
+      "invalidated": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-outline-v5",
+          "logical_id": "outline_plan"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-pre-v5",
+          "logical_id": "section_generate_pre_group"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-delivery-v5",
+          "logical_id": "delivery_approval"
+        },
+        {
+          "target_type": "CLAIM",
+          "target_id": "claim-mcu-design-v3",
+          "logical_id": "claim_mcu_design"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-retrieval-mcu-v2",
+          "logical_id": "retrieval_evidence"
+        },
+        {
+          "target_type": "ARTIFACT_VERSION",
+          "target_id": "artifact-hardware-v3",
+          "logical_id": "hardware_section"
+        },
+        {
+          "target_type": "QUALITY_REPORT",
+          "target_id": "quality-report-v3",
+          "logical_id": "quality_report"
+        },
+        {
+          "target_type": "DELIVERY_PACKAGE",
+          "target_id": "delivery-package-v3",
+          "logical_id": "delivery_package"
+        }
+      ],
+      "blocked": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch6-v5",
+          "logical_id": "section_generate_ch6"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-ch7-v5",
+          "logical_id": "section_generate_ch7"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-quality-v5",
+          "logical_id": "manuscript_quality_check"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-gate-v5",
+          "logical_id": "quality_gate_final"
+        },
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-docx-v5",
+          "logical_id": "docx_render"
+        }
+      ],
+      "cancel_requested": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-engineering-v5",
+          "logical_id": "engineering_verify"
+        }
+      ],
+      "preserved": [
+        {
+          "target_type": "NODE_RUN",
+          "target_id": "nr-background-v2",
+          "logical_id": "background_theory"
+        }
+      ]
+    },
+    "workflow_state": {
+      "outline_plan": {
+        "runtime_status": "invalidated",
+        "node_run_id": "nr-outline-v5",
+        "execution_fingerprint": "sha256:c769afcbccdf770a38af5551b9ab7f60f967c0fbcb9f5c39de00bdd1270026c3",
+        "prior_node_run_state": null
+      },
+      "section_generate_pre_group": {
+        "runtime_status": "invalidated",
+        "node_run_id": "nr-pre-v5",
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15",
+        "prior_node_run_state": null
+      },
+      "engineering_verify": {
+        "runtime_status": "cancel_requested",
+        "node_run_id": "nr-engineering-v5",
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch6": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-ch6-v5",
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch7": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-ch7-v5",
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a",
+        "prior_node_run_state": null
+      },
+      "manuscript_quality_check": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-quality-v5",
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31",
+        "prior_node_run_state": null
+      },
+      "quality_gate_final": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-gate-v5",
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7",
+        "prior_node_run_state": null
+      },
+      "docx_render": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-docx-v5",
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce",
+        "prior_node_run_state": null
+      },
+      "delivery_approval": {
+        "runtime_status": "invalidated",
+        "node_run_id": "nr-delivery-v5",
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff",
+        "prior_node_run_state": null
+      },
+      "project_fact_confirm": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-fact-confirm-v5"
+      }
+    }
+  },
+  "confirmation": {
+    "entities": {
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "task_id": "task-001",
+          "fact_key": "database_type",
+          "fact_type": "DATABASE_TYPE",
+          "current_fact_version_id": "fact-database-type-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "task_id": "task-001",
+          "fact_key": "display_driver",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-display-driver-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "task_id": "task-001",
+          "fact_key": "mcu_model",
+          "fact_type": "HARDWARE_MODEL",
+          "current_fact_version_id": "fact-mcu-model-v3",
+          "status": "LOCKED",
+          "conflict_status": "RESOLVED"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "task_id": "task-001",
+          "fact_key": "sensor_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-sensor-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "task_id": "task-001",
+          "fact_key": "software_framework",
+          "fact_type": "SOFTWARE_FRAMEWORK",
+          "current_fact_version_id": "fact-software-framework-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "task_id": "task-001",
+          "fact_key": "supply_voltage",
+          "fact_type": "ELECTRICAL_PARAMETER",
+          "current_fact_version_id": "fact-supply-voltage-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "task_id": "task-001",
+          "fact_key": "wireless_model",
+          "fact_type": "MODULE_MODEL",
+          "current_fact_version_id": "fact-wireless-model-v2",
+          "status": "LOCKED",
+          "conflict_status": "NONE"
+        }
+      ],
+      "fact_versions": [
+        {
+          "fact_version_id": "fact-database-type-v2",
+          "fact_id": "fact-database-type",
+          "fact_key": "database_type",
+          "version": 2,
+          "canonical_value": "PostgreSQL",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-53ff3ead8f517211",
+            "fsl-c3e98f7b12834b23",
+            "fsl-c97906dfc8cd02b1"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_version_id": "fact-display-driver-v2",
+          "fact_id": "fact-display-driver",
+          "fact_key": "display_driver",
+          "version": 2,
+          "canonical_value": "SSD1306",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-241c324be66b42fd",
+            "fsl-8118415ad7fa0b5e",
+            "fsl-d79b4493e83e671b"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_version_id": "fact-mcu-model-v2",
+          "fact_id": "fact-mcu-model",
+          "fact_key": "mcu_model",
+          "version": 2,
+          "canonical_value": "STM32F103C8T6",
+          "status": "SUPERSEDED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-012e03b3682cea32",
+            "fsl-5d5e3113d5f2f54d",
+            "fsl-77fadc766ca5dcd9",
+            "fsl-e9a944b068d43b4e"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+        },
+        {
+          "fact_version_id": "fact-sensor-model-v2",
+          "fact_id": "fact-sensor-model",
+          "fact_key": "sensor_model",
+          "version": 2,
+          "canonical_value": "DHT11",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-528cf35e61baff7b",
+            "fsl-9ccd66b546e3d5a8",
+            "fsl-d8c446c15a3daab0"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_version_id": "fact-software-framework-v2",
+          "fact_id": "fact-software-framework",
+          "fact_key": "software_framework",
+          "version": 2,
+          "canonical_value": "FastAPI",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-3342ffeef88f5a71",
+            "fsl-4fd81257b36a2cf3"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_version_id": "fact-supply-voltage-v2",
+          "fact_id": "fact-supply-voltage",
+          "fact_key": "supply_voltage",
+          "version": 2,
+          "canonical_value": "3.3V",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-344aa64ae847e3d1",
+            "fsl-74cb5e4fa661377c",
+            "fsl-ef125bc84a1b8436"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_version_id": "fact-wireless-model-v2",
+          "fact_id": "fact-wireless-model",
+          "fact_key": "wireless_model",
+          "version": 2,
+          "canonical_value": "ESP8266-01S",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-76427cf7fdd32928",
+            "fsl-887b9be9b7707e3f",
+            "fsl-c526b87da835c0be"
+          ],
+          "supersedes_fact_version_id": null,
+          "confirmed_by": "operator-lin-chen",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        },
+        {
+          "fact_version_id": "fact-mcu-model-v3",
+          "fact_id": "fact-mcu-model",
+          "fact_key": "mcu_model",
+          "version": 3,
+          "canonical_value": "STM32F103C8T6",
+          "status": "LOCKED",
+          "locked": true,
+          "source_link_ids": [
+            "fsl-012e03b3682cea32",
+            "fsl-5d5e3113d5f2f54d",
+            "fsl-e9a944b068d43b4e"
+          ],
+          "supersedes_fact_version_id": "fact-mcu-model-v2",
+          "confirmed_by": "reviewer-zhang",
+          "confirmed_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:0c5f2fdfe959f00001c90903138b6c32a3998d0ebeecbabaf842222fca479c94"
+        }
+      ],
+      "source_links": [
+        {
+          "source_link_id": "fsl-012e03b3682cea32",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "主控芯片：STM32F103C8T6",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "主控芯片：STM32F103C8T6",
+            "excerpt_hash": "sha256:3f0d81652c64711504f6c1cbb03c7b34716449a31c179f440af83f579d7ec0b6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B7"
+          }
+        },
+        {
+          "source_link_id": "fsl-241c324be66b42fd",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 82,
+            "char_end": 89
+          }
+        },
+        {
+          "source_link_id": "fsl-3342ffeef88f5a71",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 7,
+            "char_end": 14
+          }
+        },
+        {
+          "source_link_id": "fsl-344aa64ae847e3d1",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 96,
+            "char_end": 100
+          }
+        },
+        {
+          "source_link_id": "fsl-49b5783add0aaa11",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-4fd81257b36a2cf3",
+          "fact_key": "software_framework",
+          "canonical_value": "FastAPI",
+          "original_value": "WEB_FRAMEWORK = \"FastAPI\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WEB_FRAMEWORK = \"FastAPI\"",
+            "excerpt_hash": "sha256:c577df7f027d5040aeaed74307ae194a7ffbd6f0aac8294a32bf5fd32fc4abca",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 6,
+            "line_end": 6,
+            "symbol_name": "WEB_FRAMEWORK"
+          }
+        },
+        {
+          "source_link_id": "fsl-528cf35e61baff7b",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 34,
+            "char_end": 39
+          }
+        },
+        {
+          "source_link_id": "fsl-53ff3ead8f517211",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "DATABASE_TYPE = \"PostgreSQL\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DATABASE_TYPE = \"PostgreSQL\"",
+            "excerpt_hash": "sha256:ef5241aa4b23a1b7529488fa128b0903a7b8ec0fc5e89c9dbc4c7b59a98fd651",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 7,
+            "line_end": 7,
+            "symbol_name": "DATABASE_TYPE"
+          }
+        },
+        {
+          "source_link_id": "fsl-564c19e752f571b8",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-5d5e3113d5f2f54d",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 12,
+            "char_end": 25
+          }
+        },
+        {
+          "source_link_id": "fsl-74cb5e4fa661377c",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "供电电压：3.3V",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "供电电压：3.3V",
+            "excerpt_hash": "sha256:27e07802a38fb59f8c8d7862d5a0cc9abcb6f0ea9a006b9ea50cf17fed96c8c7",
+            "sheet_name": "硬件清单",
+            "cell_range": "B6"
+          }
+        },
+        {
+          "source_link_id": "fsl-76427cf7fdd32928",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "项目约束：主控必须使用 STM32F103C8T6；温湿度模块采用 DHT11；无线模块采用 ESP8266-01S；显示屏为 0.96 英寸 OLED，驱动芯片 SSD1306；供电电压为 3.3V。",
+            "excerpt_hash": "sha256:16a18693cd0dc7d5831694ac1a42b78d5e425f9d8cf2c4c68be3f6a71f5554ae",
+            "page_number": 1,
+            "section": "硬件选型",
+            "paragraph_index": 2,
+            "char_start": 47,
+            "char_end": 58
+          }
+        },
+        {
+          "source_link_id": "fsl-77fadc766ca5dcd9",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU_MODEL = \"STM32F103C8T6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F103C8T6\"",
+            "excerpt_hash": "sha256:8f0574ca1a1e2951147381c22e35bd7d59d09fd49e1d9b3ab8cadf90f63ef5b5",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-8118415ad7fa0b5e",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "DISPLAY_DRIVER = \"SSD1306\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "DISPLAY_DRIVER = \"SSD1306\"",
+            "excerpt_hash": "sha256:de89ca7ac04fcf04cf1fc45130d8cc4f1d99aac5ec89f4eec14b41851062d619",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 5,
+            "line_end": 5,
+            "symbol_name": "DISPLAY_DRIVER"
+          }
+        },
+        {
+          "source_link_id": "fsl-887b9be9b7707e3f",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "WIRELESS_MODEL = \"ESP8266-01S\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "WIRELESS_MODEL = \"ESP8266-01S\"",
+            "excerpt_hash": "sha256:20e67b4313193e668ffa5f7e8aaeca38f113204c11087a4e61a9c142fde46ec3",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 4,
+            "line_end": 4,
+            "symbol_name": "WIRELESS_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-9ccd66b546e3d5a8",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "温湿度模块：DHT11",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "温湿度模块：DHT11",
+            "excerpt_hash": "sha256:e0b6f660ee75c937063a6c518af9710b87631f0be4f143826f966a3a02764f83",
+            "sheet_name": "硬件清单",
+            "cell_range": "B2"
+          }
+        },
+        {
+          "source_link_id": "fsl-c3e98f7b12834b23",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "数据库：PostgreSQL",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "数据库：PostgreSQL",
+            "excerpt_hash": "sha256:9f67aa94536895bb29075c5bd5c2d76ce4ccfd2bffe1f5b45a10517203b5ec56",
+            "sheet_name": "硬件清单",
+            "cell_range": "B5"
+          }
+        },
+        {
+          "source_link_id": "fsl-c526b87da835c0be",
+          "fact_key": "wireless_model",
+          "canonical_value": "ESP8266-01S",
+          "original_value": "无线模块：ESP8266-01S",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "无线模块：ESP8266-01S",
+            "excerpt_hash": "sha256:9703d2543f8606843dda561622b594f200c8a4f8fde1067e6db80c80274b75c6",
+            "sheet_name": "硬件清单",
+            "cell_range": "B3"
+          }
+        },
+        {
+          "source_link_id": "fsl-c97906dfc8cd02b1",
+          "fact_key": "database_type",
+          "canonical_value": "PostgreSQL",
+          "original_value": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-02017dd78c3a4378",
+            "source_type": "DOCX",
+            "file_path": "task-document/任务书.docx",
+            "excerpt": "服务框架采用 FastAPI，数据库采用 PostgreSQL。",
+            "excerpt_hash": "sha256:8a17d37ac316a7b563d0c0635ee5f79648e2eab73b9edc1ab71727bba23ee10b",
+            "page_number": 1,
+            "section": "软件环境",
+            "paragraph_index": 4,
+            "char_start": 21,
+            "char_end": 31
+          }
+        },
+        {
+          "source_link_id": "fsl-d79b4493e83e671b",
+          "fact_key": "display_driver",
+          "canonical_value": "SSD1306",
+          "original_value": "显示屏：0.96 英寸 OLED / SSD1306",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-81565ec4eaa5ec84",
+            "source_type": "SPREADSHEET",
+            "file_path": "spreadsheet/BOM.xlsx",
+            "excerpt": "显示屏：0.96 英寸 OLED / SSD1306",
+            "excerpt_hash": "sha256:6874332fd2bb17373b3188b2a48967d286a1cc63d722a96b2eef6a7d7bbdeab9",
+            "sheet_name": "硬件清单",
+            "cell_range": "B4"
+          }
+        },
+        {
+          "source_link_id": "fsl-d8c446c15a3daab0",
+          "fact_key": "sensor_model",
+          "canonical_value": "DHT11",
+          "original_value": "SENSOR_MODEL = \"DHT11\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SENSOR_MODEL = \"DHT11\"",
+            "excerpt_hash": "sha256:707aaa651498c5576a0117af51b78e4c23497e888bf942398b46b81a72cf24b0",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 3,
+            "line_end": 3,
+            "symbol_name": "SENSOR_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-e9a944b068d43b4e",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F103C8T6",
+          "original_value": "MCU: STM32F103C8T6",
+          "confidence": 0.99,
+          "locator": {
+            "artifact_version_id": "av-d114f10b8a557ff8",
+            "source_type": "IMAGE_OCR",
+            "file_path": "screenshot/hardware-list.png",
+            "excerpt": "MCU: STM32F103C8T6",
+            "excerpt_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "page_index": 0,
+            "bbox": [
+              20,
+              20,
+              555,
+              55
+            ],
+            "ocr_block_id": "ocr-block-001",
+            "ocr_text": "MCU: STM32F103C8T6",
+            "ocr_text_hash": "sha256:f69fc43e4b5274963cb31a6c374ce1c63e9e0b3015d6c65e2b29c39ebe128631",
+            "image_sha256": "sha256:d114f10b8a557ff8f2cefe7f22c6ff1f22fa15e020148c4c0d6e801f2fb1261a"
+          }
+        },
+        {
+          "source_link_id": "fsl-eafc509581c7e88f",
+          "fact_key": "mcu_model",
+          "canonical_value": "STM32F407VET6",
+          "original_value": "MCU_MODEL = \"STM32F407VET6\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-665e2bcedbb5a557",
+            "source_type": "SOURCE_CODE",
+            "file_path": "conflicts/source-code/config.py",
+            "excerpt": "MCU_MODEL = \"STM32F407VET6\"",
+            "excerpt_hash": "sha256:85e045012f4f0fa30169b87db7fbcadccf07863143d7ce1fb53914df5f411b52",
+            "commit": "77ab921-conflicting-mcu-r2",
+            "line_start": 2,
+            "line_end": 2,
+            "symbol_name": "MCU_MODEL"
+          }
+        },
+        {
+          "source_link_id": "fsl-ef125bc84a1b8436",
+          "fact_key": "supply_voltage",
+          "canonical_value": "3.3V",
+          "original_value": "SUPPLY_VOLTAGE = \"3.3V\"",
+          "confidence": 1.0,
+          "locator": {
+            "artifact_version_id": "av-158753c1e871ec76",
+            "source_type": "SOURCE_CODE",
+            "file_path": "source-code/config.py",
+            "excerpt": "SUPPLY_VOLTAGE = \"3.3V\"",
+            "excerpt_hash": "sha256:4ad1588d2445e09118065db78604e4697b39fe6dcde64f1d569d554e4a2e144f",
+            "commit": "4f0f6b1-project-fact-r2",
+            "line_start": 8,
+            "line_end": 8,
+            "symbol_name": "SUPPLY_VOLTAGE"
+          }
+        }
+      ],
+      "conflicts": [
+        {
+          "conflict_id": "pfc-mcu-model",
+          "task_id": "task-001",
+          "fact_id": "fact-mcu-model",
+          "conflict_type": "USER_MATERIAL_CONFLICT",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "canonical_value": "STM32F103C8T6",
+              "source_link_ids": [
+                "fsl-012e03b3682cea32",
+                "fsl-5d5e3113d5f2f54d",
+                "fsl-e9a944b068d43b4e"
+              ]
+            },
+            {
+              "canonical_value": "STM32F407VET6",
+              "source_link_ids": [
+                "fsl-eafc509581c7e88f"
+              ]
+            }
+          ],
+          "auto_selection_allowed": false,
+          "created_at": "2026-07-15T12:00:00+08:00",
+          "content_hash": "sha256:9b905fccb3d04c816fdb51c45b73a08f651f2806b80a1576e610f7f6c55b7a23",
+          "resolution": {
+            "decision": "APPROVED",
+            "canonical_value": "STM32F103C8T6",
+            "selected_source_link_ids": [
+              "fsl-012e03b3682cea32",
+              "fsl-5d5e3113d5f2f54d",
+              "fsl-e9a944b068d43b4e"
+            ],
+            "reason": "以任务书与 BOM 的一致事实为准",
+            "impact_snapshot_hash": "sha256:7fb0e21311cec8bc19174e63a01a27f21acb374986c85b190522f805d096830a",
+            "decided_by": "reviewer-zhang",
+            "decided_at": "2026-07-15T12:00:00+08:00"
+          }
+        }
+      ]
+    },
+    "snapshots": [
+      {
+        "snapshot_id": "pfs-task-001-v5",
+        "task_id": "task-001",
+        "version": 5,
+        "facts": [
+          {
+            "fact_id": "fact-database-type",
+            "fact_version_id": "fact-database-type-v2",
+            "canonical_value": "PostgreSQL",
+            "fact_version_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+          },
+          {
+            "fact_id": "fact-display-driver",
+            "fact_version_id": "fact-display-driver-v2",
+            "canonical_value": "SSD1306",
+            "fact_version_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+          },
+          {
+            "fact_id": "fact-mcu-model",
+            "fact_version_id": "fact-mcu-model-v2",
+            "canonical_value": "STM32F103C8T6",
+            "fact_version_hash": "sha256:b99116685f6fb6a602cce728cad51782138b445d5a136cf820b67a170becf4bc"
+          },
+          {
+            "fact_id": "fact-sensor-model",
+            "fact_version_id": "fact-sensor-model-v2",
+            "canonical_value": "DHT11",
+            "fact_version_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+          },
+          {
+            "fact_id": "fact-software-framework",
+            "fact_version_id": "fact-software-framework-v2",
+            "canonical_value": "FastAPI",
+            "fact_version_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+          },
+          {
+            "fact_id": "fact-supply-voltage",
+            "fact_version_id": "fact-supply-voltage-v2",
+            "canonical_value": "3.3V",
+            "fact_version_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+          },
+          {
+            "fact_id": "fact-wireless-model",
+            "fact_version_id": "fact-wireless-model-v2",
+            "canonical_value": "ESP8266-01S",
+            "fact_version_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+          }
+        ],
+        "status": "SUPERSEDED",
+        "created_by": "operator-lin-chen",
+        "created_at": "2026-07-15T12:00:00+08:00",
+        "snapshot_hash": "sha256:7fb0e21311cec8bc19174e63a01a27f21acb374986c85b190522f805d096830a"
+      },
+      {
+        "snapshot_id": "pfs-task-001-v6",
+        "task_id": "task-001",
+        "version": 6,
+        "facts": [
+          {
+            "fact_id": "fact-database-type",
+            "fact_version_id": "fact-database-type-v2",
+            "canonical_value": "PostgreSQL",
+            "fact_version_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+          },
+          {
+            "fact_id": "fact-display-driver",
+            "fact_version_id": "fact-display-driver-v2",
+            "canonical_value": "SSD1306",
+            "fact_version_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+          },
+          {
+            "fact_id": "fact-mcu-model",
+            "fact_version_id": "fact-mcu-model-v3",
+            "canonical_value": "STM32F103C8T6",
+            "fact_version_hash": "sha256:0c5f2fdfe959f00001c90903138b6c32a3998d0ebeecbabaf842222fca479c94"
+          },
+          {
+            "fact_id": "fact-sensor-model",
+            "fact_version_id": "fact-sensor-model-v2",
+            "canonical_value": "DHT11",
+            "fact_version_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+          },
+          {
+            "fact_id": "fact-software-framework",
+            "fact_version_id": "fact-software-framework-v2",
+            "canonical_value": "FastAPI",
+            "fact_version_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+          },
+          {
+            "fact_id": "fact-supply-voltage",
+            "fact_version_id": "fact-supply-voltage-v2",
+            "canonical_value": "3.3V",
+            "fact_version_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+          },
+          {
+            "fact_id": "fact-wireless-model",
+            "fact_version_id": "fact-wireless-model-v2",
+            "canonical_value": "ESP8266-01S",
+            "fact_version_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+          }
+        ],
+        "status": "ACTIVE",
+        "created_by": "reviewer-zhang",
+        "created_at": "2026-07-15T12:00:00+08:00",
+        "snapshot_hash": "sha256:69d0febc085b4962881df530b66bcd24d6574d3e193cdea145cef77b958c4379"
+      }
+    ],
+    "new_snapshot": {
+      "snapshot_id": "pfs-task-001-v6",
+      "task_id": "task-001",
+      "version": 6,
+      "facts": [
+        {
+          "fact_id": "fact-database-type",
+          "fact_version_id": "fact-database-type-v2",
+          "canonical_value": "PostgreSQL",
+          "fact_version_hash": "sha256:c5e6c78b91908abb90fc5e5e4a3aa0910a2804967e75e1cb16e91e18faa04132"
+        },
+        {
+          "fact_id": "fact-display-driver",
+          "fact_version_id": "fact-display-driver-v2",
+          "canonical_value": "SSD1306",
+          "fact_version_hash": "sha256:ae4110a7c3a2c8c6a22eb7d78ae29e600d1c9649af88bd4d6596445d5a12a908"
+        },
+        {
+          "fact_id": "fact-mcu-model",
+          "fact_version_id": "fact-mcu-model-v3",
+          "canonical_value": "STM32F103C8T6",
+          "fact_version_hash": "sha256:0c5f2fdfe959f00001c90903138b6c32a3998d0ebeecbabaf842222fca479c94"
+        },
+        {
+          "fact_id": "fact-sensor-model",
+          "fact_version_id": "fact-sensor-model-v2",
+          "canonical_value": "DHT11",
+          "fact_version_hash": "sha256:ced90e2f5b6b707465c16ca5706530b7e06ec644b6b25a500cd3d50845d1ae94"
+        },
+        {
+          "fact_id": "fact-software-framework",
+          "fact_version_id": "fact-software-framework-v2",
+          "canonical_value": "FastAPI",
+          "fact_version_hash": "sha256:88b6ae963bb44dbbdfb9e5b13227e878ee23d02e143bce3a96b81798feb2821d"
+        },
+        {
+          "fact_id": "fact-supply-voltage",
+          "fact_version_id": "fact-supply-voltage-v2",
+          "canonical_value": "3.3V",
+          "fact_version_hash": "sha256:5227d7ea4c76bca0093fbb1a1bc8d2936e02df766101b1e58e36550015492417"
+        },
+        {
+          "fact_id": "fact-wireless-model",
+          "fact_version_id": "fact-wireless-model-v2",
+          "canonical_value": "ESP8266-01S",
+          "fact_version_hash": "sha256:0f19b3f48909f87aecfe55d77ea0422ad605c12d6615eda236da9483fe5c8dff"
+        }
+      ],
+      "status": "ACTIVE",
+      "created_by": "reviewer-zhang",
+      "created_at": "2026-07-15T12:00:00+08:00",
+      "snapshot_hash": "sha256:69d0febc085b4962881df530b66bcd24d6574d3e193cdea145cef77b958c4379"
+    },
+    "new_fact_version": {
+      "fact_version_id": "fact-mcu-model-v3",
+      "fact_id": "fact-mcu-model",
+      "fact_key": "mcu_model",
+      "version": 3,
+      "canonical_value": "STM32F103C8T6",
+      "status": "LOCKED",
+      "locked": true,
+      "source_link_ids": [
+        "fsl-012e03b3682cea32",
+        "fsl-5d5e3113d5f2f54d",
+        "fsl-e9a944b068d43b4e"
+      ],
+      "supersedes_fact_version_id": "fact-mcu-model-v2",
+      "confirmed_by": "reviewer-zhang",
+      "confirmed_at": "2026-07-15T12:00:00+08:00",
+      "content_hash": "sha256:0c5f2fdfe959f00001c90903138b6c32a3998d0ebeecbabaf842222fca479c94"
+    },
+    "human_approval": {
+      "approval_id": "ha-project-fact-conflict-v6",
+      "task_id": "task-001",
+      "approval_type": "PROJECT_FACT_CONFLICT_RESOLUTION",
+      "status": "APPROVED",
+      "conflict_id": "pfc-mcu-model",
+      "snapshot_id": "pfs-task-001-v6",
+      "approved_by": "reviewer-zhang",
+      "reason": "以任务书与 BOM 的一致事实为准",
+      "approved_at": "2026-07-15T12:00:00+08:00"
+    },
+    "audit_event": {
+      "audit_event_id": "ae-project-fact-conflict-v6",
+      "task_id": "task-001",
+      "event_type": "PROJECT_FACT_CONFLICT_RESOLVED",
+      "actor_id": "reviewer-zhang",
+      "conflict_id": "pfc-mcu-model",
+      "snapshot_id": "pfs-task-001-v6",
+      "reason": "以任务书与 BOM 的一致事实为准",
+      "occurred_at": "2026-07-15T12:00:00+08:00"
+    },
+    "confirmation_request": {
+      "conflict_id": "pfc-mcu-model",
+      "selected_canonical_value": "STM32F103C8T6",
+      "selected_source_link_ids": [
+        "fsl-012e03b3682cea32",
+        "fsl-5d5e3113d5f2f54d",
+        "fsl-e9a944b068d43b4e"
+      ],
+      "decision": "APPROVED",
+      "reason": "以任务书与 BOM 的一致事实为准",
+      "approved_by": "reviewer-zhang",
+      "impact_snapshot_hash": "sha256:7fb0e21311cec8bc19174e63a01a27f21acb374986c85b190522f805d096830a"
+    },
+    "targets": [
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v6",
+        "logical_id": "outline_plan",
+        "state": "READY",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v3"
+        ],
+        "execution_fingerprint": "sha256:da2d2c5d3d47da9210d91b7d1ff68e41333449702a72e11e17c66c1b948d03d2",
+        "prior_node_run_id": "nr-outline-v5",
+        "prior_node_run_state": "INVALIDATED"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "logical_id": "section_generate_pre_group",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "logical_id": "engineering_verify",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67",
+        "terminal_after_cancel": "BLOCKED"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "logical_id": "section_generate_ch6",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "logical_id": "section_generate_ch7",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "logical_id": "manuscript_quality_check",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "logical_id": "quality_gate_final",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "logical_id": "docx_render",
+        "state": "BLOCKED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "logical_id": "delivery_approval",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff"
+      },
+      {
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "logical_id": "claim_mcu_design",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:061dc77a254a9aef3feeaf188aa0f24f88e48aac6c228fb62763423e41884ab5"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "logical_id": "retrieval_evidence",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:c0bc16c6259d8d6e85e6904e6dca22ea19898c016f920f23a9d264f830783a83"
+      },
+      {
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "logical_id": "hardware_section",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:5ba1e1725501aeb27b68aa072589b7565693423bf19532c14902fc8e1c1835cb"
+      },
+      {
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "logical_id": "quality_report",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:1f5f361de6e3d69a65580ae4fa15708afe29c79c67f11f170d684090ee2857d5"
+      },
+      {
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "logical_id": "delivery_package",
+        "state": "INVALIDATED",
+        "depends_on_fact": true,
+        "fact_version_ids": [
+          "fact-mcu-model-v2"
+        ],
+        "execution_fingerprint": "sha256:53bbc7350a4596e3d84066f65494c77f7a603c1b0b0833b77e44691eedfb7c62"
+      },
+      {
+        "target_type": "NODE_RUN",
+        "target_id": "nr-background-v2",
+        "logical_id": "background_theory",
+        "state": "SUCCEEDED",
+        "depends_on_fact": false,
+        "fact_version_ids": [],
+        "execution_fingerprint": "sha256:59a3d895f9b0d24b47fc7b332d6b204e406013882cb7d53cb82df54d22a1d0b9"
+      }
+    ],
+    "fact_dependencies": [
+      {
+        "dependency_id": "fd-fact-mcu-model-v3-nr-outline-v6",
+        "fact_version_id": "fact-mcu-model-v3",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-outline-v6",
+        "execution_fingerprint": "sha256:da2d2c5d3d47da9210d91b7d1ff68e41333449702a72e11e17c66c1b948d03d2"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-pre-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-pre-v5",
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-engineering-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-engineering-v5",
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-ch6-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch6-v5",
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-ch7-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-ch7-v5",
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-quality-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-quality-v5",
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-gate-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-gate-v5",
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-docx-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-docx-v5",
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-nr-delivery-v5",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "NODE_RUN",
+        "target_id": "nr-delivery-v5",
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-claim-mcu-design-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "CLAIM",
+        "target_id": "claim-mcu-design-v3",
+        "execution_fingerprint": "sha256:061dc77a254a9aef3feeaf188aa0f24f88e48aac6c228fb62763423e41884ab5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-artifact-retrieval-mcu-v2",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-retrieval-mcu-v2",
+        "execution_fingerprint": "sha256:c0bc16c6259d8d6e85e6904e6dca22ea19898c016f920f23a9d264f830783a83"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-artifact-hardware-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "ARTIFACT_VERSION",
+        "target_id": "artifact-hardware-v3",
+        "execution_fingerprint": "sha256:5ba1e1725501aeb27b68aa072589b7565693423bf19532c14902fc8e1c1835cb"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-quality-report-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "QUALITY_REPORT",
+        "target_id": "quality-report-v3",
+        "execution_fingerprint": "sha256:1f5f361de6e3d69a65580ae4fa15708afe29c79c67f11f170d684090ee2857d5"
+      },
+      {
+        "dependency_id": "fd-fact-mcu-model-v2-delivery-package-v3",
+        "fact_version_id": "fact-mcu-model-v2",
+        "target_type": "DELIVERY_PACKAGE",
+        "target_id": "delivery-package-v3",
+        "execution_fingerprint": "sha256:53bbc7350a4596e3d84066f65494c77f7a603c1b0b0833b77e44691eedfb7c62"
+      }
+    ],
+    "outline_transition": {
+      "old_node_run_id": "nr-outline-v5",
+      "old_state": "INVALIDATED",
+      "new_node_run_id": "nr-outline-v6",
+      "new_state": "READY"
+    },
+    "workflow_state": {
+      "outline_plan": {
+        "runtime_status": "ready",
+        "node_run_id": "nr-outline-v6",
+        "execution_fingerprint": "sha256:da2d2c5d3d47da9210d91b7d1ff68e41333449702a72e11e17c66c1b948d03d2",
+        "prior_node_run_state": "INVALIDATED"
+      },
+      "section_generate_pre_group": {
+        "runtime_status": "invalidated",
+        "node_run_id": "nr-pre-v5",
+        "execution_fingerprint": "sha256:f291080d7098fb420f829a354bc36b95a975b455823d17efaa61d16d0d977f15",
+        "prior_node_run_state": null
+      },
+      "engineering_verify": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-engineering-v5",
+        "execution_fingerprint": "sha256:7e7be684eacded0f4e66ef78013b437166f0c3613aeebd44485673d2177a2f67",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch6": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-ch6-v5",
+        "execution_fingerprint": "sha256:e0cb0029f0c17219d94f24d0cf17cf3a0320b2c47fa49e7d858c18aa60c97ec5",
+        "prior_node_run_state": null
+      },
+      "section_generate_ch7": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-ch7-v5",
+        "execution_fingerprint": "sha256:5a57cf277333a6212199ac2d3e56fb90580b884551e8a251806e44dcac76a96a",
+        "prior_node_run_state": null
+      },
+      "manuscript_quality_check": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-quality-v5",
+        "execution_fingerprint": "sha256:39a4bda622dda46ea3e6b24a33d5041d9f96fcd6ad6e39e186f04f4b62858c31",
+        "prior_node_run_state": null
+      },
+      "quality_gate_final": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-gate-v5",
+        "execution_fingerprint": "sha256:f9340680f94795998ce6316b3216657a6057d39f5fd7e9d59067e9951bfcf9e7",
+        "prior_node_run_state": null
+      },
+      "docx_render": {
+        "runtime_status": "blocked",
+        "node_run_id": "nr-docx-v5",
+        "execution_fingerprint": "sha256:610a71378fd156f1bc1125ce6d0513241bb2e8f1ce59d16bd1383ac8333d0dce",
+        "prior_node_run_state": null
+      },
+      "delivery_approval": {
+        "runtime_status": "invalidated",
+        "node_run_id": "nr-delivery-v5",
+        "execution_fingerprint": "sha256:ef45baf372bf90df6a4455c8f586e3d96cb0275d76d4e4db3430db08edc788ff",
+        "prior_node_run_state": null
+      },
+      "project_fact_confirm": {
+        "runtime_status": "succeeded",
+        "node_run_id": "nr-fact-confirm-v6"
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ const htmlName = files.find(name => name.endsWith('.html'));
 assert.ok(htmlName, 'missing prototype HTML file');
 const file = new URL(`./${htmlName}`, import.meta.url);
 const html = await readFile(file, 'utf8');
-const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r4.json', import.meta.url), 'utf8'));
+const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r5.json', import.meta.url), 'utf8'));
 const server = await readFile(new URL('./prototype.server.cjs', import.meta.url), 'utf8');
 
 const pages = [
@@ -44,7 +44,7 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.4-P0-r4 ProjectFact 闭环修复候选/, 'r4 candidate title missing');
+assert.match(html, /v1\.2\.4-P0-r5 ProjectFact 闭环修复候选/, 'r5 candidate title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
@@ -86,6 +86,11 @@ assert.doesNotMatch(html, /snapshotVersion\s*\+=\s*1/, 'snapshot versions must c
 for (const endpoint of ['/api/project-facts', '/api/project-facts/confirm-intake', '/api/project-facts/conflict', '/api/project-facts/impact', '/api/project-facts/confirm']) {
   assert.ok(server.includes(endpoint), `missing ProjectFact API endpoint: ${endpoint}`);
 }
+assert.match(server, /resolveConflictWithExecutable/, 'conflict confirmation must invoke the executable candidate');
+assert.match(server, /readJsonBody/, 'conflict confirmation must read the request body');
+assert.match(html, /conflictCandidate/, 'conflict confirmation must allow a candidate selection');
+assert.match(html, /conflictReason/, 'conflict confirmation must collect a reason');
+assert.match(html, /conflictApprover/, 'conflict confirmation must collect an approver');
 assert.equal(projectFactPayload.initial.snapshot, null, 'initial intake must not pre-create an ACTIVE Snapshot');
 assert.equal(projectFactPayload.initial.entities.fact_versions.length, 0, 'initial intake must not pre-create ProjectFactVersion objects');
 assert.ok(projectFactPayload.initial.entities.facts.every(item => item.status === 'PROPOSED' && item.current_fact_version_id === null), 'initial facts must remain PROPOSED');
@@ -95,10 +100,15 @@ assert.equal(projectFactPayload.intake_confirmation.snapshot.status, 'ACTIVE');
 assert.equal(projectFactPayload.intake_confirmation.human_approval.approval_type, 'PROJECT_FACT_INTAKE_CONFIRMATION');
 assert.equal(projectFactPayload.intake_confirmation.audit_event.event_type, 'PROJECT_FACT_INTAKE_CONFIRMED');
 assert.deepEqual(projectFactPayload.intake_confirmation.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
+assert.ok(projectFactPayload.intake_confirmation.generated_outputs.every(output => output.context_role === 'PROJECT_FACT_OUTPUT' && output.fact_bindings.mcu_model === 'STM32F103C8T6'), 'generated outputs must carry ProjectFact bindings');
 assert.equal(projectFactPayload.conflict.project_fact_conflict.status, 'OPEN');
 assert.equal(projectFactPayload.conflict.snapshot.status, 'SUSPENDED');
 const conflictedMcu = projectFactPayload.conflict.entities.facts.find(item => item.fact_key === 'mcu_model');
 assert.equal(conflictedMcu.current_fact_version_id, null);
 assert.equal(conflictedMcu.last_locked_fact_version_id, 'fact-mcu-model-v2');
+assert.equal(projectFactPayload.conflict.snapshot_status_transition.from_status, 'ACTIVE');
+assert.equal('historical_snapshot' in projectFactPayload.conflict, false);
 assert.equal(projectFactPayload.confirmation.outline_transition.old_state, 'INVALIDATED');
 assert.equal(projectFactPayload.confirmation.outline_transition.new_state, 'READY');
+assert.equal(projectFactPayload.confirmation.human_approval.approval_type, 'PROJECT_FACT_CONFLICT_RESOLUTION');
+assert.equal(projectFactPayload.confirmation.audit_event.event_type, 'PROJECT_FACT_CONFLICT_RESOLVED');

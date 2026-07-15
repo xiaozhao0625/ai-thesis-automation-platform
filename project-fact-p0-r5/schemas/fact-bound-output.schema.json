@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fact-bound-output.schema.json",
+  "title": "ProjectFactBoundOutput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["surface", "context_role", "fact_bindings"],
+  "properties": {
+    "surface": {"type": "string", "minLength": 1},
+    "context_role": {"enum": ["PROJECT_IMPLEMENTATION", "PROJECT_FACT_OUTPUT", "BACKGROUND_ONLY", "COMPARISON_ONLY", "GENERAL_PRINCIPLE"]},
+    "fact_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mcu_model": {"type": "string", "minLength": 1},
+        "sensor_model": {"type": "string", "minLength": 1},
+        "wireless_model": {"type": "string", "minLength": 1},
+        "display_driver": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "retrieval-classification.schema.json",
+  "title": "ProjectFactRetrievalClassification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["result_id", "fact_id", "fact_version_id", "locked_model", "matched_model", "match_type", "evidence_role", "alias_id", "supports_project_fact", "supports_model_parameters"],
+  "properties": {
+    "result_id": {"type": "string", "minLength": 1},
+    "fact_id": {"type": "string", "minLength": 1},
+    "fact_version_id": {"type": "string", "minLength": 1},
+    "locked_model": {"type": "string", "minLength": 1},
+    "matched_model": {"type": "string", "minLength": 1},
+    "match_type": {"enum": ["EXACT_MODEL", "CONFIRMED_ALIAS", "SERIES_MATCH", "RELATED_MODEL", "CONFLICTING_MODEL"]},
+    "evidence_role": {"enum": ["PROJECT_FACT_EVIDENCE", "MODEL_PARAMETER_EVIDENCE", "GENERAL_PRINCIPLE", "BACKGROUND_ONLY", "COMPARISON_ONLY", "REJECTED"]},
+    "alias_id": {"type": ["string", "null"]},
+    "supports_project_fact": {"type": "boolean"},
+    "supports_model_parameters": {"type": "boolean"},
+    "alias_scope": {"enum": ["PROJECT_FACT_ONLY", "PROJECT_FACT_AND_PARAMETERS"]}
+  },
+  "oneOf": [
+    {"properties": {"match_type": {"const": "EXACT_MODEL"}, "alias_id": {"type": "null"}, "evidence_role": {"enum": ["PROJECT_FACT_EVIDENCE", "MODEL_PARAMETER_EVIDENCE", "GENERAL_PRINCIPLE", "BACKGROUND_ONLY"]}, "supports_project_fact": {"const": true}, "supports_model_parameters": {"const": true}}},
+    {"properties": {"match_type": {"const": "CONFIRMED_ALIAS"}, "alias_id": {"type": "string", "minLength": 1}, "evidence_role": {"enum": ["PROJECT_FACT_EVIDENCE", "GENERAL_PRINCIPLE", "BACKGROUND_ONLY"]}, "supports_project_fact": {"const": true}, "supports_model_parameters": {"const": false}}, "required": ["alias_scope"]},
+    {"properties": {"match_type": {"const": "CONFIRMED_ALIAS"}, "alias_id": {"type": "string", "minLength": 1}, "evidence_role": {"const": "MODEL_PARAMETER_EVIDENCE"}, "supports_project_fact": {"const": true}, "supports_model_parameters": {"const": true}, "alias_scope": {"const": "PROJECT_FACT_AND_PARAMETERS"}}, "required": ["alias_scope"]},
+    {"properties": {"match_type": {"const": "SERIES_MATCH"}, "alias_id": {"type": "null"}, "evidence_role": {"enum": ["GENERAL_PRINCIPLE", "BACKGROUND_ONLY"]}, "supports_project_fact": {"const": false}, "supports_model_parameters": {"const": false}}},
+    {"properties": {"match_type": {"const": "RELATED_MODEL"}, "alias_id": {"type": "null"}, "evidence_role": {"enum": ["BACKGROUND_ONLY", "COMPARISON_ONLY"]}, "supports_project_fact": {"const": false}, "supports_model_parameters": {"const": false}}},
+    {"properties": {"match_type": {"const": "CONFLICTING_MODEL"}, "alias_id": {"type": "null"}, "evidence_role": {"const": "REJECTED"}, "supports_project_fact": {"const": false}, "supports_model_parameters": {"const": false}}}
+  ]
+}
