@@ -38,8 +38,8 @@ test('outline confirmation invalidates original DAG nodes without a duplicate re
   await activeClick('button[data-action="outline-impact"]');
   await page.locator('#modalConfirm').click();
   assert.equal(await page.locator('#workflowInvalidationResult').count(), 0);
-  assert.equal(await page.locator('[data-node-id="section_generate_group"]').getAttribute('data-runtime-status'), 'invalidated');
-  assert.match(await page.locator('[data-node-id="section_generate_group"]').textContent(), /5 个节点已失效/);
+  assert.equal(await page.locator('[data-node-id="section_generate_pre_group"]').getAttribute('data-runtime-status'), 'invalidated');
+  assert.match(await page.locator('[data-node-id="section_generate_pre_group"]').textContent(), /5 个前置章节已失效/);
   assert.equal(await page.locator('[data-node-id]').evaluateAll(nodes => new Set(nodes.map(node => node.dataset.nodeId)).size), await page.locator('[data-node-id]').count());
 });
 
@@ -94,16 +94,36 @@ test('SVG DAG keeps every node within its stage and every edge on ports', async 
     const edgesOnPorts = [...canvas.querySelectorAll('path[data-edge-id]')].every(path => {
       const length = path.getTotalLength();
       const start = toScreen(path.getPointAtLength(0)), end = toScreen(path.getPointAtLength(length));
-      const source = canvas.querySelector(`[data-port-id="${path.dataset.sourcePort}"]`).getBoundingClientRect();
-      const target = canvas.querySelector(`[data-port-id="${path.dataset.targetPort}"]`).getBoundingClientRect();
+      const sourcePort = canvas.querySelector(`[data-port-id="${path.dataset.sourcePort}"]`);
+      const targetPort = canvas.querySelector(`[data-port-id="${path.dataset.targetPort}"]`);
+      const source = sourcePort.getBoundingClientRect(), target = targetPort.getBoundingClientRect();
+      const anchor = (box, side) => {
+        if (side === 'out-right') return {x: box.right, y: box.top + box.height / 2};
+        if (side === 'in-left') return {x: box.left, y: box.top + box.height / 2};
+        if (side === 'out-bottom') return {x: box.left + box.width / 2, y: box.bottom};
+        return {x: box.left + box.width / 2, y: box.top};
+      };
       const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
-      return distance(start, {x: source.right, y: source.top + source.height / 2}) <= tolerance && distance(end, {x: target.left, y: target.top + target.height / 2}) <= tolerance;
+      return distance(start, anchor(source, sourcePort.dataset.portSide)) <= tolerance && distance(end, anchor(target, targetPort.dataset.portSide)) <= tolerance;
     });
-    return {nodesInsideStages, edgesOnPorts, stageWidths: [...canvas.querySelectorAll('.workflow-stage[data-stage-id]')].map(stage => stage.getBoundingClientRect().width)};
+    return {nodesInsideStages, edgesOnPorts, stageWidths: [...canvas.querySelectorAll('.workflow-stage[data-stage-id]')].map(stage => stage.getBoundingClientRect().width), edgeIds: [...canvas.querySelectorAll('path[data-edge-id]')].map(edge => edge.dataset.edgeId)};
   });
   assert.equal(report.nodesInsideStages, true);
   assert.equal(report.edgesOnPorts, true);
   assert.ok(report.stageWidths.every(width => Math.round(width) >= 232));
+  assert.equal(report.stageWidths.length, 8);
+  assert.deepEqual(report.edgeIds, [
+    'task_start_approval--project_source_parse',
+    'project_source_parse--outline_plan',
+    'outline_plan--section_generate_pre_group',
+    'section_generate_pre_group--engineering_verify',
+    'engineering_verify--section_generate_ch6',
+    'section_generate_ch6--section_generate_ch7',
+    'section_generate_ch7--manuscript_quality_check',
+    'manuscript_quality_check--quality_gate_final',
+    'quality_gate_final--docx_render',
+    'docx_render--delivery_approval'
+  ]);
 });
 
 test('chapter group expands in place and preserves a single node identity per NodeRun', async () => {
@@ -112,13 +132,21 @@ test('chapter group expands in place and preserves a single node identity per No
   await activeClick('button[data-action="outline-impact"]');
   await page.locator('#modalConfirm').click();
   await page.locator('[data-action="toggle-chapter-group"]').click();
-  assert.equal(await page.locator('[data-node-id="section_generate_group"]').count(), 0);
-  assert.equal(await page.locator('[data-node-id^="section_generate_ch"]').count(), 5);
+  assert.equal(await page.locator('[data-node-id="section_generate_pre_group"]').count(), 0);
+  assert.equal(await page.locator('[data-node-id^="section_generate_pre_ch"]').count(), 5);
   assert.equal(await page.locator('[data-node-id]').evaluateAll(nodes => new Set(nodes.map(node => node.dataset.nodeId)).size), await page.locator('[data-node-id]').count());
 });
 
 test('TaskSubNavigation supports all nine entries and History API state', async () => {
   await page.goto(`${origin}/tasks/task-001/workflow?node=engineering_verify&attempt=2`);
+  assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'workflow');
+  assert.equal(await page.locator('#inspector').getAttribute('data-selected-node'), 'engineering_verify');
+  await activeRoute('materials');
+  assert.equal(new URL(page.url()).search, '');
+  assert.equal(await page.locator('#inspector').getAttribute('data-selected-node'), '');
+  assert.equal(await page.locator('#inspector').getAttribute('data-owner-page'), '');
+  assert.equal(await page.locator('#inspector').evaluate(inspector => inspector.classList.contains('closed')), true);
+  await page.goBack();
   assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'workflow');
   assert.equal(await page.locator('#inspector').getAttribute('data-selected-node'), 'engineering_verify');
   const routes = ['overview', 'workflow', 'materials', 'evidence', 'outline', 'content', 'engineering', 'quality', 'delivery'];
@@ -135,4 +163,41 @@ test('TaskSubNavigation supports all nine entries and History API state', async 
   assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'evidence');
   await page.reload();
   assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'evidence');
+});
+
+test('direct task URLs sanitize foreign query keys and keep the Workflow Inspector isolated', async () => {
+  await page.goto(`${origin}/tasks/task-001/evidence?node=engineering_verify&attempt=2&claim=Claim-219&source=EC-043`);
+  assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'evidence');
+  assert.equal(new URL(page.url()).search, '?claim=Claim-219&source=EC-043');
+  assert.equal(await page.locator('#inspector').getAttribute('data-selected-node'), '');
+  assert.equal(await page.locator('#inspector').evaluate(inspector => inspector.classList.contains('closed')), true);
+  await page.reload();
+  assert.equal(new URL(page.url()).search, '?claim=Claim-219&source=EC-043');
+  assert.equal(await page.locator('#inspector').evaluate(inspector => inspector.classList.contains('closed')), true);
+});
+
+test('global navigation updates URL, History state, and active page for every destination', async () => {
+  const routes = [
+    ['dashboard', '/dashboard'],
+    ['tasks', '/tasks'],
+    ['approvals', '/approvals'],
+    ['benchmarks', '/benchmarks'],
+    ['templates', '/templates'],
+    ['workers', '/system/workers'],
+    ['model-calls', '/system/model-calls'],
+    ['audit', '/system/audit']
+  ];
+  for (const [target, pathname] of routes) {
+    await page.locator(`.nav-item[data-target="${target}"]`).click();
+    assert.equal(new URL(page.url()).pathname, pathname);
+    assert.equal(await page.locator('section.page.active').getAttribute('data-page'), target);
+    assert.equal(await page.evaluate(() => history.state?.page), target);
+  }
+  await page.goBack();
+  assert.equal(new URL(page.url()).pathname, '/system/model-calls');
+  assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'model-calls');
+  await page.goForward();
+  assert.equal(new URL(page.url()).pathname, '/system/audit');
+  await page.reload();
+  assert.equal(await page.locator('section.page.active').getAttribute('data-page'), 'audit');
 });

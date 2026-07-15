@@ -10,7 +10,7 @@ const html = await readFile(file, 'utf8');
 const pages = [
   'dashboard', 'tasks', 'new-task', 'overview', 'workflow', 'inspector', 'evidence',
   'content', 'engineering', 'quality', 'templates', 'delivery', 'approvals',
-  'materials', 'outline', 'components'
+  'materials', 'outline', 'components', 'benchmarks', 'workers', 'model-calls', 'audit'
 ];
 
 for (const page of pages) {
@@ -42,3 +42,31 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
+assert.match(html, /v1\.2\.3 工作流语义与路由一致性校正原型/, 'v1.2.3 title missing');
+
+const semanticEdges = [
+  ['task_start_approval', 'project_source_parse'],
+  ['project_source_parse', 'outline_plan'],
+  ['outline_plan', 'section_generate_pre_group'],
+  ['section_generate_pre_group', 'engineering_verify'],
+  ['engineering_verify', 'section_generate_ch6'],
+  ['section_generate_ch6', 'section_generate_ch7'],
+  ['section_generate_ch7', 'manuscript_quality_check'],
+  ['manuscript_quality_check', 'quality_gate_final'],
+  ['quality_gate_final', 'docx_render'],
+  ['docx_render', 'delivery_approval']
+];
+for (const [source, target] of semanticEdges) {
+  assert.match(html, new RegExp(`(?:horizontal|vertical)\\('${source}','${target}'\\)`), `missing semantic edge: ${source} -> ${target}`);
+}
+assert.match(html, /\['start','启动','workflow'\].*\['preproduce','前置生产','content'\].*\['engineering','工程验证','engineering'\].*\['postproduce','后置生产','content'\].*\['delivery','交付','delivery'\]/s, 'eight-stage workflow order missing');
+
+for (const route of ['/dashboard', '/tasks', '/approvals', '/benchmarks', '/templates', '/system/workers', '/system/model-calls', '/system/audit']) {
+  assert.ok(html.includes(`'${route}'`), `missing formal route: ${route}`);
+}
+assert.match(html, /workflow:\['node','attempt'\]/, 'workflow query allowlist missing');
+assert.match(html, /materials:\['asset','parser'\]/, 'materials query allowlist missing');
+assert.match(html, /evidence:\['claim','source'\]/, 'evidence query allowlist missing');
+assert.match(html, /content:\['chapter','claim','version'\]/, 'content query allowlist missing');
+assert.match(html, /pageName==='workflow'\?new URL\(location\.href\)\.searchParams\.get\('node'\):null/, 'inspector must be scoped to workflow route');
+assert.doesNotMatch(html, /searchParams\.set\('taskId'/, 'taskId must not leak into page query state');
