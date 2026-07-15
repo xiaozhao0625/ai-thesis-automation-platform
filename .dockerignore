@@ -1,0 +1,11 @@
+.git
+.worktrees
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/node_modules
+**/dist
+platform/artifact_store
+platform/.runtime
+platform/handoff-bundles
+!platform/benchmark/ingest-fixture-v1/**

@@ -18,6 +18,20 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+node_modules/
+.env
+platform/artifact_store/
+platform/.runtime/
+platform/handoff-bundles/
+platform/frontend/playwright-report/
+platform/frontend/test-results/
+platform/frontend/*.tsbuildinfo
+platform/frontend/vite.config.js
+platform/frontend/vite.config.d.ts
+platform/frontend/playwright.config.js
+platform/frontend/playwright.config.d.ts
+platform/frontend/e2e/*.js
+platform/frontend/e2e/*.d.ts
 
 # Isolated local Git worktrees.
 .worktrees/

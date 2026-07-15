@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/playwright:v1.61.1-noble
+
+WORKDIR /app/platform/frontend
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+CMD ["npm", "run", "e2e"]

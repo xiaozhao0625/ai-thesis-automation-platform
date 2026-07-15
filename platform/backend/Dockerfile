@@ -1,0 +1,18 @@
+FROM python:3.12.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+COPY ingest-cli /app/ingest-cli
+RUN python -m pip install --no-cache-dir /app/ingest-cli
+
+COPY platform/backend /app/platform/backend
+RUN python -m pip install --no-cache-dir /app/platform/backend
+
+COPY platform/benchmark /app/platform/benchmark
+RUN mkdir -p /app/platform/artifact_store /app/platform/.runtime/ingest-work
+
+WORKDIR /app/platform/backend
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

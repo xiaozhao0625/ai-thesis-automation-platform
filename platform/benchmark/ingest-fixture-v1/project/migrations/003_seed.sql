@@ -1,0 +1,1 @@
+INSERT INTO sample VALUES (1);

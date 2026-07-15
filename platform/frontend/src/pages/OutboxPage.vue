@@ -1,0 +1,7 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'; import { api } from '../api/client'; import type { OutboxItem } from '../api/types'; import PageState from '../components/PageState.vue'; import StatusBadge from '../components/StatusBadge.vue'
+const events = ref<OutboxItem[]>([]); const pending = ref(0); const loading = ref(true); const error = ref('')
+async function load() { loading.value = true; try { const result = await api.listOutbox(); events.value = result.items; pending.value = result.pending; error.value = '' } catch (reason) { error.value = reason instanceof Error ? reason.message : '读取 Outbox 失败' } finally { loading.value = false } }
+onMounted(load)
+</script>
+<template><section class="page"><header class="page-heading"><div><p class="eyebrow">OUTBOX</p><h1>事件投递</h1><p>PostgreSQL Outbox 是 Redis 工作通知的恢复源。</p></div><div class="metric-inline"><strong>{{ pending }}</strong><span>待发布</span></div></header><PageState :loading="loading" :error="error" @retry="load"><div class="table-wrap"><table><thead><tr><th>事件</th><th>状态</th><th>聚合 ID</th><th>发布次数</th><th>错误</th><th>创建时间</th></tr></thead><tbody><tr v-for="event in events" :key="event.id"><td><strong>{{ event.event_type }}</strong><code>{{ event.id }}</code></td><td><StatusBadge :status="event.status" /></td><td><code>{{ event.aggregate_id }}</code></td><td>{{ event.publish_attempt_count }}</td><td>{{ event.last_error ?? '—' }}</td><td>{{ new Date(event.created_at).toLocaleString() }}</td></tr></tbody></table></div></PageState></section></template>
