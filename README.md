@@ -1,14 +1,16 @@
 # AI 论文自动化生产平台
 
-本仓库是平台代码的唯一 Git 仓库。当前开发分支 `feat/p1-1-platform-ingest-loop` 正在实现 P1-1：平台可运行骨架与真实资料摄取闭环。
+本仓库是平台代码的唯一 Git 事实源。当前分支 `feat/p1-1-platform-ingest-loop` 实现 P1-1：可运行的平台骨架与资料摄取闭环。
 
 ## 当前模块
 
-- `platform/`：FastAPI、PostgreSQL、Redis Stream、Outbox Publisher、Worker、Ingest CLI Adapter、Artifact Store、Vue 3 管理端、Docker Compose 和跨电脑迁移工具；
-- `ingest-cli/`：已冻结的 Ingest CLI v0.1 离线参考实现，本阶段只通过 Adapter 调用，不复制规则；
-- `docs/ingest-governance-v0.1/`：资料治理冻结契约验证器；
-- `uiux-prototype/`：历史 UI/UX 评审原型，P1-1 管理端继承已冻结 v1.2.3 的 Spectrum Ledger 视觉与路由语义；
-- `project-fact-p0-r*`：ProjectFact 历史评审候选，不属于 P1-1 自动执行范围。
+- `platform/`：FastAPI、PostgreSQL、Redis Stream、Outbox Publisher、Worker、Ingest CLI Adapter、Artifact Store、Vue 3 管理端、Docker Compose 和跨电脑迁移工具。
+- `ingest-cli/`：已冻结的 Ingest CLI v0.1 离线参考实现；平台只通过 Adapter 调用，不复制治理规则。
+- `docs/ingest-governance-v0.1/`：资料治理冻结契约验证器。
+- `uiux-prototype/`：已冻结 UI/UX 评审原型。
+- `project-fact-p0-r6/`：冻结 UI 原型仍需读取的历史执行夹具，不属于 P1-1 自动执行范围。
+
+ProjectFact r2-r5 失败候选和 NSTL 临时抓取文件已从当前代码树移除，其历史仍可从 Git 追溯。
 
 ## P1-1 固定闭环
 
@@ -20,19 +22,17 @@
 → project_fact_review WAITING_FOR_APPROVAL
 ```
 
-PostgreSQL 是唯一业务事实来源；Redis 只保存可重建的工作通知。不存在 SQLite 或内存 Redis 正式链路，也没有前端核心 Mock。
+PostgreSQL 是唯一业务事实源；Redis 只保存可重建的工作通知。没有 SQLite、内存 Redis 正式链路或前端核心 Mock。
 
-## Docker 新电脑启动
+## 新电脑启动
 
-新电脑只需安装并启动 Docker Desktop，不需要单独安装 PostgreSQL 或 Redis：
+新电脑安装并启动 Docker Desktop 后，不需要单独安装 PostgreSQL 或 Redis：
 
 ```powershell
 Copy-Item platform/.env.example platform/.env
 # 修改 platform/.env 中的本地密码
 platform/scripts/bootstrap-new-machine.ps1
 ```
-
-入口：
 
 - 管理端：`http://127.0.0.1:5173`
 - API：`http://127.0.0.1:8000`
@@ -61,19 +61,16 @@ python -m app.worker.main
 
 ```powershell
 cd platform/frontend
-npm install
+npm ci
 npm run dev
 ```
 
-## 测试
+## 验证与迁移
 
 ```powershell
-# 当前电脑已安装 Python/Node 时：
 platform/scripts/test-all.ps1
-# Docker Redis 可用时：
 platform/scripts/test-all.ps1 -WithRedis
-# 新电脑仅依赖 Docker 的完整验收（含 Redis 与 Playwright）：
 platform/scripts/test-all.ps1 -Docker -E2E
 ```
 
-数据备份、恢复和新电脑迁移见 `platform/docs/P1-1_DATA_PORTABILITY.md`。P1-1 在真实 Docker/Redis、故障恢复、Playwright E2E、备份恢复和截图全部通过前不得标记为完成。
+数据库、Artifact 备份恢复和跨电脑迁移见 `platform/docs/P1-1_DATA_PORTABILITY.md`。P1-1 在真实 Docker/Redis、故障恢复、Playwright E2E、备份恢复和截图全部通过前不得标记为完成。
