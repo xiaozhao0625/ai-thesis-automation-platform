@@ -1,0 +1,2 @@
+ingest-cli/contracts/v0.1/*.json text eol=lf
+ingest-cli/rules/v0.1/*.json text eol=lf
