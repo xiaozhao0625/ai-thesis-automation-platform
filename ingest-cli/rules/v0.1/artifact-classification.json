@@ -1,0 +1,122 @@
+{
+  "classification_rule_version": "artifact-classification-0.1",
+  "roles": [
+    "PRIMARY_REQUIREMENT",
+    "PRIMARY_DOCUMENT",
+    "ENGINEERING_SOURCE",
+    "ENGINEERING_CONFIG",
+    "ENGINEERING_RESULT",
+    "SOURCE_IMAGE",
+    "SOURCE_TABLE",
+    "TEMPLATE",
+    "REFERENCE_CANDIDATE",
+    "VERIFIED_REFERENCE",
+    "EXISTING_DRAFT",
+    "GENERATED_DRAFT",
+    "BACKUP",
+    "THIRD_PARTY_DEPENDENCY",
+    "BUILD_OUTPUT",
+    "CACHE",
+    "NOISE",
+    "SENSITIVE_DATA",
+    "EXECUTABLE",
+    "UNKNOWN"
+  ],
+  "source_extensions": [
+    ".c",
+    ".cc",
+    ".cpp",
+    ".go",
+    ".h",
+    ".hpp",
+    ".java",
+    ".js",
+    ".jsx",
+    ".kt",
+    ".php",
+    ".py",
+    ".rb",
+    ".rs",
+    ".ts",
+    ".tsx",
+    ".vue"
+  ],
+  "config_extensions": [
+    ".conf",
+    ".ini",
+    ".json",
+    ".properties",
+    ".sql",
+    ".toml",
+    ".xml",
+    ".yaml",
+    ".yml"
+  ],
+  "image_extensions": [
+    ".bmp",
+    ".gif",
+    ".jpeg",
+    ".jpg",
+    ".png",
+    ".svg",
+    ".tif",
+    ".tiff",
+    ".webp"
+  ],
+  "table_extensions": [
+    ".csv",
+    ".tsv",
+    ".xls",
+    ".xlsx"
+  ],
+  "document_extensions": [
+    ".doc",
+    ".docx",
+    ".odt",
+    ".pdf",
+    ".rtf"
+  ],
+  "requirement_name_tokens": [
+    "任务书",
+    "开题报告",
+    "需求",
+    "requirement",
+    "specification"
+  ],
+  "template_name_tokens": [
+    "学校模板",
+    "论文模板",
+    "template"
+  ],
+  "reference_name_tokens": [
+    "参考文献",
+    "引用线索",
+    "bibliography",
+    "references"
+  ],
+  "result_name_tokens": [
+    "benchmark",
+    "coverage",
+    "result",
+    "test-report",
+    "测试结果",
+    "仿真结果"
+  ],
+  "draft_name_tokens": [
+    "论文",
+    "正文",
+    "毕业设计",
+    "draft",
+    "thesis"
+  ],
+  "generated_name_tokens": [
+    "generated",
+    "机器生成",
+    "自动生成"
+  ],
+  "official_reference_path_tokens": [
+    "fixed-official-sources",
+    "official-reference",
+    "官方资料"
+  ]
+}

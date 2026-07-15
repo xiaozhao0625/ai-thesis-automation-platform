@@ -1,0 +1,346 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-mount.schema.json",
+  "title": "SourceMount",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "source_mount_id",
+    "name",
+    "mount_type",
+    "root_uri",
+    "binding_revision",
+    "read_only",
+    "status",
+    "case_policy",
+    "unicode_normalization",
+    "path_normalization_version",
+    "last_scan_id",
+    "last_scan_at",
+    "root_fingerprint",
+    "access_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "record_type": {
+      "const": "SOURCE_MOUNT"
+    },
+    "source_mount_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "mount_type": {
+      "enum": [
+        "LOCAL_DIRECTORY",
+        "NETWORK_SHARE",
+        "OBJECT_STORAGE",
+        "READ_ONLY_ARCHIVE"
+      ]
+    },
+    "root_uri": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "binding_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "read_only": {
+      "const": true
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "OFFLINE",
+        "DISABLED"
+      ]
+    },
+    "case_policy": {
+      "enum": [
+        "CASE_SENSITIVE",
+        "CASE_INSENSITIVE"
+      ]
+    },
+    "unicode_normalization": {
+      "const": "NFC"
+    },
+    "path_normalization_version": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "last_scan_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "last_scan_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "root_fingerprint": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/RootFingerprint"
+        }
+      ]
+    },
+    "access_policy": {
+      "$ref": "#/$defs/AccessPolicy"
+    }
+  },
+  "allOf": [
+    {
+      "oneOf": [
+        {
+          "required": [
+            "last_scan_id",
+            "last_scan_at",
+            "root_fingerprint"
+          ],
+          "properties": {
+            "last_scan_id": {
+              "type": "null"
+            },
+            "last_scan_at": {
+              "type": "null"
+            },
+            "root_fingerprint": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "required": [
+            "last_scan_id",
+            "last_scan_at",
+            "root_fingerprint"
+          ],
+          "properties": {
+            "last_scan_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "last_scan_at": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+            },
+            "root_fingerprint": {
+              "$ref": "#/$defs/RootFingerprint"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "Sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "RootFingerprint": {
+      "title": "RootFingerprint",
+      "description": "Semantic verification MUST enforce 0 <= hashed_record_count <= record_count. strength MUST be STRONG exactly when every published record is hashed; otherwise it MUST be MIXED.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "canonicalization_version",
+        "scope",
+        "strength",
+        "record_count",
+        "hashed_record_count",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "SHA-256"
+        },
+        "canonicalization_version": {
+          "const": "RFC8785-JCS-v1"
+        },
+        "scope": {
+          "const": "RECORDED_ITEMS"
+        },
+        "strength": {
+          "enum": [
+            "MIXED",
+            "STRONG"
+          ]
+        },
+        "record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hashed_record_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "value": {
+          "$ref": "#/$defs/Sha256"
+        }
+      },
+      "examples": [
+        {
+          "algorithm": "SHA-256",
+          "canonicalization_version": "RFC8785-JCS-v1",
+          "scope": "RECORDED_ITEMS",
+          "strength": "MIXED",
+          "record_count": 10,
+          "hashed_record_count": 8,
+          "value": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        }
+      ]
+    },
+    "AccessPolicy": {
+      "title": "SourceMountAccessPolicy",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preview_policy",
+        "external_model_policy",
+        "export_policy",
+        "audit_required"
+      ],
+      "properties": {
+        "preview_policy": {
+          "enum": [
+            "STANDARD",
+            "RESTRICTED",
+            "DENY"
+          ]
+        },
+        "external_model_policy": {
+          "enum": [
+            "ALLOW",
+            "ALLOW_REDACTED_ONLY",
+            "LOCAL_MODEL_ONLY",
+            "DENY_EXTERNAL_MODEL"
+          ]
+        },
+        "export_policy": {
+          "enum": [
+            "ALLOW",
+            "REDACT_SOURCE_URI",
+            "DENY"
+          ]
+        },
+        "audit_required": {
+          "type": "boolean"
+        }
+      },
+      "examples": [
+        {
+          "preview_policy": "RESTRICTED",
+          "external_model_policy": "DENY_EXTERNAL_MODEL",
+          "export_policy": "REDACT_SOURCE_URI",
+          "audit_required": true
+        }
+      ]
+    },
+    "SourceMountCollection": {
+      "title": "SourceMountCollection",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "record_type",
+        "source_mounts"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "0.1"
+        },
+        "record_type": {
+          "const": "SOURCE_MOUNT_COLLECTION"
+        },
+        "source_mounts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "source-mount.schema.json"
+          }
+        }
+      },
+      "examples": [
+        {
+          "schema_version": "0.1",
+          "record_type": "SOURCE_MOUNT_COLLECTION",
+          "source_mounts": [
+            {
+              "schema_version": "0.1",
+              "record_type": "SOURCE_MOUNT",
+              "source_mount_id": "thesis-library-2026",
+              "name": "Synthetic thesis library",
+              "mount_type": "LOCAL_DIRECTORY",
+              "root_uri": "file:///srv/thesis-library-2026",
+              "binding_revision": 1,
+              "read_only": true,
+              "status": "ACTIVE",
+              "case_policy": "CASE_SENSITIVE",
+              "unicode_normalization": "NFC",
+              "path_normalization_version": "path-nfc-posix-v1",
+              "last_scan_id": null,
+              "last_scan_at": null,
+              "root_fingerprint": null,
+              "access_policy": {
+                "preview_policy": "RESTRICTED",
+                "external_model_policy": "DENY_EXTERNAL_MODEL",
+                "export_policy": "REDACT_SOURCE_URI",
+                "audit_required": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "0.1",
+      "record_type": "SOURCE_MOUNT",
+      "source_mount_id": "thesis-library-2026",
+      "name": "Synthetic thesis library",
+      "mount_type": "LOCAL_DIRECTORY",
+      "root_uri": "file:///srv/thesis-library-2026",
+      "binding_revision": 1,
+      "read_only": true,
+      "status": "ACTIVE",
+      "case_policy": "CASE_SENSITIVE",
+      "unicode_normalization": "NFC",
+      "path_normalization_version": "path-nfc-posix-v1",
+      "last_scan_id": null,
+      "last_scan_at": null,
+      "root_fingerprint": null,
+      "access_policy": {
+        "preview_policy": "RESTRICTED",
+        "external_model_policy": "DENY_EXTERNAL_MODEL",
+        "export_policy": "REDACT_SOURCE_URI",
+        "audit_required": true
+      }
+    }
+  ]
+}

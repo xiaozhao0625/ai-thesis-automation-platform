@@ -1,0 +1,14 @@
+{
+  "rule_bundle_version": "0.1",
+  "hash_algorithm": "sha256",
+  "versions": {
+    "rule_set_version": "ingest-rules-0.1",
+    "classification_rule_version": "artifact-classification-0.1",
+    "candidate_scoring_version": "candidate-scoring-0.1"
+  },
+  "documents": {
+    "ingest-rules.json": "67ca5df1dc15338985ab7380c3e936778f62fc92e0402cedfdd79fe59f03d5ca",
+    "artifact-classification.json": "52986aeb2490ce430db3a7061c27d7bd5284a1c6521be28012eb26dae5a78552",
+    "candidate-scoring.json": "b84143ee42baea163e49dcb9d11ef0630a923f62b27d18315f6f280233e81dfa"
+  }
+}

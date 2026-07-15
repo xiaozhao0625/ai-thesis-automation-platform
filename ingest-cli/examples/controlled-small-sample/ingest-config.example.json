@@ -1,0 +1,68 @@
+{
+  "config_version": "0.1",
+  "source_mount": {
+    "schema_version": "0.1",
+    "record_type": "SOURCE_MOUNT",
+    "source_mount_id": "controlled-sample",
+    "name": "Controlled synthetic sample",
+    "mount_type": "LOCAL_DIRECTORY",
+    "root_uri": "file:///replace/with/generated/fixture",
+    "binding_revision": 1,
+    "read_only": true,
+    "status": "ACTIVE",
+    "case_policy": "CASE_SENSITIVE",
+    "unicode_normalization": "NFC",
+    "path_normalization_version": "path-nfc-posix-v1",
+    "last_scan_id": null,
+    "last_scan_at": null,
+    "root_fingerprint": null,
+    "access_policy": {
+      "preview_policy": "RESTRICTED",
+      "external_model_policy": "DENY_EXTERNAL_MODEL",
+      "export_policy": "REDACT_SOURCE_URI",
+      "audit_required": true
+    }
+  },
+  "rule_set_version": "ingest-rules-0.1",
+  "scanner_version": "thesis-ingest-0.1",
+  "path_normalization_version": "path-nfc-posix-v1",
+  "hash_algorithm": "SHA-256",
+  "path_rules": {
+    "exclude_directories": [".git", ".idea", ".venv", ".vscode", "__pycache__", "build", "coverage", "dist", "node_modules", "target", "venv"],
+    "exclude_file_name_patterns": ["*.autosave", "*.log.*", "~$*"],
+    "max_file_size_bytes": 2147483648
+  },
+  "quarantine_rules": {
+    "extensions": [".bat", ".cmd", ".dll", ".exe", ".jar", ".ps1"],
+    "quarantine_unknown_binary": true,
+    "quarantine_database_dump": true,
+    "detect_credential_risk": true,
+    "inspect_archives": true
+  },
+  "sensitive_classification": {
+    "enabled": true,
+    "content_categories": ["FACE_IMAGE", "PERSONAL_DATA", "QUESTIONNAIRE", "INTERVIEW", "DATABASE_DUMP", "CREDENTIAL", "SOURCE_CODE", "VIDEO", "AUDIO"]
+  },
+  "output": {
+    "output_directory": "ingest-output/",
+    "jsonl_flush_records": 1000,
+    "checkpoint_every_records": 16,
+    "emit_excluded_item_records": true,
+    "encoding": "UTF-8",
+    "line_ending": "LF"
+  },
+  "capability_pack": {
+    "pack_id": "python_web_management_v1",
+    "classification_rule_version": "artifact-classification-0.1"
+  },
+  "project_scopes": [
+    {
+      "scope_id": "project",
+      "source": "CONFIG",
+      "relative_path_prefix": "project"
+    }
+  ],
+  "symlink_policy": "DO_NOT_FOLLOW",
+  "consistency_policy": "BEST_EFFORT",
+  "resume_policy": "CHECKPOINT_STRICT"
+}

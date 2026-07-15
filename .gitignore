@@ -10,5 +10,14 @@ __pycache__/
 *.pyc
 project-fact-p0-r2/work/
 
+# Python build, test, and interpreter caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+build/
+dist/
+
 # Isolated local Git worktrees.
 .worktrees/

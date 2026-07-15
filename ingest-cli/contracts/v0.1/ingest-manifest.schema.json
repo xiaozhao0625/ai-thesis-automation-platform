@@ -1,0 +1,1122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ingest-manifest.schema.json",
+  "title": "IngestManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "record_type",
+    "scan_id",
+    "status",
+    "source_mount_id",
+    "binding_revision",
+    "config_version",
+    "config_hash",
+    "path_normalization_version",
+    "rule_set_version",
+    "scanner_version",
+    "root_fingerprint",
+    "started_at",
+    "finished_at",
+    "total_files",
+    "accepted_files",
+    "excluded_files",
+    "quarantined_files",
+    "duplicate_files",
+    "needs_review_files",
+    "failed_files",
+    "pruned_directories",
+    "issue_count",
+    "resume_info",
+    "output_hashes"
+  ],
+  "properties": {
+    "manifest_version": {
+      "const": "0.1"
+    },
+    "record_type": {
+      "const": "INGEST_MANIFEST"
+    },
+    "scan_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "status": {
+      "enum": [
+        "CREATED",
+        "RUNNING",
+        "PARTIAL",
+        "COMPLETED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "source_mount_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "binding_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "config_version": {
+      "const": "0.1"
+    },
+    "config_hash": {
+      "$ref": "#/$defs/Sha256"
+    },
+    "path_normalization_version": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+    },
+    "rule_set_version": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "scanner_version": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "root_fingerprint": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "source-mount.schema.json#/$defs/RootFingerprint"
+        }
+      ]
+    },
+    "started_at": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/ZonedDateTime"
+        }
+      ]
+    },
+    "finished_at": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/ZonedDateTime"
+        }
+      ]
+    },
+    "total_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "accepted_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "excluded_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "quarantined_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "duplicate_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "needs_review_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pruned_directories": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "issue_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "resume_info": {
+      "$ref": "#/$defs/ResumeInfo"
+    },
+    "output_hashes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "relative_path",
+          "content_hash",
+          "size_bytes",
+          "record_count",
+          "schema_ref",
+          "schema_fragment"
+        ],
+        "properties": {
+          "relative_path": {
+            "enum": [
+              "source-mounts.json",
+              "artifacts.jsonl",
+              "excluded-items.jsonl",
+              "duplicate-groups.jsonl",
+              "primary-candidates.jsonl",
+              "reference-candidates.jsonl",
+              "sensitive-items.jsonl",
+              "ingest-issues.jsonl",
+              "summary.json"
+            ]
+          },
+          "content_hash": {
+            "$ref": "#/$defs/Sha256"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "record_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "schema_ref": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9.-]*\\.schema\\.json$"
+          },
+          "schema_fragment": {
+            "type": "string",
+            "pattern": "^#(?:/[A-Za-z0-9.$_~-]+)*$"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "relative_path": {
+                "const": "source-mounts.json"
+              },
+              "schema_ref": {
+                "const": "source-mount.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/SourceMountCollection"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "artifacts.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "excluded-items.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "duplicate-groups.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/duplicate_group"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "primary-candidates.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/primary_artifact_candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "reference-candidates.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/reference_candidate"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "sensitive-items.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/sensitive_item"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "ingest-issues.jsonl"
+              },
+              "schema_ref": {
+                "const": "artifact-ingest-record.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/ingest_issue"
+              }
+            }
+          },
+          {
+            "properties": {
+              "relative_path": {
+                "const": "summary.json"
+              },
+              "schema_ref": {
+                "const": "ingest-manifest.schema.json"
+              },
+              "schema_fragment": {
+                "const": "#/$defs/Summary"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "COMPLETED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "finished_at": {
+            "$ref": "#/$defs/ZonedDateTime"
+          },
+          "root_fingerprint": {
+            "$ref": "source-mount.schema.json#/$defs/RootFingerprint"
+          },
+          "output_hashes": {
+            "minItems": 9,
+            "maxItems": 9,
+            "allOf": [
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "source-mounts.json"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "artifacts.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "excluded-items.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "duplicate-groups.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "primary-candidates.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "reference-candidates.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "sensitive-items.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "ingest-issues.jsonl"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              },
+              {
+                "contains": {
+                  "required": ["relative_path"],
+                  "properties": {"relative_path": {"const": "summary.json"}}
+                },
+                "minContains": 1,
+                "maxContains": 1
+              }
+            ]
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "root_fingerprint": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "CREATED",
+              "RUNNING"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "finished_at": {
+            "type": "null"
+          },
+          "output_hashes": {
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "finished_at": {
+            "$ref": "#/$defs/ZonedDateTime"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "CREATED"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "started_at": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "started_at": {
+            "$ref": "#/$defs/ZonedDateTime"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "ZonedDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "(?:Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "ResumeInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resumed_from_checkpoint",
+        "checkpoint_id",
+        "checkpoint_count"
+      ],
+      "properties": {
+        "resumed_from_checkpoint": {
+          "type": "boolean"
+        },
+        "checkpoint_id": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "checkpoint_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resumed_from_checkpoint": {"const": true}
+            },
+            "required": ["resumed_from_checkpoint"]
+          },
+          "then": {
+            "properties": {
+              "checkpoint_id": {"type": "string", "minLength": 1},
+              "checkpoint_count": {"minimum": 1}
+            }
+          },
+          "else": {
+            "properties": {
+              "checkpoint_id": {"type": "null"},
+              "checkpoint_count": {"const": 0}
+            }
+          }
+        }
+      ],
+      "examples": [
+        {
+          "resumed_from_checkpoint": false,
+          "checkpoint_id": null,
+          "checkpoint_count": 0
+        }
+      ]
+    },
+    "NonNegativeCountMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "examples": [
+        {
+          "ACCEPTED": 1
+        }
+      ]
+    },
+    "Summary": {
+      "title": "IngestSummary",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_version",
+        "scan_id",
+        "source_mount_id",
+        "status",
+        "total_files",
+        "accepted_files",
+        "excluded_files",
+        "quarantined_files",
+        "duplicate_files",
+        "needs_review_files",
+        "failed_files",
+        "pruned_directories",
+        "issue_count",
+        "by_artifact_role",
+        "by_media_type",
+        "by_data_classification",
+        "by_issue_severity",
+        "duration_ms",
+        "resumed_from_checkpoint",
+        "checkpoint_count",
+        "unread_files",
+        "unhashed_files",
+        "duplicate_group_count",
+        "primary_candidate_count",
+        "reference_candidate_count",
+        "sensitive_item_count"
+      ],
+      "properties": {
+        "summary_version": {
+          "const": "0.1"
+        },
+        "scan_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_mount_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "status": {
+          "enum": [
+            "CREATED",
+            "RUNNING",
+            "PARTIAL",
+            "COMPLETED",
+            "FAILED",
+            "CANCELLED"
+          ]
+        },
+        "total_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "accepted_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "excluded_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "quarantined_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "needs_review_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pruned_directories": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "issue_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "by_artifact_role": {
+          "$ref": "#/$defs/NonNegativeCountMap"
+        },
+        "by_media_type": {
+          "$ref": "#/$defs/NonNegativeCountMap"
+        },
+        "by_data_classification": {
+          "$ref": "#/$defs/NonNegativeCountMap"
+        },
+        "by_issue_severity": {
+          "$ref": "#/$defs/NonNegativeCountMap"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resumed_from_checkpoint": {
+          "type": "boolean"
+        },
+        "checkpoint_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unread_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unhashed_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_group_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "primary_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reference_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sensitive_item_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "examples": [
+        {
+          "summary_version": "0.1",
+          "scan_id": "scan-example-partial-001",
+          "source_mount_id": "thesis-library-2026",
+          "status": "PARTIAL",
+          "total_files": 10,
+          "accepted_files": 4,
+          "excluded_files": 2,
+          "quarantined_files": 1,
+          "duplicate_files": 1,
+          "needs_review_files": 2,
+          "failed_files": 1,
+          "pruned_directories": 3,
+          "issue_count": 3,
+          "by_artifact_role": {
+            "PRIMARY_REQUIREMENT": 2,
+            "ENGINEERING_SOURCE": 2,
+            "NOISE": 2,
+            "UNKNOWN": 4
+          },
+          "by_media_type": {
+            "APPLICATION_DOCX": 4,
+            "TEXT_PLAIN": 3,
+            "APPLICATION_OCTET_STREAM": 3
+          },
+          "by_data_classification": {
+            "INTERNAL": 9,
+            "RESTRICTED": 1
+          },
+          "by_issue_severity": {
+            "WARNING": 2,
+            "ERROR": 1
+          },
+          "duration_ms": 120000,
+          "resumed_from_checkpoint": false,
+          "checkpoint_count": 0,
+          "unread_files": 1,
+          "unhashed_files": 1,
+          "duplicate_group_count": 1,
+          "primary_candidate_count": 2,
+          "reference_candidate_count": 3,
+          "sensitive_item_count": 1
+        }
+      ]
+    },
+    "IngestConfig": {
+      "title": "IngestConfig",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "config_version",
+        "source_mount",
+        "rule_set_version",
+        "scanner_version",
+        "path_normalization_version",
+        "hash_algorithm",
+        "path_rules",
+        "quarantine_rules",
+        "sensitive_classification",
+        "output",
+        "capability_pack",
+        "project_scopes",
+        "symlink_policy",
+        "consistency_policy",
+        "resume_policy"
+      ],
+      "properties": {
+        "config_version": {
+          "const": "0.1"
+        },
+        "source_mount": {
+          "$ref": "source-mount.schema.json"
+        },
+        "rule_set_version": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "scanner_version": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+        },
+        "path_normalization_version": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+        },
+        "hash_algorithm": {
+          "const": "SHA-256"
+        },
+        "path_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "exclude_directories",
+            "exclude_file_name_patterns",
+            "max_file_size_bytes"
+          ],
+          "properties": {
+            "exclude_directories": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "exclude_file_name_patterns": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            },
+            "max_file_size_bytes": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "quarantine_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "extensions",
+            "quarantine_unknown_binary",
+            "quarantine_database_dump",
+            "detect_credential_risk",
+            "inspect_archives"
+          ],
+          "properties": {
+            "extensions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^\\.[a-z0-9][a-z0-9._-]{0,31}$"
+              }
+            },
+            "quarantine_unknown_binary": {
+              "type": "boolean"
+            },
+            "quarantine_database_dump": {
+              "type": "boolean"
+            },
+            "detect_credential_risk": {
+              "type": "boolean"
+            },
+            "inspect_archives": {
+              "type": "boolean"
+            }
+          }
+        },
+        "sensitive_classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "content_categories"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "content_categories": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "FACE_IMAGE",
+                  "PERSONAL_DATA",
+                  "QUESTIONNAIRE",
+                  "INTERVIEW",
+                  "DATABASE_DUMP",
+                  "CREDENTIAL",
+                  "SOURCE_CODE",
+                  "VIDEO",
+                  "AUDIO"
+                ]
+              }
+            }
+          }
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "output_directory",
+            "jsonl_flush_records",
+            "checkpoint_every_records",
+            "emit_excluded_item_records",
+            "encoding",
+            "line_ending"
+          ],
+          "properties": {
+            "output_directory": {
+              "type": "string",
+              "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)[A-Za-z0-9._/-]+/$"
+            },
+            "jsonl_flush_records": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "checkpoint_every_records": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "emit_excluded_item_records": {
+              "type": "boolean"
+            },
+            "encoding": {
+              "const": "UTF-8"
+            },
+            "line_ending": {
+              "const": "LF"
+            }
+          }
+        },
+        "capability_pack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pack_id",
+            "classification_rule_version"
+          ],
+          "properties": {
+            "pack_id": {
+              "const": "python_web_management_v1"
+            },
+            "classification_rule_version": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+            }
+          }
+        },
+        "project_scopes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "scope_id",
+              "source",
+              "relative_path_prefix"
+            ],
+            "properties": {
+              "scope_id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+              },
+              "source": {
+                "const": "CONFIG"
+              },
+              "relative_path_prefix": {
+                "type": "string",
+                "pattern": "^(?!/)(?![A-Za-z]:/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?(?:/|$))[^/\\u0000]+(?:/[^/\\u0000]+)*$"
+              }
+            }
+          }
+        },
+        "symlink_policy": {
+          "const": "DO_NOT_FOLLOW"
+        },
+        "consistency_policy": {
+          "enum": [
+            "BEST_EFFORT",
+            "SNAPSHOT_REQUIRED"
+          ]
+        },
+        "resume_policy": {
+          "enum": [
+            "CHECKPOINT_STRICT",
+            "RESTART_SCAN"
+          ]
+        }
+      },
+      "examples": [
+        {
+          "config_version": "0.1",
+          "source_mount": {
+            "schema_version": "0.1",
+            "record_type": "SOURCE_MOUNT",
+            "source_mount_id": "thesis-library-2026",
+            "name": "Synthetic thesis library",
+            "mount_type": "LOCAL_DIRECTORY",
+            "root_uri": "file:///srv/thesis-library-2026",
+            "binding_revision": 1,
+            "read_only": true,
+            "status": "ACTIVE",
+            "case_policy": "CASE_SENSITIVE",
+            "unicode_normalization": "NFC",
+            "path_normalization_version": "path-nfc-posix-v1",
+            "last_scan_id": null,
+            "last_scan_at": null,
+            "root_fingerprint": null,
+            "access_policy": {
+              "preview_policy": "RESTRICTED",
+              "external_model_policy": "DENY_EXTERNAL_MODEL",
+              "export_policy": "REDACT_SOURCE_URI",
+              "audit_required": true
+            }
+          },
+          "rule_set_version": "ingest-rules-0.1",
+          "scanner_version": "thesis-ingest-0.1",
+          "path_normalization_version": "path-nfc-posix-v1",
+          "hash_algorithm": "SHA-256",
+          "path_rules": {
+            "exclude_directories": [
+              ".git",
+              ".idea",
+              ".venv",
+              ".vscode",
+              "__pycache__",
+              "build",
+              "coverage",
+              "dist",
+              "node_modules",
+              "target",
+              "venv"
+            ],
+            "exclude_file_name_patterns": [
+              "*.autosave",
+              "*.log.*",
+              "~$*"
+            ],
+            "max_file_size_bytes": 2147483648
+          },
+          "quarantine_rules": {
+            "extensions": [
+              ".bat",
+              ".cmd",
+              ".dll",
+              ".exe",
+              ".jar",
+              ".ps1"
+            ],
+            "quarantine_unknown_binary": true,
+            "quarantine_database_dump": true,
+            "detect_credential_risk": true,
+            "inspect_archives": true
+          },
+          "sensitive_classification": {
+            "enabled": true,
+            "content_categories": [
+              "FACE_IMAGE",
+              "PERSONAL_DATA",
+              "QUESTIONNAIRE",
+              "INTERVIEW",
+              "DATABASE_DUMP",
+              "CREDENTIAL",
+              "SOURCE_CODE",
+              "VIDEO",
+              "AUDIO"
+            ]
+          },
+          "output": {
+            "output_directory": "ingest-output/",
+            "jsonl_flush_records": 1000,
+            "checkpoint_every_records": 5000,
+            "emit_excluded_item_records": true,
+            "encoding": "UTF-8",
+            "line_ending": "LF"
+          },
+          "capability_pack": {
+            "pack_id": "python_web_management_v1",
+            "classification_rule_version": "artifact-classification-0.1"
+          },
+          "project_scopes": [
+            {
+              "scope_id": "sample-projects",
+              "source": "CONFIG",
+              "relative_path_prefix": "projects/sample"
+            }
+          ],
+          "symlink_policy": "DO_NOT_FOLLOW",
+          "consistency_policy": "BEST_EFFORT",
+          "resume_policy": "CHECKPOINT_STRICT"
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "manifest_version": "0.1",
+      "record_type": "INGEST_MANIFEST",
+      "scan_id": "scan-example-partial-001",
+      "status": "PARTIAL",
+      "source_mount_id": "thesis-library-2026",
+      "binding_revision": 1,
+      "config_version": "0.1",
+      "config_hash": "sha256:14cb77f310acf191d02c045c79aae1670808fcde11b7367d0872349ca78b62d9",
+      "path_normalization_version": "path-nfc-posix-v1",
+      "rule_set_version": "ingest-rules-0.1",
+      "scanner_version": "thesis-ingest-0.1",
+      "root_fingerprint": null,
+      "started_at": "2026-07-15T00:00:00Z",
+      "finished_at": "2026-07-15T00:02:00Z",
+      "total_files": 10,
+      "accepted_files": 4,
+      "excluded_files": 2,
+      "quarantined_files": 1,
+      "duplicate_files": 1,
+      "needs_review_files": 2,
+      "failed_files": 1,
+      "pruned_directories": 3,
+      "issue_count": 3,
+      "resume_info": {
+        "resumed_from_checkpoint": false,
+        "checkpoint_id": null,
+        "checkpoint_count": 0
+      },
+      "output_hashes": []
+    }
+  ]
+}
