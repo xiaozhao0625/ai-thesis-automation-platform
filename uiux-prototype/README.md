@@ -13,11 +13,13 @@
 ## 本地验证
 
 ```powershell
-$p='C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\node_modules\.pnpm'
-$env:NODE_PATH="$p\playwright@1.61.1\node_modules;$p\playwright-core@1.61.1\node_modules"
-$node='C:\Users\Administrator\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe'
-& $node prototype.contract.test.mjs
-& $node --test prototype.interaction.test.cjs
+node prototype.contract.test.mjs
+
+$env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD='1'
+$prefix=Join-Path $env:TEMP 'codex-playwright-check'
+& (Get-Command npm.cmd).Source install --prefix $prefix playwright@1.61.1
+$env:NODE_PATH=Join-Path $prefix 'node_modules'
+node --test prototype.interaction.test.cjs
 ```
 
-浏览器测试使用本机 Chrome；测试内置临时静态 HTTP 服务，无需安装项目依赖。
+浏览器测试使用本机 Chrome；测试内置临时静态 HTTP 服务。若环境已提供 Playwright，只需保证 `NODE_PATH` 可解析 `playwright` 模块。

@@ -1,13 +1,14 @@
 # AI Thesis Automation Platform
 
-Current static-code baseline for the AI thesis automation platform.
+This is the only Git repository for the AI thesis automation platform code.
 
-## Included source
+## Current source
 
-- `nstl_index.html` - current static page baseline
-- `nstl_index_js.js` - page interaction logic
-- `nstl_paper_nav.js` - paper-navigation logic
+- `uiux-prototype/` - current UI/UX v1.2.2 clickable prototype, contract test, browser interaction test, screenshot, and DOCX explanation.
+- `nstl_index.html`, `nstl_index_js.js`, `nstl_paper_nav.js` - legacy NSTL-derived static prototype assets kept as business and visual reference, not the current engineering baseline.
 
 ## Repository scope
 
-This initial commit intentionally excludes third-party skill packages and handoff documents. Product, workflow, and UI/UX baseline documents remain in the local handoff package while the implementation repository is established.
+Code changes should be made and committed here. Product requirements, technical baselines, template originals, delivery packages, and continuing handoff notes live in the project root folders outside this Git repository.
+
+Use `git status --short --branch` and `git log -1 --oneline` to confirm the current branch, worktree state, and latest commit before starting new work.
