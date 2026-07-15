@@ -6,7 +6,7 @@ const htmlName = files.find(name => name.endsWith('.html'));
 assert.ok(htmlName, 'missing prototype HTML file');
 const file = new URL(`./${htmlName}`, import.meta.url);
 const html = await readFile(file, 'utf8');
-const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r2.json', import.meta.url), 'utf8'));
+const projectFactPayload = JSON.parse(await readFile(new URL('./project-fact-r3.json', import.meta.url), 'utf8'));
 const server = await readFile(new URL('./prototype.server.cjs', import.meta.url), 'utf8');
 
 const pages = [
@@ -44,7 +44,7 @@ assert.match(html, /data-target-port=/, 'SVG edges must bind target ports');
 assert.match(html, /task-subnav/, 'shared TaskSubNavigation component missing');
 assert.match(html, /history\[replace\?'replaceState':'pushState'\]/, 'History API routing missing');
 assert.match(html, /toggle-chapter-group/, 'collapsed chapter group control missing');
-assert.match(html, /v1\.2\.4-P0-r2 ProjectFact 闭环修复候选/, 'r2 candidate title missing');
+assert.match(html, /v1\.2\.4-P0-r3 ProjectFact 闭环修复候选/, 'r3 candidate title missing');
 
 const semanticEdges = [
   ['task_start_approval', 'project_source_parse'],
@@ -83,12 +83,18 @@ for (const action of ['simulate-fact-conflict', 'review-project-fact-impact', 'c
 assert.match(html, /公开资料决定内容丰富度；用户锁定事实决定项目真实性/, 'source authority principle missing');
 assert.doesNotMatch(html, /const facts=\[/, 'ProjectFact data must not be hardcoded in HTML');
 assert.doesNotMatch(html, /snapshotVersion\s*\+=\s*1/, 'snapshot versions must come from the executable candidate');
-for (const endpoint of ['/api/project-facts', '/api/project-facts/conflict', '/api/project-facts/impact', '/api/project-facts/confirm']) {
+for (const endpoint of ['/api/project-facts', '/api/project-facts/confirm-intake', '/api/project-facts/conflict', '/api/project-facts/impact', '/api/project-facts/confirm']) {
   assert.ok(server.includes(endpoint), `missing ProjectFact API endpoint: ${endpoint}`);
 }
-const initialMcu = projectFactPayload.initial.entities.fact_versions.find(item => item.fact_key === 'mcu_model');
-assert.equal(initialMcu.canonical_value, 'STM32F103C8T6');
-assert.deepEqual(projectFactPayload.initial.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
+assert.equal(projectFactPayload.initial.snapshot, null, 'initial intake must not pre-create an ACTIVE Snapshot');
+assert.equal(projectFactPayload.initial.entities.fact_versions.length, 0, 'initial intake must not pre-create ProjectFactVersion objects');
+assert.ok(projectFactPayload.initial.entities.facts.every(item => item.status === 'PROPOSED' && item.current_fact_version_id === null), 'initial facts must remain PROPOSED');
+const intakeMcu = projectFactPayload.intake_confirmation.entities.fact_versions.find(item => item.fact_key === 'mcu_model');
+assert.equal(intakeMcu.canonical_value, 'STM32F103C8T6');
+assert.equal(projectFactPayload.intake_confirmation.snapshot.status, 'ACTIVE');
+assert.equal(projectFactPayload.intake_confirmation.human_approval.approval_type, 'PROJECT_FACT_INTAKE_CONFIRMATION');
+assert.equal(projectFactPayload.intake_confirmation.audit_event.event_type, 'PROJECT_FACT_INTAKE_CONFIRMED');
+assert.deepEqual(projectFactPayload.intake_confirmation.retrieval.map(item => item.match_type), ['EXACT_MODEL', 'SERIES_MATCH', 'RELATED_MODEL']);
 assert.equal(projectFactPayload.conflict.project_fact_conflict.status, 'OPEN');
 assert.equal(projectFactPayload.confirmation.outline_transition.old_state, 'INVALIDATED');
 assert.equal(projectFactPayload.confirmation.outline_transition.new_state, 'READY');

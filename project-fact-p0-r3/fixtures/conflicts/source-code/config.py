@@ -1,0 +1,4 @@
+# fixture_commit: 77ab921-conflicting-mcu-r2
+MCU_MODEL = "STM32F407VET6"
+SENSOR_MODEL = "DHT11"
+WIRELESS_MODEL = "ESP8266-01S"

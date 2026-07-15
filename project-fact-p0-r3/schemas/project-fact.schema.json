@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-fact.schema.json",
+  "title": "ProjectFact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fact_id", "task_id", "fact_key", "fact_type", "current_fact_version_id", "status", "conflict_status"],
+  "properties": {
+    "fact_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "fact_key": {"type": "string", "minLength": 1},
+    "fact_type": {"enum": ["HARDWARE_MODEL", "MODULE_MODEL", "SOFTWARE_FRAMEWORK", "SOFTWARE_VERSION", "DATABASE_TYPE", "COMMUNICATION_PROTOCOL", "PIN_ASSIGNMENT", "ELECTRICAL_PARAMETER", "FUNCTION_REQUIREMENT", "PROJECT_NAME", "ROLE_DEFINITION", "TEST_PARAMETER", "USER_CONSTRAINT"]},
+    "current_fact_version_id": {"type": ["string", "null"]},
+    "status": {"enum": ["PROPOSED", "LOCKED", "CONFLICT", "INVALIDATED", "SUPERSEDED"]},
+    "conflict_status": {"enum": ["NONE", "OPEN", "RESOLVED"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "CONFLICT"}}}, "then": {"properties": {"current_fact_version_id": {"type": "null"}, "conflict_status": {"const": "OPEN"}}}},
+    {"if": {"properties": {"status": {"const": "LOCKED"}}}, "then": {"properties": {"current_fact_version_id": {"type": "string", "minLength": 1}}}}
+  ]
+}

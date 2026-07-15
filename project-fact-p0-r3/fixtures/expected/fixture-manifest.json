@@ -1,0 +1,40 @@
+{
+  "fixture_version": "v0.3.2-P0-r3",
+  "files": [
+    {
+      "path": "task-document/任务书.docx",
+      "sha256": "sha256:02017dd78c3a4378aee2eed672993d762e98dfae479483c4fa84ef6983819b4b",
+      "artifact_version_id": "av-02017dd78c3a4378"
+    },
+    {
+      "path": "source-code/config.py",
+      "sha256": "sha256:158753c1e871ec76e4d528656c1a124d8444af8a2544b76844b2f5522ff5a271",
+      "artifact_version_id": "av-158753c1e871ec76"
+    },
+    {
+      "path": "spreadsheet/BOM.xlsx",
+      "sha256": "sha256:81565ec4eaa5ec84ce42a53cb9c65b9776a23a995bc8de82e6129d2b6dfda41b",
+      "artifact_version_id": "av-81565ec4eaa5ec84"
+    },
+    {
+      "path": "screenshot/hardware-list.png",
+      "sha256": "sha256:d114f10b8a557ff8f2cefe7f22c6ff1f22fa15e020148c4c0d6e801f2fb1261a",
+      "artifact_version_id": "av-d114f10b8a557ff8"
+    },
+    {
+      "path": "screenshot/hardware-list.ocr.json",
+      "sha256": "sha256:616e8c7d6559a04e85a1b1ba0190d7584c5100f991fa669c5c8733f5a92e9853",
+      "artifact_version_id": "av-616e8c7d6559a04e"
+    },
+    {
+      "path": "conflicts/source-code/config.py",
+      "sha256": "sha256:665e2bcedbb5a557d8a50d34d04197c74a18a049906f2b77d7a95314425c6875",
+      "artifact_version_id": "av-665e2bcedbb5a557"
+    },
+    {
+      "path": "expected/dependency-graph.json",
+      "sha256": "sha256:558cc64b97f004c67f97f3d0f6a21cf7827bd57afd73acde9768608db6fbc730",
+      "artifact_version_id": "av-558cc64b97f004c6"
+    }
+  ]
+}

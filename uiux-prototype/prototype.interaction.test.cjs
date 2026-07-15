@@ -15,6 +15,14 @@ async function taskOverview() {
   await page.locator('.nav-item[data-target="tasks"]').click();
   await activeClick('button[data-target="overview"]');
 }
+async function confirmProjectFactIntake() {
+  await page.locator('.nav-item[data-target="tasks"]').click();
+  await activeClick('button[data-target="new-task"]');
+  if (await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state') === 'PENDING_CONFIRMATION') {
+    await activeClick('button[data-action="confirm-intake-facts"]');
+    await page.locator('#projectFactIntake[data-fact-gate-state="CONFIRMED"]').waitFor();
+  }
+}
 
 test.before(async () => {
   server = createPrototypeServer();
@@ -206,12 +214,24 @@ test('startup gate confirms API-backed ProjectFacts with source locators', async
   assert.equal(await mcu.getAttribute('data-canonical-value'), 'STM32F103C8T6');
   const sourceText = await mcu.textContent();
   for (const source of ['任务书.docx', 'config.py', 'BOM.xlsx', 'hardware-list.png']) assert.match(sourceText, new RegExp(source.replace('.', '\\.')));
+  const before = await page.evaluate(() => fetch('/api/project-facts').then(response => response.json()));
+  assert.equal(before.snapshot, null);
+  assert.equal(before.entities.fact_versions.length, 0);
+  assert.equal(before.entities.facts.every(fact => fact.status === 'PROPOSED' && fact.current_fact_version_id === null), true);
   await activeClick('button[data-action="confirm-intake-facts"]');
+  await page.locator('#projectFactIntake[data-fact-gate-state="CONFIRMED"]').waitFor();
   assert.equal(await page.locator('#projectFactIntake').getAttribute('data-fact-gate-state'), 'CONFIRMED');
   assert.equal(await page.locator('#projectFactIntake [data-fact-id]').evaluateAll(rows => rows.every(row => row.dataset.status === 'LOCKED' && row.dataset.locked === 'true')), true);
+  const after = await page.evaluate(() => fetch('/api/project-facts').then(response => response.json()));
+  assert.equal(after.snapshot.status, 'ACTIVE');
+  assert.match(after.snapshot.snapshot_hash, /^sha256:/);
+  assert.equal(after.entities.fact_versions.length > 0, true);
+  assert.equal(after.human_approval.approval_type, 'PROJECT_FACT_INTAKE_CONFIRMATION');
+  assert.equal(after.audit_event.event_type, 'PROJECT_FACT_INTAKE_CONFIRMED');
 });
 
 test('ProjectFactSnapshot preserves exact models across materials, outline, content, BOM, and quality', async () => {
+  await confirmProjectFactIntake();
   await taskOverview();
   await activeRoute('materials');
   assert.equal(await page.locator('#materialProjectFacts').getAttribute('data-project-fact-snapshot-version'), '5');
@@ -232,6 +252,7 @@ test('ProjectFactSnapshot preserves exact models across materials, outline, cont
 });
 
 test('retrieval policy separates exact, series, and related models', async () => {
+  await confirmProjectFactIntake();
   await taskOverview();
   await activeRoute('evidence');
   assert.equal(await page.locator('#projectFactRetrieval [data-match-type="EXACT_MODEL"]').count(), 1);
@@ -244,6 +265,7 @@ test('retrieval policy separates exact, series, and related models', async () =>
 });
 
 test('conflict applies dependency closure before confirmation and creates a new ready outline run', async () => {
+  await confirmProjectFactIntake();
   await taskOverview();
   await activeRoute('workflow');
   const oldFingerprint = await page.locator('[data-node-id="outline_plan"]').getAttribute('data-execution-fingerprint');

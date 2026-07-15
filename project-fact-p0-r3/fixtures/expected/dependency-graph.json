@@ -1,0 +1,39 @@
+{
+  "root": "fact-mcu-model-v2",
+  "targets": [
+    {"target_type": "NODE_RUN", "target_id": "nr-outline-v5", "logical_id": "outline_plan", "state": "WAITING_FOR_APPROVAL"},
+    {"target_type": "NODE_RUN", "target_id": "nr-pre-v5", "logical_id": "section_generate_pre_group", "state": "SUCCEEDED"},
+    {"target_type": "NODE_RUN", "target_id": "nr-engineering-v5", "logical_id": "engineering_verify", "state": "RUNNING"},
+    {"target_type": "NODE_RUN", "target_id": "nr-ch6-v5", "logical_id": "section_generate_ch6", "state": "READY"},
+    {"target_type": "NODE_RUN", "target_id": "nr-ch7-v5", "logical_id": "section_generate_ch7", "state": "PENDING"},
+    {"target_type": "NODE_RUN", "target_id": "nr-quality-v5", "logical_id": "manuscript_quality_check", "state": "QUEUED"},
+    {"target_type": "NODE_RUN", "target_id": "nr-gate-v5", "logical_id": "quality_gate_final", "state": "PENDING"},
+    {"target_type": "NODE_RUN", "target_id": "nr-docx-v5", "logical_id": "docx_render", "state": "PENDING"},
+    {"target_type": "NODE_RUN", "target_id": "nr-delivery-v5", "logical_id": "delivery_approval", "state": "WAITING_FOR_APPROVAL"},
+    {"target_type": "CLAIM", "target_id": "claim-mcu-design-v3", "logical_id": "claim_mcu_design", "state": "SUCCEEDED"},
+    {"target_type": "ARTIFACT_VERSION", "target_id": "artifact-retrieval-mcu-v2", "logical_id": "retrieval_evidence", "state": "SUCCEEDED"},
+    {"target_type": "ARTIFACT_VERSION", "target_id": "artifact-hardware-v3", "logical_id": "hardware_section", "state": "SUCCEEDED"},
+    {"target_type": "QUALITY_REPORT", "target_id": "quality-report-v3", "logical_id": "quality_report", "state": "SUCCEEDED"},
+    {"target_type": "DELIVERY_PACKAGE", "target_id": "delivery-package-v3", "logical_id": "delivery_package", "state": "SUCCEEDED"},
+    {"target_type": "NODE_RUN", "target_id": "nr-background-v2", "logical_id": "background_theory", "state": "SUCCEEDED"}
+  ],
+  "edges": [
+    ["fact-mcu-model-v2", "nr-outline-v5"],
+    ["fact-mcu-model-v2", "nr-engineering-v5"],
+    ["fact-mcu-model-v2", "claim-mcu-design-v3"],
+    ["fact-mcu-model-v2", "artifact-retrieval-mcu-v2"],
+    ["fact-mcu-model-v2", "artifact-hardware-v3"],
+    ["nr-outline-v5", "nr-pre-v5"],
+    ["nr-pre-v5", "nr-ch6-v5"],
+    ["nr-engineering-v5", "nr-ch6-v5"],
+    ["nr-ch6-v5", "nr-ch7-v5"],
+    ["nr-ch7-v5", "nr-quality-v5"],
+    ["nr-quality-v5", "nr-gate-v5"],
+    ["nr-gate-v5", "nr-docx-v5"],
+    ["nr-docx-v5", "nr-delivery-v5"],
+    ["nr-docx-v5", "delivery-package-v3"],
+    ["claim-mcu-design-v3", "quality-report-v3"],
+    ["artifact-hardware-v3", "quality-report-v3"],
+    ["quality-report-v3", "delivery-package-v3"]
+  ]
+}
