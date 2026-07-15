@@ -48,9 +48,20 @@ def validate_instance(
     schema_name: str,
     *,
     pointer_prefix: str = "",
+    schema_fragment: str | None = None,
 ) -> None:
+    schema = load_schema(schema_name)
+    if schema_fragment is not None:
+        if not schema_fragment.startswith("#/"):
+            raise ContractError(f"unsupported schema fragment: {schema_fragment}")
+        _resolve_fragment(schema, schema_fragment)
+        schema = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$ref": schema_fragment,
+            "$defs": schema.get("$defs", {}),
+        }
     validator = Draft202012Validator(
-        load_schema(schema_name),
+        schema,
         format_checker=FormatChecker(),
     )
     errors = sorted(validator.iter_errors(instance), key=lambda error: list(error.path))
@@ -66,3 +77,13 @@ def validate_instance(
 
 def _escape_pointer(segment: str) -> str:
     return segment.replace("~", "~0").replace("/", "~1")
+
+
+def _resolve_fragment(schema: dict[str, object], fragment: str) -> object:
+    current: object = schema
+    for encoded in fragment[2:].split("/"):
+        segment = encoded.replace("~1", "/").replace("~0", "~")
+        if not isinstance(current, dict) or segment not in current:
+            raise ContractError(f"schema fragment not found: {fragment}")
+        current = current[segment]
+    return current
